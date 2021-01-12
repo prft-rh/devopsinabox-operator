@@ -1,0 +1,20 @@
+apiVersion: apimc.com.perficient/v1alpha1
+kind: DevSecOpsManager
+metadata:
+  name: devsecopsmanager-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/devops-in-a-box/values.yaml
+  config:
+    repoPath: ""
+    repoUrl: ""
+  fullnameOverride: ""
+  git:
+    password: ""
+    server: https://gitlab.com
+    token: ""
+    username: ""
+  nameOverride: ""
+  prometheus:
+    token: ""
+  
+  

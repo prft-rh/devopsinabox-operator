@@ -1,0 +1,15 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: {{ include "devops-in-a-box-namespace.fullname" . }}
+  labels:
+    k8s-app: {{ include "devops-in-a-box-namespace.fullname" . }}
+spec:
+  endpoints:
+    - interval: 30s
+      path: /actuator/prometheus
+      port: management
+      scheme: http
+  selector:
+    matchLabels:
+      prometheus: spring-boot-service

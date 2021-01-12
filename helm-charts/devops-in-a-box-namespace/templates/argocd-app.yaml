@@ -1,0 +1,16 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: {{ include "devops-in-a-box-namespace.fullname" . }}
+  namespace: {{ .Values.manager.namespace }}
+spec:
+  destination:
+    namespace: {{ .Release.Namespace }}
+    server: 'https://kubernetes.default.svc'
+  project: default
+  source:
+    path: {{ .Values.config.repoPath }}
+    repoURL: {{ .Values.config.repoUrl }}
+    targetRevision: {{ .Values.config.repoBranch }}
+  syncPolicy:
+    automated: {}

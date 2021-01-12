@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: argocd-cm
+  labels:
+    app.kubernetes.io/name: argocd-cm
+    app.kubernetes.io/part-of: argocd
+data:
+  repository.credentials: |
+    - url: {{ .Values.git.server }}
+      passwordSecret:
+        name: {{ include "devops-in-a-box.fullname" . }}-git-auth
+        key: password
+      usernameSecret:
+        name: {{ include "devops-in-a-box.fullname" . }}-git-auth
+        key: username

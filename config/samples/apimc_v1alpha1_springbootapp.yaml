@@ -1,0 +1,34 @@
+apiVersion: apimc.com.perficient/v1alpha1
+kind: SpringBootApp
+metadata:
+  name: springbootapp-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/spring-boot/values.yaml
+  autoscaling:
+    enabled: false
+    maxReplicas: 100
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  config:
+    repo: ""
+  docker:
+    image: ""
+  fullnameOverride: ""
+  git:
+    branch: master
+    module: ""
+    url: ""
+  management:
+    port: 8081
+  maven:
+    mirror: ""
+  nameOverride: ""
+  podAnnotations: {}
+  replicaCount: 1
+  resources: {}
+  service:
+    port: 8080
+  serviceAccount:
+    annotations: {}
+  
+  

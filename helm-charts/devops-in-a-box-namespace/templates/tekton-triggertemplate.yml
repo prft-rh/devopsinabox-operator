@@ -1,0 +1,49 @@
+apiVersion: triggers.tekton.dev/v1alpha1
+kind: TriggerTemplate
+metadata:
+  name: devopsinabox
+spec:
+  params:
+  - name: git-repo-url
+    description: The git repository url
+  - name: git-revision
+    description: The git revision
+    default: release-tech-preview-2
+  - name: app-name
+    description: The name of the deployment to be created / patched
+  - name: image-repo
+    description: The docker image repo
+  - name: config-repo
+    description: The git repo with the kube configs
+  resourcetemplates:
+  - apiVersion: tekton.dev/v1beta1
+    kind: PipelineRun
+    metadata:
+      name: $(tt.params.app-name)-$(uid)
+      labels:
+        tekton.dev/pipeline: {{ include "devops-in-a-box-namespace.fullname" . }}
+    spec:
+      params:
+        - name: APP_NAME
+          value: $(tt.params.app-name)
+        - name: APP_REPO
+          value: $(tt.params.git-repo-url)
+        - name: GIT_REVISION
+          value: $(tt.params.git-revision)
+        - name: IMAGE_REPO
+          value: $(tt.params.image-repo)
+        - name: CONFIG_REPO
+          value: $(tt.params.config-repo)
+      pipelineRef:
+        name: {{ include "devops-in-a-box-namespace.fullname" . }}
+      serviceAccountName: pipeline
+      timeout: 1h0m0s
+      workspaces:
+        - name: workspace
+          volumeClaimTemplate:
+            spec:
+              accessModes:
+              - ReadWriteOnce
+              resources:
+                requests:
+                  storage: 1Gi

@@ -1,0 +1,14 @@
+domain: com.perficient
+layout: helm.sdk.operatorframework.io/v1
+projectName: devopsinabox
+resources:
+- group: apimc
+  kind: DevSecOpsManager
+  version: v1alpha1
+- group: apimc
+  kind: ManagedNamespace
+  version: v1alpha1
+- group: apimc
+  kind: SpringBootApp
+  version: v1alpha1
+version: 3-alpha

@@ -1,0 +1,13 @@
+apiVersion: integreatly.org/v1alpha1
+kind: GrafanaDashboard
+metadata:
+  name: spring-boot-dashboard
+  labels:
+    app: devopsinabox
+spec:
+  datasources:
+    - datasourceName: Prometheus
+      inputName: DS_PROMETHEUS
+  name: spring-boot.json
+  url: >-
+    https://raw.githubusercontent.com/prft-rh/devopsinabox-helm-chart/master/spring-boot-grafana-dashboard.json

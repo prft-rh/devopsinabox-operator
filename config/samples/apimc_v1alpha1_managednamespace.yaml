@@ -1,0 +1,22 @@
+apiVersion: apimc.com.perficient/v1alpha1
+kind: ManagedNamespace
+metadata:
+  name: managednamespace-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/devops-in-a-box-namespace/values.yaml
+  config:
+    repoPath: ""
+    repoUrl: ""
+  docker:
+    password: ""
+    server: https://quay.io
+    username: ""
+  fullnameOverride: ""
+  git:
+    password: ""
+    server: https://gitlab.com
+    token: ""
+    username: ""
+  nameOverride: ""
+  
+  

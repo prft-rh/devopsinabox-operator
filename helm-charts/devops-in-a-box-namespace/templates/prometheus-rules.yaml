@@ -1,0 +1,16 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "devops-in-a-box-namespace.fullname" . }}
+spec:
+  groups:
+  - name: spring-boot
+    rules:
+    - alert: Load
+      expr: system_load_average_1m{endpoint="management"} >= 10
+    - alert: ResponseTime
+      expr: max(http_server_requests_seconds_max{endpoint="management", status!~"5.."}) >= 0.2
+    - alert: ResponseTime
+      expr: max(http_server_requests_seconds_max{endpoint="management", status!~"5.."}) >= 0.2
+    - alert: ServerErrors
+      expr: sum(rate(http_server_requests_seconds_count{endpoint="management", status=~"5.."}[1m])) > 1

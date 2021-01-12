@@ -1,0 +1,6 @@
+## Append samples you want in your CSV to this file as resources ##
+resources:
+- apimc_v1alpha1_devsecopsmanager.yaml
+- apimc_v1alpha1_managednamespace.yaml
+- apimc_v1alpha1_springbootapp.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples

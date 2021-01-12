@@ -1,0 +1,25 @@
+# Default values for devops-in-a-box-namespace.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+git:
+  token: ""
+  username: ""
+  password: ""
+  server: "https://gitlab.com"
+  
+docker:
+  server: "https://quay.io"
+  username: ""
+  password: ""
+
+config:
+  repoUrl: ""
+  repoPath: ""
+  repoBranch: "master"
+
+manager:
+  namespace: ""
+
+nameOverride: ""
+fullnameOverride: ""

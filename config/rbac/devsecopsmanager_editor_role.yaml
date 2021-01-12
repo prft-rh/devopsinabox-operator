@@ -1,0 +1,24 @@
+# permissions for end users to edit devsecopsmanagers.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: devsecopsmanager-editor-role
+rules:
+- apiGroups:
+  - apimc.com.perficient
+  resources:
+  - devsecopsmanagers
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apimc.com.perficient
+  resources:
+  - devsecopsmanagers/status
+  verbs:
+  - get

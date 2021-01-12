@@ -1,0 +1,24 @@
+# permissions for end users to edit springbootapps.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: springbootapp-editor-role
+rules:
+- apiGroups:
+  - apimc.com.perficient
+  resources:
+  - springbootapps
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+- apiGroups:
+  - apimc.com.perficient
+  resources:
+  - springbootapps/status
+  verbs:
+  - get
