@@ -1,0 +1,25 @@
+apiVersion: elasticsearch.k8s.elastic.co/v1
+kind: Elasticsearch
+metadata:
+  annotations:
+    {{- include "devops-in-a-box.annotations" . | nindent 4 }}
+  name: {{ include "devops-in-a-box.fullname" . }}
+  labels:
+    {{- include "devops-in-a-box.labels" . | nindent 4 }}
+spec:
+  version: 7.10.1
+  nodeSets:
+    - config:
+        node.data: true
+        node.ingest: true
+        node.master: true
+        node.store.allow_mmap: false
+      count: 1
+      name: default
+      podTemplate:
+        metadata:
+          creationTimestamp: null
+        spec:
+          volumes:
+            - emptyDir: {}
+              name: elasticsearch-data

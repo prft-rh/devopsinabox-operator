@@ -1,0 +1,27 @@
+{{- $fullName := include "devops-in-a-box.fullname" . -}}
+{{- if semverCompare ">=1.19-0" .Capabilities.KubeVersion.GitVersion -}}
+apiVersion: logging.openshift.io/v1
+kind: ClusterLogForwarder
+metadata:
+  name: instance
+  namespace: openshift-logging
+  labels:
+    app.kubernetes.io/component: cluster-logging
+{{ include "devops-in-a-box.labels" . | indent 4 }}
+spec:
+  outputs:
+    - url: "tls://{{ $fullName }}.{{ .Release.Namespace }}.svc:{{ $.Values.forwarding.fluentd.port }}"
+      name: {{ $fullName }}
+      type: fluentdForward
+      secret:
+        name: {{ $fullName }}
+  pipelines:
+    - inputRefs:
+        - application
+      name: container-logs
+      outputRefs:
+      {{- if or .Values.forwarding.preserveDefault }}
+        - default
+      {{- end }}
+        - {{ $fullName }}
+{{- end }}

@@ -28,8 +28,6 @@ If release name contains chart name it will be used as a full name.
 Common annotations
 */}}
 {{- define "devops-in-a-box.annotations" -}}
-app.openshift.io/vcs-ref: {{ .Values.git.branch }}
-app.openshift.io/vcs-uri: {{ .Values.git.url | quote }}
 {{- end }}
 
 {{/*

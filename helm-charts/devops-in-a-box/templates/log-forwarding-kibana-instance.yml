@@ -1,0 +1,21 @@
+apiVersion: kibana.k8s.elastic.co/v1
+kind: Kibana
+metadata:
+  annotations:
+    {{- include "devops-in-a-box.annotations" . | nindent 4 }}
+  name: {{ include "devops-in-a-box.fullname" . }}
+  labels:
+    {{- include "devops-in-a-box.labels" . | nindent 4 }}
+spec:
+  version: 7.10.1
+  count: 1
+  elasticsearchRef:
+    name: {{ include "devops-in-a-box.fullname" . }}
+  podTemplate:
+    spec:
+      containers:
+      - name: kibana
+        resources:
+          limits:
+            memory: 1Gi
+            cpu: 1

@@ -14,7 +14,7 @@ spec:
           - name: app-name
             value: {{ include "spring-boot.fullname" . }}
           - name: image-repo
-            value: {{ .Values.docker.image }}
+            value: {{ .Values.docker.repo }}
           - name: config-repo
             value: {{ .Values.config.repo }}
     template:

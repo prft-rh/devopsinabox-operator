@@ -7,6 +7,35 @@ spec:
   config:
     repoPath: ""
     repoUrl: ""
+  forwarding:
+    fluentd:
+      affinity: {}
+      caFile: files/default-openshift-logging-fluentd.crt
+      image: registry.redhat.io/openshift4/ose-logging-fluentd:v4.4
+      keyFile: files/default-openshift-logging-fluentd.key
+      loglevel: warn
+      nodeSelector: {}
+      passphrase: ""
+      persistence:
+        accessMode: ReadWriteOnce
+        enabled: false
+        size: 10Gi
+        storageClass: ""
+      port: 24224
+      replicas: 2
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 100m
+          memory: 512Mi
+      sharedkey: splunkforwarding
+      ssl: true
+      tolerations: []
+      updateStrategy:
+        type: RollingUpdate
+    preserveDefault: true
   fullnameOverride: ""
   git:
     password: ""

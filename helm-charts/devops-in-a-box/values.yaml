@@ -17,3 +17,40 @@ prometheus:
 
 nameOverride: ""
 fullnameOverride: ""
+
+forwarding:
+  preserveDefault: true
+  fluentd:
+    port: 24224
+    sharedkey: splunkforwarding
+    passphrase: ""
+    ssl: true
+    caFile: files/default-openshift-logging-fluentd.crt
+    keyFile: files/default-openshift-logging-fluentd.key
+    loglevel: warn
+    replicas: 2
+    persistence:
+      enabled: false
+      size: 10Gi
+      ## If defined, storageClassName: <storageClass>
+      ## If set to "-", storageClassName: "", which disables dynamic provisioning
+      ## If undefined (the default) or set to null, no storageClassName spec is
+      ##   set, choosing the default provisioner.  (gp2 on AWS, standard on
+      ##   GKE, AWS & OpenStack)
+      ##
+      # storageClass: "-"
+      storageClass: ""
+      accessMode: ReadWriteOnce
+    image: registry.redhat.io/openshift4/ose-logging-fluentd:v4.4
+    nodeSelector: {}
+    tolerations: []
+    affinity: {}
+    resources:
+      requests:
+        cpu: 100m
+        memory: 512Mi
+      limits:
+        cpu: 500m
+        memory: 1024Mi
+    updateStrategy:
+      type: "RollingUpdate"

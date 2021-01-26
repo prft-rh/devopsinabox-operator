@@ -1,0 +1,156 @@
+{{- $fullName := include "devops-in-a-box.fullname" . -}}
+{{- $splunkSecret := printf "%s-splunk" $fullName -}}
+{{- $logForwardingConfig := printf "%s-config" $fullName -}}
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: {{ $fullName }}
+  labels:
+    app.kubernetes.io/component: fluentd
+{{ include "devops-in-a-box.labels" . | indent 4 }}
+spec:
+  replicas: {{ .Values.forwarding.fluentd.replicas }}
+  serviceName: {{ $fullName }}-headless
+  updateStrategy:
+{{ toYaml .Values.forwarding.fluentd.updateStrategy | indent 4 }}
+  selector:
+    matchLabels:
+      app: {{ $fullName }}
+  template:
+    metadata:
+      labels:
+        app: {{ $fullName }}
+    spec:
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      containers:
+        - resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          terminationMessagePath: /dev/termination-log
+          name: {{ $fullName }}
+          env:
+            - name: NODE_NAME
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: spec.nodeName
+            - name: LOG_LEVEL
+              valueFrom:
+                configMapKeyRef:
+                  name: {{ $fullName }}
+                  key: fluentd-loglevel
+            - name: ELASTICSEARCH_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullName }}-es-elastic-user
+                  key: elastic
+            - name: SHARED_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullName }}
+                  key: shared_key
+            - name: FLUENTD_SSL_PASSPHRASE
+              valueFrom:
+                secretKeyRef:
+                  name: {{ $fullName }}
+                  key: fluentd-ssl-passsphrase
+          imagePullPolicy: Always
+          volumeMounts:
+            - name: {{ $logForwardingConfig }}
+              readOnly: true
+              mountPath: /etc/fluent/
+            - mountPath: /secret/fluentd
+              name: {{ $fullName }}
+              readOnly: true
+            - mountPath: /var/log/fluentd
+              name: buffer
+            - mountPath: /secret/elasticsearch
+              name: elasticsearch-certs
+              readOnly: true
+            - name: entrypoint
+              readOnly: true
+              mountPath: /opt/app-root/src/run.sh
+              subPath: run.sh
+          terminationMessagePolicy: File
+          image: {{ .Values.forwarding.fluentd.image }}
+          livenessProbe:
+            tcpSocket:
+              port: 24224
+            periodSeconds: 5
+            timeoutSeconds: 3
+            initialDelaySeconds: 10
+          readinessProbe:
+            tcpSocket:
+              port: 24224
+            periodSeconds: 3
+            timeoutSeconds: 2
+            initialDelaySeconds: 2
+          ports:
+            - containerPort: 24224
+              name: forwarder-tcp
+              protocol: TCP
+            - containerPort: 24224
+              name: forwarder-udp
+              protocol: UDP
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+    {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+    {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+    {{- end }}
+      volumes:
+        - name: entrypoint
+          configMap:
+            name: {{ $fullName }}
+            defaultMode: 420
+        - name: {{ $logForwardingConfig }}
+          configMap:
+            name: {{ $fullName }}
+            items:
+              - key: td-agent.conf
+                path: fluent.conf
+            defaultMode: 420
+            optional: true
+        - name: {{ $fullName }}
+          secret:
+            secretName: {{ $fullName }}
+            items:
+              - key: tls.crt
+                path: tls.crt
+              - key: tls.key
+                path: tls.key
+        {{- if not .Values.forwarding.fluentd.persistence.enabled }}
+        - name: buffer
+          emptyDir: {}
+        {{- end }}
+        - name: elasticsearch-certs
+          secret:
+            secretName: {{ $fullName }}-es-http-certs-public
+            items:
+              - key: ca.crt
+                path: elasticsearch-ca.crt
+      dnsPolicy: ClusterFirst
+  {{- if .Values.forwarding.fluentd.persistence.enabled }}
+  volumeClaimTemplates:
+  - metadata:
+      name: buffer
+    spec:
+      accessModes:
+      - {{ .Values.forwarding.fluentd.persistence.accessMode | quote }}
+      resources:
+        requests:
+          storage: {{ .Values.forwarding.fluentd.persistence.size }}
+      {{- if .Values.forwarding.fluentd.persistence.storageClass }}
+      {{- if (eq "-" .Values.forwarding.fluentd.persistence.storageClass) }}
+      storageClassName: ""
+      {{- else }}
+      storageClassName: "{{ .Values.forwarding.fluentd.persistence.storageClass }}"
+      {{- end }}
+      {{- end }}
+  {{- end }}
