@@ -1,0 +1,46 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: ClusterServiceVersion
+metadata:
+  annotations:
+    alm-examples: '[]'
+    capabilities: Basic Install
+  name: devopsinabox.v0.0.0
+  namespace: placeholder
+spec:
+  apiservicedefinitions: {}
+  customresourcedefinitions: {}
+  description: Perficient's DevSecOps Manager For Kubernetes Applications
+  displayName: Devops-in-a-box
+  icon:
+  - base64data: ""
+    mediatype: ""
+  install:
+    spec:
+      deployments: null
+    strategy: ""
+  installModes:
+  - supported: false
+    type: OwnNamespace
+  - supported: false
+    type: SingleNamespace
+  - supported: false
+    type: MultiNamespace
+  - supported: true
+    type: AllNamespaces
+  keywords:
+  - devops
+  - devsecops
+  - spring
+  - boot
+  - java
+  - gitops
+  - cicd
+  - argo
+  links:
+  - name: Devopsinabox
+    url: https://devopsinabox.domain
+  maturity: alpha
+  provider:
+    name: Perficient Inc
+    url: http://www.perficient.com
+  version: 0.0.0
