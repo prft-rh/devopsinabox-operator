@@ -211,18 +211,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - kibana.k8s.elastic.co
-          resources:
-          - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - logging.openshift.io
-          resources:
-          - logforwardings
-          verbs:
-          - '*'
-        - apiGroups:
           - route.openshift.io
           resources:
           - routes
@@ -264,6 +252,18 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - kibana.k8s.elastic.co
+          resources:
+          - kibanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - logging.openshift.io
+          resources:
+          - logforwardings
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -277,13 +277,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - tekton.dev
-          resources:
-          - pipelines
-          - tasks
-          verbs:
-          - '*'
         - apiGroups:
           - monitoring.coreos.com
           resources:
@@ -311,6 +304,13 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - tekton.dev
+          resources:
+          - pipelines
+          - tasks
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -324,13 +324,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - ""
-          resources:
-          - persistentvolumeclaims
-          - services
-          verbs:
-          - '*'
         - apiGroups:
           - apps.openshift.io
           resources:
@@ -347,6 +340,13 @@ spec:
           - route.openshift.io
           resources:
           - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - persistentvolumeclaims
+          - services
           verbs:
           - '*'
         - apiGroups:
