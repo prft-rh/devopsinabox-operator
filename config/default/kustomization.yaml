@@ -26,4 +26,4 @@ patchesStrategicMerge:
 - manager_auth_proxy_patch.yaml
 
 patches:
-  - path: ../patches/manager-memory.yaml
+  - path: manager-memory.yaml
