@@ -4,6 +4,12 @@ metadata:
   annotations:
     alm-examples: '[]'
     capabilities: Basic Install
+    categories: "Modernization & Migration,Developer Tools,Application Runtime"
+    description: "Perficient's DevSecOps Manager For Kubernetes Applications"
+    containerImage: "quay.io/mrethers/devopsinabox-operator:v0.0.1"
+    createdAt: "2021-01-27 12:00:00Z"
+    support: "Perficient"
+    repository: "https://github.com/prft-rh/devopsinabox-operator"
   name: devopsinabox.v0.0.0
   namespace: placeholder
 spec:
