@@ -278,6 +278,18 @@ spec:
           - update
           - watch
         - apiGroups:
+          - ""
+          resources:
+          - secrets
+          verbs:
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          verbs:
+          - '*'
+        - apiGroups:
           - tekton.dev
           resources:
           - pipelines
@@ -296,18 +308,6 @@ spec:
           resources:
           - triggerbindings
           - triggertemplates
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - secrets
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
           verbs:
           - '*'
         - apiGroups:
