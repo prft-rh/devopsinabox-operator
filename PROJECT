@@ -1,6 +1,6 @@
 domain: com.perficient
 layout: helm.sdk.operatorframework.io/v1
-projectName: test-devopsinabox
+projectName: devopsinabox
 resources:
 - group: apimc
   kind: DevSecOpsManager
