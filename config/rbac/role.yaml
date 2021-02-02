@@ -54,18 +54,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "kibana.k8s.elastic.co"
-  resources:
-  - "kibanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "logging.openshift.io"
-  resources:
-  - "logforwardings"
-- verbs:
-  - "*"
-  apiGroups:
   - "route.openshift.io"
   resources:
   - "routes"
@@ -104,6 +92,18 @@ rules:
   - "grafanadashboards"
   - "grafanadatasources"
   - "grafanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "kibana.k8s.elastic.co"
+  resources:
+  - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "logging.openshift.io"
+  resources:
+  - "logforwardings"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -122,13 +122,6 @@ rules:
   - patch
   - update
   - watch
-- verbs:
-  - "*"
-  apiGroups:
-  - "tekton.dev"
-  resources:
-  - "pipelines"
-  - "tasks"
 - verbs:
   - "*"
   apiGroups:
@@ -155,6 +148,13 @@ rules:
   - "argoproj.io"
   resources:
   - "applications"
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -176,13 +176,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - ""
-  resources:
-  - "persistentvolumeclaims"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
@@ -198,5 +191,12 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "persistentvolumeclaims"
+  - "services"
 
 # +kubebuilder:scaffold:rules
