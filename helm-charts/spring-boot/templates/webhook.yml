@@ -17,5 +17,7 @@ spec:
             value: {{ .Values.docker.repo }}
           - name: config-repo
             value: {{ .Values.config.repo }}
+          - name: workspace
+            value: workspace-{{ include "spring-boot.fullname" . }}
     template:
       name: devopsinabox

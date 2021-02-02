@@ -48,10 +48,23 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "clusterrolebindings"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
   - "configmaps"
   - "secrets"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
 - verbs:
   - "*"
   apiGroups:
@@ -62,29 +75,17 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "elasticsearch.k8s.elastic.co"
+  resources:
+  - "elasticsearches"
+- verbs:
+  - "*"
+  apiGroups:
   - "integreatly.org"
   resources:
   - "grafanadashboards"
   - "grafanadatasources"
   - "grafanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "operators.coreos.com"
-  resources:
-  - "subscriptions"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "elasticsearch.k8s.elastic.co"
-  resources:
-  - "elasticsearches"
 - verbs:
   - "*"
   apiGroups:
@@ -103,7 +104,7 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
-  
+
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
 ##
@@ -175,8 +176,15 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
+  - "persistentvolumeclaims"
   - "services"
 - verbs:
   - "*"
@@ -190,11 +198,5 @@ rules:
   - "triggers.tekton.dev"
   resources:
   - "eventlisteners"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
 
 # +kubebuilder:scaffold:rules

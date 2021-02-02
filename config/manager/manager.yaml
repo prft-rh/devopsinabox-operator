@@ -26,7 +26,7 @@ spec:
       - image: controller:latest
         args:
         - "--enable-leader-election"
-        - "--leader-election-id=devopsinabox"
+        - "--leader-election-id=test-devopsinabox"
         name: manager
         resources:
           limits:
@@ -34,5 +34,5 @@ spec:
             memory: 90Mi
           requests:
             cpu: 100m
-            memory: 90Mi
+            memory: 60Mi
       terminationGracePeriodSeconds: 10

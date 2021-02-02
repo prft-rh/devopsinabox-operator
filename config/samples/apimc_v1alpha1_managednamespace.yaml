@@ -5,6 +5,7 @@ metadata:
 spec:
   # Default values copied from <project_dir>/helm-charts/devops-in-a-box-namespace/values.yaml
   config:
+    repoBranch: master
     repoPath: ""
     repoUrl: ""
   docker:
@@ -17,6 +18,8 @@ spec:
     server: https://gitlab.com
     token: ""
     username: ""
+  manager:
+    namespace: ""
   nameOverride: ""
   
   

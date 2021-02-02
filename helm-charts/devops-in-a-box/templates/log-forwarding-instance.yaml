@@ -3,7 +3,7 @@
 apiVersion: logging.openshift.io/v1
 kind: ClusterLogForwarder
 metadata:
-  name: instance
+  name: {{ $fullName }}
   namespace: openshift-logging
   labels:
     app.kubernetes.io/component: cluster-logging

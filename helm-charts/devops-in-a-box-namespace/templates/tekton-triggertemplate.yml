@@ -40,10 +40,6 @@ spec:
       timeout: 1h0m0s
       workspaces:
         - name: workspace
-          volumeClaimTemplate:
-            spec:
-              accessModes:
-              - ReadWriteOnce
-              resources:
-                requests:
-                  storage: 1Gi
+          persistentVolumeClaim:
+            claimName: $(tt.params.workspace)
+            subPath: $(tt.params.app-name)

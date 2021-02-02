@@ -13,6 +13,7 @@ spec:
     repo: ""
   docker:
     image: ""
+    repo: ""
   fullnameOverride: ""
   git:
     branch: master

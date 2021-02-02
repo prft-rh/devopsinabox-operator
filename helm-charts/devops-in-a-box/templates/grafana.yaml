@@ -3,6 +3,10 @@ kind: Grafana
 metadata:
   name: {{ include "devops-in-a-box.fullname" . }}
 spec:
+  deployment:
+    envFrom:
+    - secretRef:
+        name: {{ include "devops-in-a-box.fullname" . }}-grafana-token
   config:
     auth:
       disable_signout_menu: true
