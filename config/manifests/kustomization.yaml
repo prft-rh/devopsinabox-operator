@@ -2,6 +2,3 @@ resources:
 - ../default
 - ../samples
 - ../scorecard
-
-patches:
-  - path: csv-patch.yaml
