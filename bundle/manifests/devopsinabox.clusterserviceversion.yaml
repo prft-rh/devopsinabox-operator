@@ -148,7 +148,7 @@ metadata:
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Perficient
-  name: devopsinabox.v0.0.32
+  name: devopsinabox.v0.0.33
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -211,13 +211,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          - argocds
-          verbs:
-          - '*'
-        - apiGroups:
           - elasticsearch.k8s.elastic.co
           resources:
           - elasticsearches
@@ -264,6 +257,13 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          - argocds
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -277,6 +277,12 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          verbs:
+          - '*'
         - apiGroups:
           - argoproj.io
           resources:
@@ -302,12 +308,6 @@ spec:
           resources:
           - triggerbindings
           - triggertemplates
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - secrets
           verbs:
           - '*'
         - apiGroups:
@@ -380,7 +380,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.32
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.33
                 name: manager
                 resources:
                   limits:
@@ -449,4 +449,4 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  version: 0.0.32
+  version: 0.0.33
