@@ -141,14 +141,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.1
-    createdAt: 2021-01-27 12:00:00Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.30
+    createdAt: 2021-02-09 16:00:00Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.3.0
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Perficient
-  name: devopsinabox.v0.0.30
+  name: devopsinabox.v0.0.31
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -380,7 +380,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.30
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.31
                 name: manager
                 resources:
                   limits:
@@ -449,4 +449,4 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  version: 0.0.30
+  version: 0.0.31
