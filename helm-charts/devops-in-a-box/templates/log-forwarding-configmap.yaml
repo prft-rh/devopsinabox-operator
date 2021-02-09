@@ -35,7 +35,7 @@ data:
       @type rewrite_tag_filter
       <rule>
         key $.kubernetes.flat_labels
-        pattern /perficient.com\/runtime=spring-boot/
+        pattern /perficient_com\/runtime=spring-boot/
         tag spring-boot
       </rule>
     </match>
