@@ -148,7 +148,7 @@ metadata:
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Perficient
-  name: devopsinabox.v0.0.31
+  name: devopsinabox.v0.0.32
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -211,12 +211,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
           - argoproj.io
           resources:
           - applications
@@ -261,6 +255,12 @@ spec:
           - configmaps
           - secrets
           - services
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - statefulsets
           verbs:
           - '*'
         - apiGroups:
@@ -380,7 +380,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.31
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.32
                 name: manager
                 resources:
                   limits:
@@ -449,4 +449,4 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  version: 0.0.31
+  version: 0.0.32
