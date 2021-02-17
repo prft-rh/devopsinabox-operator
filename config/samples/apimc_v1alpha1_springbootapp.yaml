@@ -31,5 +31,9 @@ spec:
     port: 8080
   serviceAccount:
     annotations: {}
+  version:
+    branch: v2
+    image: ""
+    name: v2
   
   

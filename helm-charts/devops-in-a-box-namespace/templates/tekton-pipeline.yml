@@ -28,6 +28,9 @@ spec:
     - default: prod
       name: PROD_CONFIG_BRANCH
       type: string
+    - default: "spec.docker.image"
+      name: IMAGE_FIELD_NAME
+      type: string
   tasks:
     - name: fetch-repository
       params:
@@ -74,7 +77,7 @@ spec:
         - name: source-repo
           value: $(params.CONFIG_REPO)
         - name: update-key
-          value: spec.docker.image
+          value: $(IMAGE_FIELD_NAME)
         - name: insecure
           value: 'true'
         - name: branch-generate-name
@@ -99,7 +102,7 @@ spec:
         - name: source-repo
           value: $(params.CONFIG_REPO)
         - name: update-key
-          value: spec.docker.image
+          value: $(IMAGE_FIELD_NAME)
         - name: insecure
           value: 'true'
         - name: branch-generate-name

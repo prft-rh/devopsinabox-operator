@@ -17,6 +17,8 @@ spec:
     description: The git repo with the kube configs
   - name: workspace
     description: The name of the PVC used as pipeline workspace
+  - name: image-field-name
+    description: The name of the field holding the container image name in the CRD
   resourcetemplates:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
@@ -36,6 +38,8 @@ spec:
           value: $(tt.params.image-repo)
         - name: CONFIG_REPO
           value: $(tt.params.config-repo)
+        - name: IMAGE_FIELD_NAME
+          value: $(tt.params.image-field-name)
       pipelineRef:
         name: {{ include "devops-in-a-box-namespace.fullname" . }}
       serviceAccountName: pipeline
