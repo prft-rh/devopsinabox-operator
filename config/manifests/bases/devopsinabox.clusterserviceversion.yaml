@@ -49,5 +49,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.vdevopsinabox.v0.0.35
+  replaces: devopsinabox.v0.0.35
   version: 0.0.0
