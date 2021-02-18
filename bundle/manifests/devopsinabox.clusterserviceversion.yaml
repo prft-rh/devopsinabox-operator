@@ -153,7 +153,7 @@ metadata:
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Perficient
-  name: devopsinabox.v0.0.35
+  name: devopsinabox.v0.0.36
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -210,39 +210,64 @@ spec:
           - update
           - watch
         - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - clusterrolebindings
+          verbs:
+          - '*'
+        - apiGroups:
+          - elasticsearch.k8s.elastic.co
+          resources:
+          - elasticsearches
+          verbs:
+          - '*'
+        - apiGroups:
+          - integreatly.org
+          resources:
+          - grafanadashboards
+          - grafanadatasources
+          - grafanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - kibana.k8s.elastic.co
+          resources:
+          - kibanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - logging.openshift.io
+          resources:
+          - logforwardings
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
           - ""
           resources:
-          - pods
-          - services
-          - services/finalizers
-          - endpoints
-          - persistentvolumeclaims
-          - events
           - configmaps
           - secrets
+          - services
           verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
+          - '*'
         - apiGroups:
           - apps
           resources:
-          - deployments
-          - daemonsets
-          - replicasets
           - statefulsets
           verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          - argocds
+          verbs:
+          - '*'
         - apiGroups:
           - apimc.com.perficient
           resources:
@@ -258,39 +283,38 @@ spec:
           - update
           - watch
         - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          verbs:
+          - '*'
+        - apiGroups:
+          - tekton.dev
+          resources:
+          - pipelines
+          - tasks
+          verbs:
+          - '*'
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - prometheusrules
+          - servicemonitors
+          verbs:
+          - '*'
+        - apiGroups:
+          - triggers.tekton.dev
+          resources:
+          - triggerbindings
+          - triggertemplates
+          verbs:
+          - '*'
+        - apiGroups:
           - ""
           resources:
-          - pods
-          - services
-          - services/finalizers
-          - endpoints
-          - persistentvolumeclaims
-          - events
-          - configmaps
           - secrets
           verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
-        - apiGroups:
-          - apps
-          resources:
-          - deployments
-          - daemonsets
-          - replicasets
-          - statefulsets
-          verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
+          - '*'
         - apiGroups:
           - apimc.com.perficient
           resources:
@@ -306,39 +330,30 @@ spec:
           - update
           - watch
         - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
           - ""
           resources:
-          - pods
-          - services
-          - services/finalizers
-          - endpoints
           - persistentvolumeclaims
-          - events
-          - configmaps
-          - secrets
+          - services
           verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
+          - '*'
         - apiGroups:
-          - apps
+          - apps.openshift.io
           resources:
-          - deployments
-          - daemonsets
-          - replicasets
-          - statefulsets
+          - deploymentconfigs
           verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
+          - '*'
+        - apiGroups:
+          - triggers.tekton.dev
+          resources:
+          - eventlisteners
+          verbs:
+          - '*'
         - apiGroups:
           - authentication.k8s.io
           resources:
@@ -370,7 +385,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.35
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.36
                 name: manager
                 resources:
                   limits:
@@ -439,5 +454,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.33
-  version: 0.0.35
+  replaces: devopsinabox.vdevopsinabox.v0.0.35
+  version: 0.0.36
