@@ -12,7 +12,7 @@ spec:
   config:
     repo: ""
   docker:
-    image: ""
+    image: placeholder
     repo: ""
   fullnameOverride: ""
   git:
@@ -33,7 +33,7 @@ spec:
     annotations: {}
   version:
     branch: ""
-    image: ""
+    image: placeholder
     name: ""
   
   

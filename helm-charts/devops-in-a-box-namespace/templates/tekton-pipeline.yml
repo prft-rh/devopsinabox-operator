@@ -77,7 +77,7 @@ spec:
         - name: source-repo
           value: $(params.CONFIG_REPO)
         - name: update-key
-          value: $(IMAGE_FIELD_NAME)
+          value: $(params.IMAGE_FIELD_NAME)
         - name: insecure
           value: 'true'
         - name: branch-generate-name
@@ -102,7 +102,7 @@ spec:
         - name: source-repo
           value: $(params.CONFIG_REPO)
         - name: update-key
-          value: $(IMAGE_FIELD_NAME)
+          value: $(params.IMAGE_FIELD_NAME)
         - name: insecure
           value: 'true'
         - name: branch-generate-name

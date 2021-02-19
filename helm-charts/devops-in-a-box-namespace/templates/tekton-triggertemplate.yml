@@ -48,4 +48,3 @@ spec:
         - name: workspace
           persistentVolumeClaim:
             claimName: $(tt.params.workspace)
-            subPath: $(tt.params.app-name)
