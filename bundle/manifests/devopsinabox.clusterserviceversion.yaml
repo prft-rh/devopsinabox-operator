@@ -153,7 +153,7 @@ metadata:
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Perficient
-  name: devopsinabox.v0.0.37
+  name: devopsinabox.v0.0.38
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -216,12 +216,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
           - argoproj.io
           resources:
           - applications
@@ -266,6 +260,12 @@ spec:
           - configmaps
           - secrets
           - services
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - statefulsets
           verbs:
           - '*'
         - apiGroups:
@@ -330,6 +330,18 @@ spec:
           - update
           - watch
         - apiGroups:
+          - triggers.tekton.dev
+          resources:
+          - eventlisteners
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
           - ""
           resources:
           - persistentvolumeclaims
@@ -340,18 +352,6 @@ spec:
           - apps.openshift.io
           resources:
           - deploymentconfigs
-          verbs:
-          - '*'
-        - apiGroups:
-          - triggers.tekton.dev
-          resources:
-          - eventlisteners
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -385,7 +385,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.37
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.38
                 name: manager
                 resources:
                   limits:
@@ -454,5 +454,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.36
-  version: 0.0.37
+  replaces: devopsinabox.v0.0.37
+  version: 0.0.38
