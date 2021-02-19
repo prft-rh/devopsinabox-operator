@@ -137,9 +137,9 @@ metadata:
               "annotations": {}
             },
             "version": {
-              "branch": "v2",
+              "branch": "",
               "image": "",
-              "name": "v2"
+              "name": ""
             }
           }
         }
@@ -153,7 +153,7 @@ metadata:
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Perficient
-  name: devopsinabox.v0.0.36
+  name: devopsinabox.v0.0.37
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -216,20 +216,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - elasticsearch.k8s.elastic.co
-          resources:
-          - elasticsearches
-          verbs:
-          - '*'
-        - apiGroups:
-          - integreatly.org
-          resources:
-          - grafanadashboards
-          - grafanadatasources
-          - grafanas
-          verbs:
-          - '*'
-        - apiGroups:
           - kibana.k8s.elastic.co
           resources:
           - kibanas
@@ -269,6 +255,20 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - elasticsearch.k8s.elastic.co
+          resources:
+          - elasticsearches
+          verbs:
+          - '*'
+        - apiGroups:
+          - integreatly.org
+          resources:
+          - grafanadashboards
+          - grafanadatasources
+          - grafanas
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -282,6 +282,12 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          verbs:
+          - '*'
         - apiGroups:
           - argoproj.io
           resources:
@@ -310,12 +316,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - ""
-          resources:
-          - secrets
-          verbs:
-          - '*'
-        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -329,12 +329,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
         - apiGroups:
           - ""
           resources:
@@ -352,6 +346,12 @@ spec:
           - triggers.tekton.dev
           resources:
           - eventlisteners
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -385,7 +385,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.36
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.37
                 name: manager
                 resources:
                   limits:
@@ -454,5 +454,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.35
-  version: 0.0.36
+  replaces: devopsinabox.v0.0.36
+  version: 0.0.37

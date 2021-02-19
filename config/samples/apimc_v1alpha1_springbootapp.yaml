@@ -32,8 +32,8 @@ spec:
   serviceAccount:
     annotations: {}
   version:
-    branch: v2
+    branch: ""
     image: ""
-    name: v2
+    name: ""
   
   
