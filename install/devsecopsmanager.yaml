@@ -1,0 +1,46 @@
+apiVersion: apimc.com.perficient/v1alpha1
+kind: DevSecOpsManager
+metadata:
+  name: devsecopsmanager
+  namespace: perficient-operators
+  finalizers:
+    - uninstall-helm-release
+spec:
+  config:
+    repoPath: .
+    repoUrl: 'https://github.com/prft-rh/managed-cluster.git'
+  forwarding:
+    fluentd:
+      loglevel: warn
+      nodeSelector: {}
+      port: 24224
+      resources:
+        limits:
+          cpu: 500m
+          memory: 1024Mi
+        requests:
+          cpu: 100m
+          memory: 512Mi
+      affinity: {}
+      passphrase: ''
+      ssl: true
+      caFile: files/default-openshift-logging-fluentd.crt
+      sharedkey: splunkforwarding
+      keyFile: files/default-openshift-logging-fluentd.key
+      image: 'registry.redhat.io/openshift4/ose-logging-fluentd:v4.4'
+      replicas: 2
+      tolerations: []
+      updateStrategy:
+        type: RollingUpdate
+      persistence:
+        accessMode: ReadWriteOnce
+        enabled: false
+        size: 10Gi
+        storageClass: ''
+    preserveDefault: true
+  fullnameOverride: ''
+  git:
+    password: '*****'
+    server: 'https://github.com'
+    username: mrethers
+  nameOverride: ''
