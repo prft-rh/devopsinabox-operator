@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: CatalogSource
+metadata:
+  name: my-test-operators
+spec:
+  displayName: Test Operators
+  image: quay.io/mrethers/operators-catalog:latest
+  publisher: Perficient
+  sourceType: grpc
+  updateStrategy:
+    registryPoll:
+      interval: 5m
