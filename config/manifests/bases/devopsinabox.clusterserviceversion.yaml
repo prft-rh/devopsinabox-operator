@@ -9,7 +9,7 @@ metadata:
     createdAt: 2021-02-09 16:00:00Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     repository: https://github.com/prft-rh/devopsinabox-operator
-    support: Perficient
+    support: Matthieu Rethers
   name: devopsinabox.v0.0.0
   namespace: placeholder
 spec:
@@ -43,7 +43,7 @@ spec:
   - cicd
   - argo
   links:
-  - name: Devopsinabox
+  - name: Devops-in-a-box
     url: https://devopsinabox.domain
   maturity: alpha
   provider:

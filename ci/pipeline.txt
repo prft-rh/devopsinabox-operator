@@ -1,0 +1,67 @@
+#to generate from Helm:
+
+# clone the helm charts
+git clone git@github.com:prft-rh/spring-boot-app-helm-chart.git
+git clone git@github.com:prft-rh/devopsinabox-helm-chart.git
+git clone git@github.com:prft-rh/devopsinabox-namespace-helm-chart.git
+
+# clone the operator itself
+git clone git@github.com:prft-rh/devopsinabox-operator.git	
+
+# generate the new operator files
+mkdir devopsinabox
+cd devopsinabox
+operator-sdk init --plugins=helm --domain=com.perficient --group=apimc --version=v1alpha1 --kind=DevSecOpsManager --helm-chart=../devopsinabox-helm-chart
+operator-sdk create api --group=apimc --version=v1alpha1 --kind=ManagedNamespace --helm-chart=../devopsinabox-namespace-helm-chart
+operator-sdk create api --group=apimc --version=v1alpha1 --kind=SpringBootApp --helm-chart=../spring-boot-app-helm-chart
+
+# copy the file to the operator repo
+cp -R . ../devopsinabox-operator
+cd ../devopsinabox-operator
+
+# add manager patch (memory) as it gets overrided by the above copy
+cat <<EOF >> config/default/kustomization.yaml
+patches:   
+  - path: manager-memory.yaml
+EOF
+
+# update operator controller image
+export VERSION=0.0.41
+export REPLACES=0.0.40 # the NAME of the CSV
+export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
+
+# generate bundle
+# version refers to the CSV version
+export BUNDLE_IMG=quay.io/mrethers/devopsinabox-operator-bundle:v$VERSION
+
+# inject "replaces" field with previous version
+sed -i 's/replaces:.*$/replaces: devopsinabox.v'"$REPLACES"'/g' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+
+# replaces image name in CSV annotation for OperatorHub
+sed -i 's/containerImage:.*$/containerImage: '"$IMG"'/g' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+
+# replaces image name in CSV annotation for OperatorHub
+sed -i 's/createdAt:.*$/createdAt: $(date + "%Y-%m-%d %H:%M:%SZ")/g' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+
+# TODO set the replaces field in the CSV base
+make bundle
+
+# create a branch with the changes
+
+git status
+
+## publish (after branch merge)
+
+# build and push operator image
+make docker-build docker-push
+# build and push bundle image
+make bundle-build
+docker push $BUNDLE_IMG
+
+# update catalog
+export CATALOG_IMAGE=quay.io/mrethers/operators-catalog
+export CATALOG_VERSION=v1.0.15
+opm index add --bundles $BUNDLE_IMG --from-index $CATALOG_IMAGE:latest --tag $CATALOG_IMAGE:$CATALOG_VERSION --build-tool docker --pull-tool docker
+docker tag $CATALOG_IMAGE:$CATALOG_VERSION $CATALOG_IMAGE:latest
+docker push $CATALOG_IMAGE:$CATALOG_VERSION
+docker push $CATALOG_IMAGE:latest
