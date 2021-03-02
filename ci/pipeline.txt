@@ -26,8 +26,8 @@ patches:
 EOF
 
 # update operator controller image
-export VERSION=0.0.41
-export REPLACES=0.0.40 # the NAME of the CSV
+export VERSION=0.0.45
+export REPLACES=0.0.44 # the NAME of the CSV
 export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 
 # generate bundle
@@ -35,22 +35,27 @@ export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 export BUNDLE_IMG=quay.io/mrethers/devopsinabox-operator-bundle:v$VERSION
 
 # inject "replaces" field with previous version
-sed -i 's/replaces:.*$/replaces: devopsinabox.v'"$REPLACES"'/g' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+sed -i "s/replaces:.*$/replaces: devopsinabox.v$REPLACES/g" config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+
+# replaces image name in CSV annotation for OperatorHub (IMG contains forward slashes so needs to be escaped
+# https://stackoverflow.com/questions/584894/environment-variable-substitution-in-sed
+sed -i 's@containerImage:.*$@containerImage: '"$IMG"'@g' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
 
 # replaces image name in CSV annotation for OperatorHub
-sed -i 's/containerImage:.*$/containerImage: '"$IMG"'/g' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+sed -i "s/createdAt:.*$/createdAt: $(date +'%Y-%m-%d %H:%M:%SZ')/g" config/manifests/bases/devopsinabox.clusterserviceversion.yaml
 
-# replaces image name in CSV annotation for OperatorHub
-sed -i 's/createdAt:.*$/createdAt: $(date + "%Y-%m-%d %H:%M:%SZ")/g' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+# FIX for WSL2 windows paths with whitespaces
+sed -i 's/env PATH=$(PATH)/env PATH="\\"$(PATH)\\""/g' Makefile
 
 # TODO set the replaces field in the CSV base
 make bundle
 
-# create a branch with the changes
+## commit changes
+git diff
+git commit -am "Upgrading helm charts"
+git push
 
-git status
-
-## publish (after branch merge)
+## publish
 
 # build and push operator image
 make docker-build docker-push
@@ -60,7 +65,7 @@ docker push $BUNDLE_IMG
 
 # update catalog
 export CATALOG_IMAGE=quay.io/mrethers/operators-catalog
-export CATALOG_VERSION=v1.0.15
+export CATALOG_VERSION=v1.0.19
 opm index add --bundles $BUNDLE_IMG --from-index $CATALOG_IMAGE:latest --tag $CATALOG_IMAGE:$CATALOG_VERSION --build-tool docker --pull-tool docker
 docker tag $CATALOG_IMAGE:$CATALOG_VERSION $CATALOG_IMAGE:latest
 docker push $CATALOG_IMAGE:$CATALOG_VERSION
