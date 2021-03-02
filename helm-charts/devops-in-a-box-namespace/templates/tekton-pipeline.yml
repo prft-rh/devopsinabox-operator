@@ -54,6 +54,10 @@ spec:
           value: '$(params.IMAGE_REPO):$(params.GIT_REVISION)'
         - name: TLSVERIFY
           value: 'false'
+        {{- if .Values.mirrors.maven }}
+        - name: MAVEN_MIRROR_URL
+          value: {{ .Values.mirrors.maven }}
+        {{- end }}
       runAfter:
         - fetch-repository
       taskRef:
