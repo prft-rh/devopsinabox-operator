@@ -48,7 +48,7 @@ sed -i "s/createdAt:.*$/createdAt: $(date +'%Y-%m-%d %H:%M:%SZ')/g" config/manif
 sed -i 's/env PATH=$(PATH)/env PATH="\\"$(PATH)\\""/g' Makefile
 
 # TODO set the replaces field in the CSV base
-make bundle
+make bundle DEFAULT_CHANNEL=alpha
 
 ## commit changes
 git diff
