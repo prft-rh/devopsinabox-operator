@@ -8,27 +8,31 @@ spec:
     - default: 'myApp'
       name: APP_NAME
       type: string
-    # repo with app source code
+    # git repo with app source code
     - default: 'https://github.com/myorg/myrepo'
       name: APP_REPO
       type: string
-    # docker registry repo
+    # container repo
     - default: 'quay.io/myorg/myrepo'
       name: IMAGE_REPO
       type: string
+    # namespace git repo for gitops
     - default: 'myorg/mykubeconfigrepo'
       name: CONFIG_REPO
       type: string
+    # namespace git repo branch for gitops - staging env
     - default: master
       name: GIT_REVISION
       type: string
+    # namespace git repo branch for gitops - prod env
     - default: master
       name: STAGE_CONFIG_BRANCH
       type: string
     - default: prod
       name: PROD_CONFIG_BRANCH
       type: string
-    - default: "spec.docker.image"
+    # the name of the field holding the container image in the CRD (Spring Boot/NodeJS/etc)
+    - default: "spec.container.image"
       name: IMAGE_FIELD_NAME
       type: string
   tasks:

@@ -12,7 +12,7 @@ spec:
   - name: app-name
     description: The name of the deployment to be created / patched
   - name: image-repo
-    description: The docker image repo
+    description: The container image repo
   - name: config-repo
     description: The git repo with the kube configs
   - name: workspace

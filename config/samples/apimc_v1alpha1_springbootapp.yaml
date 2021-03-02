@@ -11,9 +11,9 @@ spec:
     targetCPUUtilizationPercentage: 80
   config:
     repo: ""
-  docker:
+  container:
     image: placeholder
-    repo: ""
+    registry: ""
   fullnameOverride: ""
   git:
     branch: master

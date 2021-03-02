@@ -8,8 +8,8 @@ git:
   password: ""
   server: "https://gitlab.com"
   
-docker:
-  server: "https://quay.io"
+container:
+  registry: "https://quay.io"
   username: ""
   password: ""
 

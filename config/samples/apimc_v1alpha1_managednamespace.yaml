@@ -8,9 +8,9 @@ spec:
     repoBranch: master
     repoPath: ""
     repoUrl: ""
-  docker:
+  container:
     password: ""
-    server: https://quay.io
+    registry: https://quay.io
     username: ""
   fullnameOverride: ""
   git:
