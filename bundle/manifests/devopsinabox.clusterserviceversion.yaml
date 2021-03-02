@@ -150,7 +150,7 @@ metadata:
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
     containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.44
-    createdAt: 2021-03-02 14:57:30Z
+    createdAt: 2021-03-02 15:09:06Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
@@ -219,12 +219,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - kibana.k8s.elastic.co
-          resources:
-          - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
           - logging.openshift.io
           resources:
           - logforwardings
@@ -272,6 +266,12 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - kibana.k8s.elastic.co
+          resources:
+          - kibanas
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -285,19 +285,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          verbs:
-          - '*'
-        - apiGroups:
-          - tekton.dev
-          resources:
-          - pipelines
-          - tasks
-          verbs:
-          - '*'
         - apiGroups:
           - monitoring.coreos.com
           resources:
@@ -319,6 +306,19 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          verbs:
+          - '*'
+        - apiGroups:
+          - tekton.dev
+          resources:
+          - pipelines
+          - tasks
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -332,6 +332,12 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
         - apiGroups:
           - ""
           resources:
@@ -349,12 +355,6 @@ spec:
           - triggers.tekton.dev
           resources:
           - eventlisteners
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
           verbs:
           - '*'
         - apiGroups:
