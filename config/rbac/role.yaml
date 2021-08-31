@@ -54,20 +54,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - ""
-  resources:
-  - "configmaps"
-  - "secrets"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
   - "argoproj.io"
   resources:
   - "applications"
@@ -98,6 +84,20 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "configmaps"
+  - "secrets"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -119,19 +119,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-- verbs:
-  - "*"
-  apiGroups:
-  - "tekton.dev"
-  resources:
-  - "pipelines"
-  - "tasks"
-- verbs:
-  - "*"
-  apiGroups:
   - "monitoring.coreos.com"
   resources:
   - "prometheusrules"
@@ -149,6 +136,19 @@ rules:
   - ""
   resources:
   - "secrets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -170,6 +170,13 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - ""
+  resources:
+  - "persistentvolumeclaims"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
@@ -185,12 +192,5 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "persistentvolumeclaims"
-  - "services"
 
 # +kubebuilder:scaffold:rules
