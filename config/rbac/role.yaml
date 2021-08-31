@@ -54,6 +54,26 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "integreatly.org"
+  resources:
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "kibana.k8s.elastic.co"
+  resources:
+  - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
   - "configmaps"
@@ -78,26 +98,6 @@ rules:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
-- verbs:
-  - "*"
-  apiGroups:
-  - "integreatly.org"
-  resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "kibana.k8s.elastic.co"
-  resources:
-  - "kibanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -119,6 +119,20 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "monitoring.coreos.com"
+  resources:
+  - "prometheusrules"
+  - "servicemonitors"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "triggerbindings"
+  - "triggertemplates"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
   - "secrets"
@@ -135,20 +149,6 @@ rules:
   resources:
   - "pipelines"
   - "tasks"
-- verbs:
-  - "*"
-  apiGroups:
-  - "monitoring.coreos.com"
-  resources:
-  - "prometheusrules"
-  - "servicemonitors"
-- verbs:
-  - "*"
-  apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "triggerbindings"
-  - "triggertemplates"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
