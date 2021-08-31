@@ -119,12 +119,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - ""
-  resources:
-  - "secrets"
-- verbs:
-  - "*"
-  apiGroups:
   - "argoproj.io"
   resources:
   - "applications"
@@ -149,6 +143,12 @@ rules:
   resources:
   - "triggerbindings"
   - "triggertemplates"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "secrets"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -170,6 +170,18 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "apps.openshift.io"
+  resources:
+  - "deploymentconfigs"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "eventlisteners"
+- verbs:
+  - "*"
+  apiGroups:
   - "route.openshift.io"
   resources:
   - "routes"
@@ -180,17 +192,5 @@ rules:
   resources:
   - "persistentvolumeclaims"
   - "services"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps.openshift.io"
-  resources:
-  - "deploymentconfigs"
-- verbs:
-  - "*"
-  apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "eventlisteners"
 
 # +kubebuilder:scaffold:rules

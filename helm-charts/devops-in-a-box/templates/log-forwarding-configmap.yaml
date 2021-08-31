@@ -20,6 +20,7 @@ data:
       port  24224
 {{ if .Values.forwarding.fluentd.ssl }}
       <transport tls>
+        ca_path /secret/fluentd/ca-bundle.crt
         cert_path /secret/fluentd/tls.crt
         private_key_path /secret/fluentd/tls.key
         private_key_passphrase "#{ENV['FLUENTD_SSL_PASSPHRASE'] }"
@@ -34,8 +35,8 @@ data:
     <match kubernetes.**>
       @type rewrite_tag_filter
       <rule>
-        key $.kubernetes.flat_labels
-        pattern /perficient_com\/runtime=spring-boot/
+        key $['kubernetes']['labels']['perficient_com/runtime']
+        pattern /spring-boot/
         tag spring-boot
       </rule>
     </match>
