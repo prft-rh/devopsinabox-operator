@@ -23,7 +23,7 @@ spec:
     - name: image-field-name
       value: "spec.container.image"
     template:
-      name: devopsinabox
+      ref: devopsinabox
   {{- if .Values.version.name }}
   {{- $top := . }}
   - interceptors:
