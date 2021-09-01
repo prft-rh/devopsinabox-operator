@@ -54,6 +54,19 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
+  - "roles"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
   - "argoproj.io"
   resources:
   - "applications"
@@ -92,12 +105,6 @@ rules:
   - "configmaps"
   - "secrets"
   - "services"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -119,6 +126,19 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
+- verbs:
+  - "*"
+  apiGroups:
   - "monitoring.coreos.com"
   resources:
   - "prometheusrules"
@@ -136,19 +156,6 @@ rules:
   - ""
   resources:
   - "secrets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-- verbs:
-  - "*"
-  apiGroups:
-  - "tekton.dev"
-  resources:
-  - "pipelines"
-  - "tasks"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp

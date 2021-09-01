@@ -149,14 +149,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.52
-    createdAt: 2021-08-31 19:23:16Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.53
+    createdAt: 2021-09-01 12:19:31Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.52
+  name: devopsinabox.v0.0.53
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -219,6 +219,19 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - rolebindings
+          - roles
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
           - argoproj.io
           resources:
           - applications
@@ -260,12 +273,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -279,6 +286,19 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          verbs:
+          - '*'
+        - apiGroups:
+          - tekton.dev
+          resources:
+          - pipelines
+          - tasks
+          verbs:
+          - '*'
         - apiGroups:
           - monitoring.coreos.com
           resources:
@@ -297,19 +317,6 @@ spec:
           - ""
           resources:
           - secrets
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          verbs:
-          - '*'
-        - apiGroups:
-          - tekton.dev
-          resources:
-          - pipelines
-          - tasks
           verbs:
           - '*'
         - apiGroups:
@@ -382,7 +389,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.52
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.53
                 livenessProbe:
                   httpGet:
                     path: /readyz
@@ -466,5 +473,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.51
-  version: 0.0.52
+  replaces: devopsinabox.v0.0.52
+  version: 0.0.53
