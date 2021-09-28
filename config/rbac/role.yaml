@@ -54,33 +54,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
-- verbs:
-  - "*"
-  apiGroups:
-  - "elasticsearch.k8s.elastic.co"
-  resources:
-  - "elasticsearches"
-- verbs:
-  - "*"
-  apiGroups:
-  - "integreatly.org"
-  resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
-- verbs:
-  - "*"
-  apiGroups:
   - "kibana.k8s.elastic.co"
   resources:
   - "kibanas"
@@ -105,6 +78,33 @@ rules:
   resources:
   - "rolebindings"
   - "roles"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  - "argocds"
+- verbs:
+  - "*"
+  apiGroups:
+  - "elasticsearch.k8s.elastic.co"
+  resources:
+  - "elasticsearches"
+- verbs:
+  - "*"
+  apiGroups:
+  - "integreatly.org"
+  resources:
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -123,6 +123,13 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "triggerbindings"
+  - "triggertemplates"
 - verbs:
   - "*"
   apiGroups:
@@ -149,13 +156,6 @@ rules:
   resources:
   - "prometheusrules"
   - "servicemonitors"
-- verbs:
-  - "*"
-  apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "triggerbindings"
-  - "triggertemplates"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
