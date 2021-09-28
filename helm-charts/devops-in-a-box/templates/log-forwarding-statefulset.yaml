@@ -125,6 +125,8 @@ spec:
                 path: tls.crt
               - key: tls.key
                 path: tls.key
+              - key: ca-bundle.crt
+                path: ca-bundle.crt
         {{- if not .Values.forwarding.fluentd.persistence.enabled }}
         - name: buffer
           emptyDir: {}
