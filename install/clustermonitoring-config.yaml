@@ -4,5 +4,4 @@ metadata:
   name: cluster-monitoring-config
 data:
   config.yaml: |
-    techPreviewUserWorkload:
-      enabled: true
+    enableUserWorkload: true

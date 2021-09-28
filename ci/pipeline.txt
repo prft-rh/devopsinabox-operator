@@ -26,8 +26,8 @@ patches:
 EOF
 
 # update operator controller image
-export VERSION=0.0.45
-export REPLACES=0.0.44 # the NAME of the CSV
+export VERSION=0.0.54
+export REPLACES=0.0.53 # the NAME of the CSV
 export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 
 # generate bundle
@@ -51,7 +51,6 @@ sed -i 's/env PATH=$(PATH)/env PATH="\\"$(PATH)\\""/g' Makefile
 make bundle DEFAULT_CHANNEL=alpha
 
 ## commit changes
-git diff
 git commit -am "Upgrading helm charts"
 git push
 
@@ -65,7 +64,7 @@ docker push $BUNDLE_IMG
 
 # update catalog
 export CATALOG_IMAGE=quay.io/mrethers/operators-catalog
-export CATALOG_VERSION=v1.0.19
+export CATALOG_VERSION=v1.0.28
 opm index add --bundles $BUNDLE_IMG --from-index $CATALOG_IMAGE:latest --tag $CATALOG_IMAGE:$CATALOG_VERSION --build-tool docker --pull-tool docker
 docker tag $CATALOG_IMAGE:$CATALOG_VERSION $CATALOG_IMAGE:latest
 docker push $CATALOG_IMAGE:$CATALOG_VERSION
