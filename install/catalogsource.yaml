@@ -1,9 +1,9 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: CatalogSource
 metadata:
-  name: my-test-operators
+  name: perficient-operators
 spec:
-  displayName: Test Operators
+  displayName: Perficient Operators
   image: quay.io/mrethers/operators-catalog:latest
   publisher: Perficient
   sourceType: grpc
