@@ -54,6 +54,14 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "integreatly.org"
+  resources:
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
+- verbs:
+  - "*"
+  apiGroups:
   - "kibana.k8s.elastic.co"
   resources:
   - "kibanas"
@@ -97,14 +105,6 @@ rules:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
-- verbs:
-  - "*"
-  apiGroups:
-  - "integreatly.org"
-  resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -123,6 +123,13 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - "monitoring.coreos.com"
+  resources:
+  - "prometheusrules"
+  - "servicemonitors"
 - verbs:
   - "*"
   apiGroups:
@@ -149,13 +156,6 @@ rules:
   resources:
   - "pipelines"
   - "tasks"
-- verbs:
-  - "*"
-  apiGroups:
-  - "monitoring.coreos.com"
-  resources:
-  - "prometheusrules"
-  - "servicemonitors"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
