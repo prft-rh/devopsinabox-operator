@@ -5,6 +5,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: {{ include "devops-in-a-box.fullname" . }}-argocd-application-controller
+    namespace: {{ .Release.Namespace }}
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
