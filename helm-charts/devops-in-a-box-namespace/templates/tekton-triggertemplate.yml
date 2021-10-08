@@ -42,7 +42,7 @@ spec:
           value: $(tt.params.image-field-name)
       pipelineRef:
         name: {{ include "devops-in-a-box-namespace.fullname" . }}
-      serviceAccountName: pipeline
+      serviceAccountName: {{ include "devops-in-a-box-namespace.fullname" . }}-build-bot
       timeout: 1h0m0s
       workspaces:
         - name: workspace
