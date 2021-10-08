@@ -51,6 +51,20 @@ rules:
   - "rbac.authorization.k8s.io"
   resources:
   - "clusterrolebindings"
+  - "clusterroles"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  - "argocds"
+- verbs:
+  - "*"
+  apiGroups:
+  - "elasticsearch.k8s.elastic.co"
+  resources:
+  - "elasticsearches"
 - verbs:
   - "*"
   apiGroups:
@@ -82,29 +96,9 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "rbac.authorization.k8s.io"
-  resources:
-  - "rolebindings"
-  - "roles"
-- verbs:
-  - "*"
-  apiGroups:
   - "apps"
   resources:
   - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
-- verbs:
-  - "*"
-  apiGroups:
-  - "elasticsearch.k8s.elastic.co"
-  resources:
-  - "elasticsearches"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -126,20 +120,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "monitoring.coreos.com"
-  resources:
-  - "prometheusrules"
-  - "servicemonitors"
-- verbs:
-  - "*"
-  apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "triggerbindings"
-  - "triggertemplates"
-- verbs:
-  - "*"
-  apiGroups:
   - ""
   resources:
   - "secrets"
@@ -156,6 +136,20 @@ rules:
   resources:
   - "pipelines"
   - "tasks"
+- verbs:
+  - "*"
+  apiGroups:
+  - "monitoring.coreos.com"
+  resources:
+  - "prometheusrules"
+  - "servicemonitors"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "triggerbindings"
+  - "triggertemplates"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -177,6 +171,18 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "eventlisteners"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
   - "persistentvolumeclaims"
@@ -187,17 +193,5 @@ rules:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
-- verbs:
-  - "*"
-  apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "eventlisteners"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
 
 # +kubebuilder:scaffold:rules
