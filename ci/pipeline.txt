@@ -15,6 +15,9 @@ operator-sdk init --plugins=helm --domain=com.perficient --group=apimc --version
 operator-sdk create api --group=apimc --version=v1alpha1 --kind=ManagedNamespace --helm-chart=../devopsinabox-namespace-helm-chart
 operator-sdk create api --group=apimc --version=v1alpha1 --kind=SpringBootApp --helm-chart=../spring-boot-app-helm-chart
 
+# cleanup helm-charts
+rm -Rf ../devopsinabox-operator/helm-charts
+
 # copy the file to the operator repo
 cp -R . ../devopsinabox-operator
 cd ../devopsinabox-operator
@@ -26,8 +29,8 @@ patches:
 EOF
 
 # update operator controller image
-export VERSION=0.0.54
-export REPLACES=0.0.53 # the NAME of the CSV
+export VERSION=0.0.61
+export REPLACES=0.0.60 # the NAME of the CSV
 export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 
 # generate bundle
@@ -51,6 +54,7 @@ sed -i 's/env PATH=$(PATH)/env PATH="\\"$(PATH)\\""/g' Makefile
 make bundle DEFAULT_CHANNEL=alpha
 
 ## commit changes
+git add -A
 git commit -am "Upgrading helm charts"
 git push
 
@@ -64,7 +68,7 @@ docker push $BUNDLE_IMG
 
 # update catalog
 export CATALOG_IMAGE=quay.io/mrethers/operators-catalog
-export CATALOG_VERSION=v1.0.28
+export CATALOG_VERSION=v1.0.35
 opm index add --bundles $BUNDLE_IMG --from-index $CATALOG_IMAGE:latest --tag $CATALOG_IMAGE:$CATALOG_VERSION --build-tool docker --pull-tool docker
 docker tag $CATALOG_IMAGE:$CATALOG_VERSION $CATALOG_IMAGE:latest
 docker push $CATALOG_IMAGE:$CATALOG_VERSION
