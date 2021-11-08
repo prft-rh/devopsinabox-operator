@@ -52,5 +52,4 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.60
   version: 0.0.0
