@@ -52,4 +52,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
+  replaces: nothing
   version: 0.0.0
