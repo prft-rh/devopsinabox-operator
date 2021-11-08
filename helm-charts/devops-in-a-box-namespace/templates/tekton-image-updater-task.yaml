@@ -36,13 +36,13 @@ spec:
   steps:
     - args:
         - update
-        - '-o $(org)'
-        - '-j $(project)'
-        - '-f $(file-path)'
-        - '-s $(branch-generate-name)'
-        - '-b $(source-branch)'
-        - '-i $(new-image-url)'
-        - '-r $(repo)'
+        - '-o $(params.org)'
+        - '-j $(params.project)'
+        - '-f $(params.file-path)'
+        - '-s $(params.branch-generate-name)'
+        - '-b $(params.source-branch)'
+        - '-i $(params.new-image-url)'
+        - '-r $(params.repo)'
       env:
         - name: AUTH_TOKEN
           valueFrom:
