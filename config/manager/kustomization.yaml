@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: quay.io/mrethers/devopsinabox-operator
-  newTag: v1.0.0-ado
+  newTag: v0.0.1-ado
