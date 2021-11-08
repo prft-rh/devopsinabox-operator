@@ -11,6 +11,10 @@ spec:
     default: release-tech-preview-2
   - name: app-name
     description: The name of the deployment to be created / patched
+  - name: org
+    description: The ADO org name
+  - name: project
+    description: The ADO project name
   - name: image-repo
     description: The container image repo
   - name: config-repo
@@ -28,6 +32,10 @@ spec:
         tekton.dev/pipeline: {{ include "devops-in-a-box-namespace.fullname" . }}
     spec:
       params:
+        - name: ORG
+          value: {{ .Values.ado.org }}
+        - name: PROJECT
+          value: {{ .Values.ado.project }}
         - name: APP_NAME
           value: $(tt.params.app-name)
         - name: APP_REPO

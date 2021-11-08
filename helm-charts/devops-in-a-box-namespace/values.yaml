@@ -13,6 +13,10 @@ container:
   username: ""
   password: ""
 
+ado:
+  org: ""
+  project: ""
+
 config:
   repoUrl: ""
   repoPath: ""

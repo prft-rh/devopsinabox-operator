@@ -4,6 +4,9 @@ metadata:
   name: managednamespace-sample
 spec:
   # Default values copied from <project_dir>/helm-charts/devops-in-a-box-namespace/values.yaml
+  ado:
+    org: ""
+    project: ""
   config:
     repoBranch: master
     repoPath: ""

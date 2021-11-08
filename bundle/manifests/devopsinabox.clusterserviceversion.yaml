@@ -71,6 +71,10 @@ metadata:
             "name": "managednamespace-sample"
           },
           "spec": {
+            "ado": {
+              "org": "",
+              "project": ""
+            },
             "config": {
               "repoBranch": "master",
               "repoPath": "",
@@ -149,14 +153,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.61
-    createdAt: 2021-10-11 12:00:31Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v1.0.0-ado
+    createdAt: 2021-11-08 13:39:22Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.61
+  name: devopsinabox.v1.0.0-ado
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -220,12 +224,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
           - ""
           resources:
           - configmaps
@@ -267,6 +265,12 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -280,20 +284,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - tekton.dev
-          resources:
-          - pipelines
-          - tasks
-          verbs:
-          - '*'
-        - apiGroups:
-          - monitoring.coreos.com
-          resources:
-          - prometheusrules
-          - servicemonitors
-          verbs:
-          - '*'
         - apiGroups:
           - triggers.tekton.dev
           resources:
@@ -309,9 +299,29 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - rolebindings
+          verbs:
+          - '*'
+        - apiGroups:
           - argoproj.io
           resources:
           - applications
+          verbs:
+          - '*'
+        - apiGroups:
+          - tekton.dev
+          resources:
+          - pipelines
+          - tasks
+          verbs:
+          - '*'
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - prometheusrules
+          - servicemonitors
           verbs:
           - '*'
         - apiGroups:
@@ -384,7 +394,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.61
+                image: quay.io/mrethers/devopsinabox-operator:v1.0.0-ado
                 livenessProbe:
                   httpGet:
                     path: /readyz
@@ -469,4 +479,4 @@ spec:
     name: Perficient Inc
     url: http://www.perficient.com
   replaces: devopsinabox.v0.0.60
-  version: 0.0.61
+  version: 1.0.0-ado
