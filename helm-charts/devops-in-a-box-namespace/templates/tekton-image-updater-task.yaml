@@ -10,9 +10,6 @@ spec:
     - description: 'The ADO project name'
       name: project
       type: string
-    - description: 'The ADO personal access token (PAT)'
-      name: pat
-      type: string
     - description: Path within the source-repo to update
       name: file-path
       type: string
