@@ -10,6 +10,10 @@ cd devopsinabox-namespace-helm-chart
 git checkout azure-devops
 cd ..
 
+cd spring-boot-app-helm-chart
+git checkout azure-devops
+cd ..
+
 # clone the operator itself
 git clone git@github.com:prft-rh/devopsinabox-operator.git	
 
@@ -38,8 +42,8 @@ patches:
 EOF
 
 # update operator controller image
-export VERSION=0.0.8-ado
-export REPLACES=0.0.7-ado # the NAME of the CSV
+export VERSION=0.0.9-ado
+export REPLACES=0.0.8-ado # the NAME of the CSV
 export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 
 # generate bundle
@@ -77,7 +81,7 @@ docker push $BUNDLE_IMG
 
 # update catalog
 export CATALOG_IMAGE=quay.io/mrethers/operators-catalog
-export CATALOG_VERSION=v1.0.42
+export CATALOG_VERSION=v1.0.43
 opm index add --bundles $BUNDLE_IMG --from-index $CATALOG_IMAGE:latest --tag $CATALOG_IMAGE:$CATALOG_VERSION --build-tool docker --pull-tool docker
 docker tag $CATALOG_IMAGE:$CATALOG_VERSION $CATALOG_IMAGE:latest
 docker push $CATALOG_IMAGE:$CATALOG_VERSION
