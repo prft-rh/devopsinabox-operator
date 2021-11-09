@@ -55,12 +55,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
-- verbs:
-  - "*"
-  apiGroups:
   - ""
   resources:
   - "configmaps"
@@ -99,6 +93,12 @@ rules:
   - "kibana.k8s.elastic.co"
   resources:
   - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -117,13 +117,6 @@ rules:
   - patch
   - update
   - watch
-- verbs:
-  - "*"
-  apiGroups:
-  - "tekton.dev"
-  resources:
-  - "pipelines"
-  - "tasks"
 - verbs:
   - "*"
   apiGroups:
@@ -157,6 +150,13 @@ rules:
   - "argoproj.io"
   resources:
   - "applications"
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
