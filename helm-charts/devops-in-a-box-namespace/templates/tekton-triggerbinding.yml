@@ -5,6 +5,6 @@ metadata:
 spec:
   params:
   - name: git-repo-url
-    value: $(body.resource.repository.url)
+    value: $(body.resource.repository.remoteUrl)
   - name: git-revision
     value: $(body.resource.commits[0].commitId)
