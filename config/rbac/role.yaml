@@ -55,6 +55,20 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "integreatly.org"
+  resources:
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "kibana.k8s.elastic.co"
+  resources:
+  - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
   - "route.openshift.io"
   resources:
   - "routes"
@@ -85,20 +99,6 @@ rules:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
-- verbs:
-  - "*"
-  apiGroups:
-  - "integreatly.org"
-  resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "kibana.k8s.elastic.co"
-  resources:
-  - "kibanas"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -178,6 +178,18 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "eventlisteners"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
   - "persistentvolumeclaims"
@@ -188,17 +200,5 @@ rules:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
-- verbs:
-  - "*"
-  apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "eventlisteners"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
 
 # +kubebuilder:scaffold:rules
