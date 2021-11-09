@@ -22,7 +22,7 @@ spec:
     server: https://gitlab.com
     token: ""
     username: ""
-  manager:
+  gitops:
     namespace: ""
   mirrors:
     maven: ""
