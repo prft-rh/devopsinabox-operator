@@ -34,14 +34,9 @@ spec:
       name: update-key
       type: string
   steps:
-    - args:
-        - '-o $(params.org)'
-        - '-j $(params.project)'
-        - '-f $(params.file-path)'
-        - '-s $(params.branch-generate-name)'
-        - '-b $(params.source-branch)'
-        - '-i $(params.new-image-url)'
-        - '-r $(params.repo)'
+    - script: |
+        update -o $(params.org) -f $(params.file-path) -s $(params.branch-generate-name) \
+        -b $(params.source-branch) -i $(params.new-image-url) -r $(params.repo)
       env:
         - name: AUTH_TOKEN
           valueFrom:
