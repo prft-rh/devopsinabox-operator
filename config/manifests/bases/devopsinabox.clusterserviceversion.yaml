@@ -6,7 +6,7 @@ metadata:
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
     containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.10-ado
-    createdAt: 2021-11-09 09:32:17Z
+    createdAt: 2021-11-09 09:38:14Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers

@@ -155,7 +155,7 @@ metadata:
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
     containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.10-ado
-    createdAt: 2021-11-09 09:32:17Z
+    createdAt: 2021-11-09 09:38:14Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
@@ -225,18 +225,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - kibana.k8s.elastic.co
-          resources:
-          - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
           - ""
           resources:
           - configmaps
@@ -269,6 +257,18 @@ spec:
           - grafanadashboards
           - grafanadatasources
           - grafanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - kibana.k8s.elastic.co
+          resources:
+          - kibanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -340,13 +340,6 @@ spec:
           - update
           - watch
         - apiGroups:
-          - ""
-          resources:
-          - persistentvolumeclaims
-          - services
-          verbs:
-          - '*'
-        - apiGroups:
           - apps.openshift.io
           resources:
           - deploymentconfigs
@@ -362,6 +355,13 @@ spec:
           - route.openshift.io
           resources:
           - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - persistentvolumeclaims
+          - services
           verbs:
           - '*'
         - apiGroups:
