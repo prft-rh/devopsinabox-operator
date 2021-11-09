@@ -154,14 +154,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.11-ado
-    createdAt: 2021-11-09 10:57:48Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.12-ado
+    createdAt: 2021-11-09 12:40:10Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.11-ado
+  name: devopsinabox.v0.0.12-ado
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -225,6 +225,12 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - apps
+          resources:
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
           - argoproj.io
           resources:
           - applications
@@ -266,12 +272,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -285,6 +285,13 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          - serviceaccounts
+          verbs:
+          - '*'
         - apiGroups:
           - rbac.authorization.k8s.io
           resources:
@@ -319,13 +326,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - ""
-          resources:
-          - secrets
-          - serviceaccounts
-          verbs:
-          - '*'
-        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -340,39 +340,30 @@ spec:
           - update
           - watch
         - apiGroups:
+          - apps.openshift.io
+          resources:
+          - deploymentconfigs
+          verbs:
+          - '*'
+        - apiGroups:
+          - triggers.tekton.dev
+          resources:
+          - eventlisteners
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
           - ""
           resources:
-          - pods
-          - services
-          - services/finalizers
-          - endpoints
           - persistentvolumeclaims
-          - events
-          - configmaps
-          - secrets
+          - services
           verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
-        - apiGroups:
-          - apps
-          resources:
-          - deployments
-          - daemonsets
-          - replicasets
-          - statefulsets
-          verbs:
-          - create
-          - delete
-          - get
-          - list
-          - patch
-          - update
-          - watch
+          - '*'
         - apiGroups:
           - authentication.k8s.io
           resources:
@@ -404,7 +395,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.11-ado
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.12-ado
                 livenessProbe:
                   httpGet:
                     path: /readyz
@@ -488,5 +479,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.10-ado
-  version: 0.0.11-ado
+  replaces: devopsinabox.v0.0.11-ado
+  version: 0.0.12-ado
