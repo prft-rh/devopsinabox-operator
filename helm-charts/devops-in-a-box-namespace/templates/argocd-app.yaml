@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: {{ include "devops-in-a-box-namespace.fullname" . }}
-  namespace: {{ .Values.manager.namespace }}
+  namespace: {{ .Values.gitops.namespace }}
 spec:
   destination:
     namespace: {{ .Release.Namespace }}

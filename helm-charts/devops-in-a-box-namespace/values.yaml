@@ -23,7 +23,7 @@ config:
   repoBranch: "master"
   prodBranch: ""
 
-manager:
+gitops:
   namespace: ""
 
 mirrors:
