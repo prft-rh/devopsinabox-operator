@@ -48,6 +48,10 @@ spec:
           value: $(tt.params.config-repo)
         - name: IMAGE_FIELD_NAME
           value: $(tt.params.image-field-name)
+        - name: STAGE_CONFIG_BRANCH
+          value: {{ .Values.config.repoBranch }}
+        - name: PROD_CONFIG_BRANCH
+          value: {{ .Values.config.prodBranch }}
       pipelineRef:
         name: {{ include "devops-in-a-box-namespace.fullname" . }}
       serviceAccountName: {{ include "devops-in-a-box-namespace.fullname" . }}-build-bot

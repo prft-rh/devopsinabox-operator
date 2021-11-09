@@ -21,6 +21,7 @@ config:
   repoUrl: ""
   repoPath: ""
   repoBranch: "master"
+  prodBranch: ""
 
 manager:
   namespace: ""

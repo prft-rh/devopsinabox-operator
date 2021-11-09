@@ -76,6 +76,7 @@ metadata:
               "project": ""
             },
             "config": {
+              "prodBranch": "",
               "repoBranch": "master",
               "repoPath": "",
               "repoUrl": ""
@@ -153,14 +154,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.7-ado
-    createdAt: 2021-11-08 21:00:26Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.8-ado
+    createdAt: 2021-11-08 21:28:42Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.7-ado
+  name: devopsinabox.v0.0.8-ado
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -224,20 +225,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - integreatly.org
-          resources:
-          - grafanadashboards
-          - grafanadatasources
-          - grafanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - kibana.k8s.elastic.co
-          resources:
-          - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
           - route.openshift.io
           resources:
           - routes
@@ -271,6 +258,20 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - integreatly.org
+          resources:
+          - grafanadashboards
+          - grafanadatasources
+          - grafanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - kibana.k8s.elastic.co
+          resources:
+          - kibanas
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -284,25 +285,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - ""
-          resources:
-          - secrets
-          - serviceaccounts
-          verbs:
-          - '*'
-        - apiGroups:
-          - rbac.authorization.k8s.io
-          resources:
-          - rolebindings
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          verbs:
-          - '*'
         - apiGroups:
           - tekton.dev
           resources:
@@ -325,6 +307,25 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - ""
+          resources:
+          - secrets
+          - serviceaccounts
+          verbs:
+          - '*'
+        - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - rolebindings
+          verbs:
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -339,18 +340,6 @@ spec:
           - update
           - watch
         - apiGroups:
-          - triggers.tekton.dev
-          resources:
-          - eventlisteners
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
           - ""
           resources:
           - persistentvolumeclaims
@@ -361,6 +350,18 @@ spec:
           - apps.openshift.io
           resources:
           - deploymentconfigs
+          verbs:
+          - '*'
+        - apiGroups:
+          - triggers.tekton.dev
+          resources:
+          - eventlisteners
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -394,7 +395,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.7-ado
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.8-ado
                 livenessProbe:
                   httpGet:
                     path: /readyz
@@ -478,5 +479,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.6-ado
-  version: 0.0.7-ado
+  replaces: devopsinabox.v0.0.7-ado
+  version: 0.0.8-ado
