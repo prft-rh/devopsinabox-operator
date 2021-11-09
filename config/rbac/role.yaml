@@ -55,19 +55,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
-- verbs:
-  - "*"
-  apiGroups:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
@@ -99,6 +86,19 @@ rules:
   - "configmaps"
   - "secrets"
   - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  - "argocds"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -117,13 +117,6 @@ rules:
   - patch
   - update
   - watch
-- verbs:
-  - "*"
-  apiGroups:
-  - "tekton.dev"
-  resources:
-  - "pipelines"
-  - "tasks"
 - verbs:
   - "*"
   apiGroups:
@@ -157,6 +150,13 @@ rules:
   - "argoproj.io"
   resources:
   - "applications"
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
