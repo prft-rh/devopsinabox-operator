@@ -46,8 +46,8 @@ patches:
 EOF
 
 # update operator controller image
-export VERSION=0.0.25-ado
-export REPLACES=0.0.24-ado # the NAME of the CSV
+export VERSION=0.0.26-ado
+export REPLACES=0.0.25-ado # the NAME of the CSV
 export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 
 # generate bundle
@@ -85,7 +85,7 @@ docker push $BUNDLE_IMG
 
 # update catalog
 export CATALOG_IMAGE=quay.io/mrethers/operators-catalog
-export CATALOG_VERSION=v1.0.59
+export CATALOG_VERSION=v1.0.60
 opm index add --bundles $BUNDLE_IMG --from-index $CATALOG_IMAGE:latest --tag $CATALOG_IMAGE:$CATALOG_VERSION --build-tool docker --pull-tool docker
 docker tag $CATALOG_IMAGE:$CATALOG_VERSION $CATALOG_IMAGE:latest
 docker push $CATALOG_IMAGE:$CATALOG_VERSION
