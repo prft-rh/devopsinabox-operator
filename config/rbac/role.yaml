@@ -120,26 +120,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "triggerbindings"
-  - "triggertemplates"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "secrets"
-  - "serviceaccounts"
-- verbs:
-  - "*"
-  apiGroups:
-  - "rbac.authorization.k8s.io"
-  resources:
-  - "rolebindings"
-- verbs:
-  - "*"
-  apiGroups:
   - "argoproj.io"
   resources:
   - "applications"
@@ -157,6 +137,26 @@ rules:
   resources:
   - "prometheusrules"
   - "servicemonitors"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "triggerbindings"
+  - "triggertemplates"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "secrets"
+  - "serviceaccounts"
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
