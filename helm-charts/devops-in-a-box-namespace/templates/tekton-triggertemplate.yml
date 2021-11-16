@@ -29,7 +29,7 @@ spec:
   - apiVersion: tekton.dev/v1beta1
     kind: PipelineRun
     metadata:
-      name: $(tt.params.app-name)-$(uid)
+      generateName: $(tt.params.app-name)-
       labels:
         tekton.dev/pipeline: {{ include "devops-in-a-box-namespace.fullname" . }}
     spec:
