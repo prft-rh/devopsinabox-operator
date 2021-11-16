@@ -95,7 +95,6 @@ spec:
       workspaces:
         - name: maven-settings
           workspace: maven-settings
-          optional: true
         - name: source
           workspace: workspace
     - name: build-container-image

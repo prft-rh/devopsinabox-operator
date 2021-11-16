@@ -55,27 +55,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - ""
-  resources:
-  - "configmaps"
-  - "secrets"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
-- verbs:
-  - "*"
-  apiGroups:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
@@ -99,6 +78,27 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "configmaps"
+  - "secrets"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  - "argocds"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -117,6 +117,19 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "secrets"
+  - "serviceaccounts"
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
 - verbs:
   - "*"
   apiGroups:
@@ -144,19 +157,6 @@ rules:
   resources:
   - "triggerbindings"
   - "triggertemplates"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "secrets"
-  - "serviceaccounts"
-- verbs:
-  - "*"
-  apiGroups:
-  - "rbac.authorization.k8s.io"
-  resources:
-  - "rolebindings"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
