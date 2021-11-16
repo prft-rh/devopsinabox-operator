@@ -7,4 +7,4 @@ spec:
   - name: git-repo-url
     value: $(body.resource.repository.remoteUrl)
   - name: git-revision
-    value: $(body.resource.commits[0].commitId)
+    value: $(body.resource.refUpdates[0].newObjectId)
