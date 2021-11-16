@@ -164,14 +164,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.21-ado
-    createdAt: 2021-11-15 19:57:36Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.22-ado
+    createdAt: 2021-11-15 20:05:11Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.21-ado
+  name: devopsinabox.v0.0.22-ado
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -235,6 +235,19 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - apps
+          resources:
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          - argocds
+          verbs:
+          - '*'
+        - apiGroups:
           - elasticsearch.k8s.elastic.co
           resources:
           - elasticsearches
@@ -269,19 +282,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          - argocds
-          verbs:
-          - '*'
-        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -295,25 +295,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - ""
-          resources:
-          - secrets
-          - serviceaccounts
-          verbs:
-          - '*'
-        - apiGroups:
-          - rbac.authorization.k8s.io
-          resources:
-          - rolebindings
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          verbs:
-          - '*'
         - apiGroups:
           - tekton.dev
           resources:
@@ -336,6 +317,25 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - ""
+          resources:
+          - secrets
+          - serviceaccounts
+          verbs:
+          - '*'
+        - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - rolebindings
+          verbs:
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -349,6 +349,12 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
         - apiGroups:
           - ""
           resources:
@@ -366,12 +372,6 @@ spec:
           - triggers.tekton.dev
           resources:
           - eventlisteners
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -405,7 +405,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.21-ado
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.22-ado
                 livenessProbe:
                   httpGet:
                     path: /readyz
@@ -421,11 +421,11 @@ spec:
                   periodSeconds: 10
                 resources:
                   limits:
-                    cpu: 100m
-                    memory: 512Mi
+                    cpu: 200m
+                    memory: 1Gi
                   requests:
-                    cpu: 100m
-                    memory: 512Mi
+                    cpu: 200m
+                    memory: 1Gi
               - args:
                 - --secure-listen-address=0.0.0.0:8443
                 - --upstream=http://127.0.0.1:8080/
@@ -489,5 +489,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.20-ado
-  version: 0.0.21-ado
+  replaces: devopsinabox.v0.0.21-ado
+  version: 0.0.22-ado
