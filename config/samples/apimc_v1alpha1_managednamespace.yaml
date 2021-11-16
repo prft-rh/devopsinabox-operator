@@ -24,6 +24,8 @@ spec:
     username: ""
   gitops:
     namespace: ""
+  maven:
+    settings: ""
   mirrors:
     maven: ""
   nameOverride: ""

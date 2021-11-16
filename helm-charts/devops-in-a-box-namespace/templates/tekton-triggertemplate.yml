@@ -64,3 +64,8 @@ spec:
         - name: workspace
           persistentVolumeClaim:
             claimName: $(tt.params.workspace)
+{{- if .Values.maven.settings }}
+        - name: maven-settings
+          secret:
+            name: {{ .Values.maven.settings }}
+{{- end }}

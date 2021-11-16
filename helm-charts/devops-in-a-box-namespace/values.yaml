@@ -26,6 +26,10 @@ config:
 gitops:
   namespace: ""
 
+# the name of the secret holding the maven settings file
+maven:
+  settings: ""
+
 mirrors:
   maven: ""
 

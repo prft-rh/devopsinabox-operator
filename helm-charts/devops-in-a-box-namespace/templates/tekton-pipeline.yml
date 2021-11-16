@@ -160,3 +160,4 @@ spec:
   workspaces:
     - name: workspace
     - name: maven-settings
+      optional: true
