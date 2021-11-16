@@ -67,5 +67,5 @@ spec:
 {{- if .Values.maven.settings }}
         - name: maven-settings
           secret:
-            name: {{ .Values.maven.settings }}
+            secretName: {{ .Values.maven.settings }}
 {{- end }}
