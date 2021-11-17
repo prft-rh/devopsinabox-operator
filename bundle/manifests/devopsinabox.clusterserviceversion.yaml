@@ -164,14 +164,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.27-ado
-    createdAt: 2021-11-16 15:52:30Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.28-ado
+    createdAt: 2021-11-17 10:23:37Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.27-ado
+  name: devopsinabox.v0.0.28-ado
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -235,6 +235,26 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - kibana.k8s.elastic.co
+          resources:
+          - kibanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          - secrets
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
           - apps
           resources:
           - statefulsets
@@ -259,26 +279,6 @@ spec:
           - grafanadashboards
           - grafanadatasources
           - grafanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - kibana.k8s.elastic.co
-          resources:
-          - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - configmaps
-          - secrets
-          - services
           verbs:
           - '*'
         - apiGroups:
@@ -350,6 +350,13 @@ spec:
           - update
           - watch
         - apiGroups:
+          - ""
+          resources:
+          - persistentvolumeclaims
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
           - apps.openshift.io
           resources:
           - deploymentconfigs
@@ -365,13 +372,6 @@ spec:
           - route.openshift.io
           resources:
           - routes
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - persistentvolumeclaims
-          - services
           verbs:
           - '*'
         - apiGroups:
@@ -405,7 +405,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.27-ado
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.28-ado
                 livenessProbe:
                   httpGet:
                     path: /readyz
@@ -489,5 +489,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.26-ado
-  version: 0.0.27-ado
+  replaces: devopsinabox.v0.0.27-ado
+  version: 0.0.28-ado
