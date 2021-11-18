@@ -12,6 +12,10 @@ spec:
     - default: 'https://github.com/myorg/myrepo'
       name: APP_REPO
       type: string
+    # git repo containing base dockerfile
+    - default: 'https://github.com/myorg/myrepo'
+      name: DOCKERFILE_REPO
+      type: string
     # container repo
     - default: 'quay.io/myorg/myrepo'
       name: IMAGE_REPO
@@ -52,21 +56,52 @@ spec:
       workspaces:
         - name: output
           workspace: workspace
-    - name: build
+    - name: fetch-dockerfile
+      params:
+        - name: url
+          value: $(params.DOCKERFILE_REPO)
+        - name: subdirectory
+          value: 'docker'
+        - name: deleteExisting
+          value: 'true'
+      taskRef:
+        kind: ClusterTask
+        name: git-clone      
+      runAfter:
+        - fetch-repository
+      workspaces:
+        - name: output
+          workspace: workspace
+    - name: maven-package
+      taskRef:
+        name: maven
+        kind: ClusterTask
+      runAfter:
+        - fetch-dockerfile
+      params:
+        - name: GOALS
+          value:
+            - '-DskipTests'
+            - 'clean'
+            - 'package'
+      workspaces:
+{{- if .Values.maven.settings }}
+        - name: maven-settings
+          workspace: maven-settings
+{{- end }}
+        - name: source
+          workspace: workspace
+    - name: build-container-image
+      taskRef:
+        name: buildah
+        kind: ClusterTask
+      runAfter:
+        - maven-package
       params:
         - name: IMAGE
           value: '$(params.IMAGE_REPO):$(params.GIT_REVISION)'
-        - name: TLSVERIFY
-          value: 'false'
-        {{- if .Values.mirrors.maven }}
-        - name: MAVEN_MIRROR_URL
-          value: {{ .Values.mirrors.maven }}
-        {{- end }}
-      runAfter:
-        - fetch-repository
-      taskRef:
-        kind: ClusterTask
-        name: s2i-java
+        - name: DOCKERFILE
+          value: docker/Dockerfile
       workspaces:
         - name: source
           workspace: workspace
@@ -116,9 +151,10 @@ spec:
         - name: branch-generate-name
           value: 'image-promotion-'
       runAfter:
-        - build
+        - build-container-image
       taskRef:
         kind: Task
         name: image-updater
   workspaces:
     - name: workspace
+    - name: maven-settings

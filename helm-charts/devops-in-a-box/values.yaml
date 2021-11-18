@@ -7,6 +7,9 @@ git:
   username: ""
   password: ""
   server: "https://gitlab.com"
+
+gitops:
+  install: true
   
 config:
   repoUrl: ""

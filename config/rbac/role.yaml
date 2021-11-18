@@ -55,6 +55,12 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "kibana.k8s.elastic.co"
+  resources:
+  - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
   - "route.openshift.io"
   resources:
   - "routes"
@@ -93,12 +99,6 @@ rules:
   - "grafanadashboards"
   - "grafanadatasources"
   - "grafanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "kibana.k8s.elastic.co"
-  resources:
-  - "kibanas"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -120,6 +120,25 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - ""
+  resources:
+  - "secrets"
+  - "serviceaccounts"
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+- verbs:
+  - "*"
+  apiGroups:
   - "tekton.dev"
   resources:
   - "pipelines"
@@ -138,19 +157,6 @@ rules:
   resources:
   - "triggerbindings"
   - "triggertemplates"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "secrets"
-  - "serviceaccounts"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp

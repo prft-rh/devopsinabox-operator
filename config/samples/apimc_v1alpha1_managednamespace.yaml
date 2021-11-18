@@ -18,8 +18,10 @@ spec:
     server: https://gitlab.com
     token: ""
     username: ""
-  manager:
+  gitops:
     namespace: ""
+  maven:
+    settings: ""
   mirrors:
     maven: ""
   nameOverride: ""

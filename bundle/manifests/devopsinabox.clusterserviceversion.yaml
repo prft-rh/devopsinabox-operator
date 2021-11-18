@@ -58,6 +58,9 @@ metadata:
               "token": "",
               "username": ""
             },
+            "gitops": {
+              "install": true
+            },
             "nameOverride": "",
             "prometheus": {
               "token": ""
@@ -88,8 +91,11 @@ metadata:
               "token": "",
               "username": ""
             },
-            "manager": {
+            "gitops": {
               "namespace": ""
+            },
+            "maven": {
+              "settings": ""
             },
             "mirrors": {
               "maven": ""
@@ -117,6 +123,9 @@ metadata:
               "image": "placeholder",
               "registry": ""
             },
+            "dockerfile": {
+              "repo": "https://github.com/prft-rh/dockerfile-java11.git"
+            },
             "fullnameOverride": "",
             "git": {
               "branch": "master",
@@ -137,7 +146,8 @@ metadata:
               "port": 8080
             },
             "serviceAccount": {
-              "annotations": {}
+              "annotations": {},
+              "name": null
             },
             "version": {
               "branch": "",
@@ -149,14 +159,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.61
-    createdAt: 2021-10-11 12:00:31Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.62
+    createdAt: 2021-11-18 11:35:23Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.4.2
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.61
+  name: devopsinabox.v0.0.62
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -220,6 +230,12 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - kibana.k8s.elastic.co
+          resources:
+          - kibanas
+          verbs:
+          - '*'
+        - apiGroups:
           - route.openshift.io
           resources:
           - routes
@@ -261,12 +277,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - kibana.k8s.elastic.co
-          resources:
-          - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -280,6 +290,25 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          - serviceaccounts
+          verbs:
+          - '*'
+        - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - rolebindings
+          verbs:
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          verbs:
+          - '*'
         - apiGroups:
           - tekton.dev
           resources:
@@ -299,19 +328,6 @@ spec:
           resources:
           - triggerbindings
           - triggertemplates
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - secrets
-          - serviceaccounts
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
           verbs:
           - '*'
         - apiGroups:
@@ -384,7 +400,7 @@ spec:
                 - --metrics-addr=127.0.0.1:8080
                 - --enable-leader-election
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.61
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.62
                 livenessProbe:
                   httpGet:
                     path: /readyz
@@ -400,11 +416,11 @@ spec:
                   periodSeconds: 10
                 resources:
                   limits:
-                    cpu: 100m
-                    memory: 512Mi
+                    cpu: 200m
+                    memory: 1Gi
                   requests:
-                    cpu: 100m
-                    memory: 512Mi
+                    cpu: 200m
+                    memory: 1Gi
               - args:
                 - --secure-listen-address=0.0.0.0:8443
                 - --upstream=http://127.0.0.1:8080/
@@ -468,5 +484,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.60
-  version: 0.0.61
+  replaces: devopsinabox.v0.0.61
+  version: 0.0.62

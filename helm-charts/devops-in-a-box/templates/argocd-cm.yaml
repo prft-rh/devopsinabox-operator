@@ -1,3 +1,5 @@
+{{- if .Values.gitops }}
+{{- if .Values.gitops.install }}
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -14,3 +16,5 @@ data:
       usernameSecret:
         name: {{ include "devops-in-a-box.fullname" . }}-git-auth
         key: username
+{{- end }}
+{{- end }}
