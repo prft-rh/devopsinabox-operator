@@ -5,8 +5,8 @@ metadata:
     alm-examples: '[]'
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.29-ado
-    createdAt: 2021-12-28 10:21:06Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.30-ado
+    createdAt: 2021-12-28 10:37:47Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
@@ -52,5 +52,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.28-ado
+  replaces: devopsinabox.v0.0.29-ado
   version: 0.0.0
