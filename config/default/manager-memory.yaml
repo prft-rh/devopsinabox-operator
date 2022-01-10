@@ -4,6 +4,7 @@ metadata:
   name: controller-manager
   namespace: system
 spec:
+ serviceAccountName: devopsinabox-controller
   template:
     spec:
       containers:

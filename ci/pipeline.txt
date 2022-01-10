@@ -39,10 +39,15 @@ rm -Rf ../devopsinabox-operator/helm-charts
 cp -R . ../devopsinabox-operator
 cd ../devopsinabox-operator
 
-# add manager patch (memory) as it gets overrided by the above copy
+# re-add manager patch (memory/serviceaccount) as it gets overrided by the above copy
 cat <<EOF >> config/default/kustomization.yaml
 patches:   
   - path: manager-memory.yaml
+EOF
+
+# add service account
+cat <<EOF >> config/rbac/kustomization.yaml
+- path: service_account.yaml
 EOF
 
 # update operator controller image
