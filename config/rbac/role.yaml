@@ -45,40 +45,60 @@ rules:
   - patch
   - update
   - watch
-- apiGroups:
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "clusterrolebindings"
+  - "clusterroles"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
-  - pods
-  - services
-  - services/finalizers
-  - endpoints
-  - persistentvolumeclaims
-  - events
-  - configmaps
-  - secrets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - apps
+  - "configmaps"
+  - "secrets"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
   resources:
-  - deployments
-  - daemonsets
-  - replicasets
-  - statefulsets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  - "argocds"
+- verbs:
+  - "*"
+  apiGroups:
+  - "elasticsearch.k8s.elastic.co"
+  resources:
+  - "elasticsearches"
+- verbs:
+  - "*"
+  apiGroups:
+  - "integreatly.org"
+  resources:
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "kibana.k8s.elastic.co"
+  resources:
+  - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -97,40 +117,46 @@ rules:
   - patch
   - update
   - watch
-- apiGroups:
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
+- verbs:
+  - "*"
+  apiGroups:
+  - "monitoring.coreos.com"
+  resources:
+  - "prometheusrules"
+  - "servicemonitors"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "triggerbindings"
+  - "triggertemplates"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
-  - pods
-  - services
-  - services/finalizers
-  - endpoints
-  - persistentvolumeclaims
-  - events
-  - configmaps
-  - secrets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - deployments
-  - daemonsets
-  - replicasets
-  - statefulsets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - "secrets"
+  - "serviceaccounts"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -149,39 +175,30 @@ rules:
   - patch
   - update
   - watch
-- apiGroups:
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps.openshift.io"
+  resources:
+  - "deploymentconfigs"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "eventlisteners"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
-  - pods
-  - services
-  - services/finalizers
-  - endpoints
-  - persistentvolumeclaims
-  - events
-  - configmaps
-  - secrets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
-- apiGroups:
-  - apps
-  resources:
-  - deployments
-  - daemonsets
-  - replicasets
-  - statefulsets
-  verbs:
-  - create
-  - delete
-  - get
-  - list
-  - patch
-  - update
-  - watch
+  - "persistentvolumeclaims"
+  - "services"
 
 # +kubebuilder:scaffold:rules
