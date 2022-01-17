@@ -55,20 +55,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - ""
-  resources:
-  - "configmaps"
-  - "secrets"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
   - "argoproj.io"
   resources:
   - "applications"
@@ -99,6 +85,20 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "configmaps"
+  - "secrets"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -178,6 +178,13 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - ""
+  resources:
+  - "persistentvolumeclaims"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
@@ -193,12 +200,5 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "persistentvolumeclaims"
-  - "services"
 
 # +kubebuilder:scaffold:rules
