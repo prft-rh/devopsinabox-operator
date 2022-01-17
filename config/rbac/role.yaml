@@ -55,19 +55,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
-- verbs:
-  - "*"
-  apiGroups:
-  - "elasticsearch.k8s.elastic.co"
-  resources:
-  - "elasticsearches"
-- verbs:
-  - "*"
-  apiGroups:
   - "integreatly.org"
   resources:
   - "grafanadashboards"
@@ -99,6 +86,19 @@ rules:
   - "apps"
   resources:
   - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  - "argocds"
+- verbs:
+  - "*"
+  apiGroups:
+  - "elasticsearch.k8s.elastic.co"
+  resources:
+  - "elasticsearches"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace

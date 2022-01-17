@@ -28,7 +28,13 @@ spec:
   nameOverride: ""
   podAnnotations: {}
   replicaCount: 1
-  resources: {}
+  resources:
+    limits:
+      cpu: 300m
+      memory: 600Mi
+    requests:
+      cpu: 100m
+      memory: 400Mi
   service:
     port: 8080
   serviceAccount:
