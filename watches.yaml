@@ -11,4 +11,4 @@
   version: v1alpha1
   kind: SpringBootApp
   chart: helm-charts/spring-boot
-# +kubebuilder:scaffold:watch
+#+kubebuilder:scaffold:watch

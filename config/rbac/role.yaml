@@ -55,26 +55,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "integreatly.org"
-  resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "kibana.k8s.elastic.co"
-  resources:
-  - "kibanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
-- verbs:
-  - "*"
-  apiGroups:
   - ""
   resources:
   - "configmaps"
@@ -96,9 +76,35 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "logging.openshift.io"
+  resources:
+  - "clusterlogforwarders"
+- verbs:
+  - "*"
+  apiGroups:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
+- verbs:
+  - "*"
+  apiGroups:
+  - "integreatly.org"
+  resources:
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "kibana.k8s.elastic.co"
+  resources:
+  - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -117,18 +123,6 @@ rules:
   - patch
   - update
   - watch
-- verbs:
-  - "*"
-  apiGroups:
-  - "rbac.authorization.k8s.io"
-  resources:
-  - "rolebindings"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
 - verbs:
   - "*"
   apiGroups:
@@ -157,6 +151,18 @@ rules:
   resources:
   - "secrets"
   - "serviceaccounts"
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -201,4 +207,4 @@ rules:
   resources:
   - "routes"
 
-# +kubebuilder:scaffold:rules
+#+kubebuilder:scaffold:rules

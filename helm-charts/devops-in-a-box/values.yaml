@@ -3,10 +3,8 @@
 # Declare variables to be passed into your templates.
 
 git:
-  token: ""
   username: ""
   password: ""
-  server: "https://gitlab.com"
 
 gitops:
   install: true
@@ -15,9 +13,6 @@ config:
   repoUrl: ""
   repoPath: ""
   
-prometheus:
-  token: ""
-
 nameOverride: ""
 fullnameOverride: ""
 

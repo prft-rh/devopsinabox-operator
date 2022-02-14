@@ -39,13 +39,9 @@ spec:
   fullnameOverride: ""
   git:
     password: ""
-    server: https://gitlab.com
-    token: ""
     username: ""
   gitops:
     install: true
   nameOverride: ""
-  prometheus:
-    token: ""
   
   

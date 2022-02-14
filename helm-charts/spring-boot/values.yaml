@@ -23,9 +23,6 @@ config:
 
 maven:
   mirror: ""
-  
-dockerfile:
-  repo: https://github.com/prft-rh/dockerfile-java11.git
 
 # base image for spring boot containers  
 dockerfile:
@@ -47,13 +44,17 @@ service:
 management:
   port: 8081
 
-resources:
-  limits:
-    cpu: 300m
-    memory: 600Mi
-  requests:
-    cpu: 100m
-    memory: 400Mi
+resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
 
 autoscaling:
   enabled: false

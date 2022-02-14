@@ -4,11 +4,7 @@ metadata:
   name: managednamespace-sample
 spec:
   # Default values copied from <project_dir>/helm-charts/devops-in-a-box-namespace/values.yaml
-  ado:
-    org: ""
-    project: ""
   config:
-    prodBranch: ""
     repoBranch: master
     repoPath: ""
     repoUrl: ""
@@ -18,9 +14,8 @@ spec:
     username: ""
   fullnameOverride: ""
   git:
+    baseurl: https://gitlab.com
     password: ""
-    server: https://gitlab.com
-    token: ""
     username: ""
   gitops:
     namespace: ""

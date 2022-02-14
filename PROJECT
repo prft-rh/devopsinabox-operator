@@ -1,17 +1,30 @@
 domain: com.perficient
-layout: helm.sdk.operatorframework.io/v1
-projectName: devopsinabox
-resources:
-- group: apimc
-  kind: DevSecOpsManager
-  version: v1alpha1
-- group: apimc
-  kind: ManagedNamespace
-  version: v1alpha1
-- group: apimc
-  kind: SpringBootApp
-  version: v1alpha1
-version: 3-alpha
+layout:
+- helm.sdk.operatorframework.io/v1
 plugins:
   manifests.sdk.operatorframework.io/v2: {}
   scorecard.sdk.operatorframework.io/v2: {}
+projectName: devopsinabox
+resources:
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: com.perficient
+  group: apimc
+  kind: DevSecOpsManager
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: com.perficient
+  group: apimc
+  kind: ManagedNamespace
+  version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: com.perficient
+  group: apimc
+  kind: SpringBootApp
+  version: v1alpha1
+version: "3"

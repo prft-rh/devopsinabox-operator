@@ -3,25 +3,22 @@
 # Declare variables to be passed into your templates.
 
 git:
-  token: ""
   username: ""
   password: ""
-  server: "https://gitlab.com"
+  
+  # the operator requires the namespace config repo and apps all use the same git URL prefix
+  baseurl: "https://gitlab.com"
   
 container:
   registry: "https://quay.io"
   username: ""
   password: ""
 
-ado:
-  org: ""
-  project: ""
-
 config:
+  # repoUrl needs to start with the git.baseurl parameter above
   repoUrl: ""
   repoPath: ""
   repoBranch: "master"
-  prodBranch: ""
 
 gitops:
   namespace: ""
