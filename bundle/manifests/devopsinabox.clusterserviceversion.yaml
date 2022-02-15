@@ -157,14 +157,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.5-aws
-    createdAt: 2022-02-15 16:37:00Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.6-aws
+    createdAt: 2022-02-15 16:48:56Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.5-aws
+  name: devopsinabox.v0.0.6-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -245,20 +245,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - configmaps
-          - secrets
-          - services
-          verbs:
-          - '*'
-        - apiGroups:
           - apps
           resources:
           - statefulsets
@@ -298,6 +284,20 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          - secrets
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -311,6 +311,13 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - prometheusrules
+          - servicemonitors
+          verbs:
+          - '*'
         - apiGroups:
           - triggers.tekton.dev
           resources:
@@ -351,13 +358,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - monitoring.coreos.com
-          resources:
-          - prometheusrules
-          - servicemonitors
-          verbs:
-          - '*'
-        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -371,6 +371,12 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
         - apiGroups:
           - ""
           resources:
@@ -388,12 +394,6 @@ spec:
           - triggers.tekton.dev
           resources:
           - eventlisteners
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -430,7 +430,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.5-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.6-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -532,5 +532,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.4-aws
-  version: 0.0.5-aws
+  replaces: devopsinabox.v0.0.5-aws
+  version: 0.0.6-aws
