@@ -46,8 +46,8 @@ patches:
 EOF
 
 # update operator controller image
-export VERSION=0.0.2-aws
-export REPLACES=0.0.1-aws # the NAME of the CSV
+export VERSION=0.0.3-aws
+export REPLACES=0.0.2-aws # the NAME of the CSV
 export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 
 # generate bundle
@@ -68,7 +68,7 @@ sed -i "s/createdAt:.*$/createdAt: $(date +'%Y-%m-%d %H:%M:%SZ')/g" config/manif
 sed -i 's/env PATH=$(PATH)/env PATH="\\"$(PATH)\\""/g' Makefile
 
 # TODO set the replaces field in the CSV base
-make bundle CHANNELS=alpha,aws DEFAULT_CHANNEL=alpha
+make bundle CHANNELS=aws DEFAULT_CHANNEL=aws
 
 ## commit changes
 git add -A
@@ -85,7 +85,7 @@ docker push $BUNDLE_IMG
 
 # update catalog
 export CATALOG_IMAGE=quay.io/mrethers/operators-catalog
-export CATALOG_VERSION=v1.0.71
+export CATALOG_VERSION=v1.0.72
 opm index add --bundles $BUNDLE_IMG --from-index $CATALOG_IMAGE:latest --tag $CATALOG_IMAGE:$CATALOG_VERSION --build-tool docker --pull-tool docker
 docker tag $CATALOG_IMAGE:$CATALOG_VERSION $CATALOG_IMAGE:latest
 docker push $CATALOG_IMAGE:$CATALOG_VERSION
