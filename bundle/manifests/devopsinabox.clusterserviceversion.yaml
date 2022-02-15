@@ -157,14 +157,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.3-aws
-    createdAt: 2022-02-15 11:55:08Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.4-aws
+    createdAt: 2022-02-15 14:56:35Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.3-aws
+  name: devopsinabox.v0.0.4-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -312,27 +312,6 @@ spec:
           - update
           - watch
         - apiGroups:
-          - tekton.dev
-          resources:
-          - pipelines
-          - tasks
-          verbs:
-          - '*'
-        - apiGroups:
-          - monitoring.coreos.com
-          resources:
-          - prometheusrules
-          - servicemonitors
-          verbs:
-          - '*'
-        - apiGroups:
-          - triggers.tekton.dev
-          resources:
-          - triggerbindings
-          - triggertemplates
-          verbs:
-          - '*'
-        - apiGroups:
           - ""
           resources:
           - secrets
@@ -355,6 +334,27 @@ spec:
           - argoproj.io
           resources:
           - applications
+          verbs:
+          - '*'
+        - apiGroups:
+          - tekton.dev
+          resources:
+          - pipelines
+          - tasks
+          verbs:
+          - '*'
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - prometheusrules
+          - servicemonitors
+          verbs:
+          - '*'
+        - apiGroups:
+          - triggers.tekton.dev
+          resources:
+          - triggerbindings
+          - triggertemplates
           verbs:
           - '*'
         - apiGroups:
@@ -430,7 +430,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.3-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.4-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -532,5 +532,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.2-aws
-  version: 0.0.3-aws
+  replaces: devopsinabox.v0.0.3-aws
+  version: 0.0.4-aws

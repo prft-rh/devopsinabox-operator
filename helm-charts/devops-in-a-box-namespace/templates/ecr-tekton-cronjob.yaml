@@ -3,7 +3,7 @@ apiVersion: batch/v1beta1
 kind: CronJob
 metadata:
   annotations:
-  name: {{ include "devops-in-a-box-namespace.fullname" . }}-ecr-cred-helper
+  name: {{ include "devops-in-a-box-namespace.fullname" . }}-ecr-tekton
 spec:
   concurrencyPolicy: Allow
   failedJobsHistoryLimit: 1
