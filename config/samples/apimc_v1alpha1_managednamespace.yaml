@@ -12,6 +12,9 @@ spec:
     password: ""
     registry: https://quay.io
     username: ""
+  ecr:
+    accountId: "123456789415"
+    region: us-east-1
   fullnameOverride: ""
   git:
     baseurl: https://gitlab.com

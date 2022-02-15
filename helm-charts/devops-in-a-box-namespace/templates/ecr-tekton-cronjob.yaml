@@ -1,0 +1,57 @@
+{{- if .Values.ecr }}
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  annotations:
+  name: {{ include "devops-in-a-box-namespace.fullname" . }}-ecr-cred-helper
+spec:
+  concurrencyPolicy: Allow
+  failedJobsHistoryLimit: 1
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          containers:
+          - command:
+            - /bin/sh
+            - -c
+            - |-
+              SECRET_NAME={{ include "devops-in-a-box-namespace.fullname" . }}-registry-auth
+              TOKEN=`aws ecr get-login --region {{ .Values.ecr.region }} --registry-ids {{ .Values.ecr.accountId }} | cut -d' ' -f6`
+              TOKEN=`echo TOKEN | base64 -w0`
+              kubectl patch secret ${SECRET_NAME} --type=json -p="[{\"op\" : \"replace\" ,\"path\" : \"/data/password\" ,\"value\" : \"${TOKEN}\"}]"
+            env:
+            - name: AWS_DEFAULT_REGION
+              value: {{ .Values.ecr.region }}
+            - name: AWS_SECRET_ACCESS_KEY
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "devops-in-a-box-namespace.fullname" . }}-aws-secret
+                  key: secretAccessKey
+            - name: AWS_ACCESS_KEY_ID
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "devops-in-a-box-namespace.fullname" . }}-aws-secret
+                  key: accessKeyId
+            image: odaniait/aws-kubectl:latest
+            imagePullPolicy: IfNotPresent
+            name: ecr-cred-helper
+            resources: {}
+            securityContext:
+              capabilities: {}
+            terminationMessagePath: /dev/termination-log
+            terminationMessagePolicy: File
+          dnsPolicy: Default
+          hostNetwork: true
+          restartPolicy: Never
+          schedulerName: default-scheduler
+          securityContext: {}
+          terminationGracePeriodSeconds: 30
+  schedule: 0 */6 * * *
+  successfulJobsHistoryLimit: 3
+  suspend: false
+  {{- end }}

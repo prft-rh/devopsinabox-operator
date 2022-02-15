@@ -9,6 +9,10 @@ git:
   # the operator requires the namespace config repo and apps all use the same git URL prefix
   baseurl: "https://gitlab.com"
   
+ecr:
+  accountId: "123456789415"
+  region: "us-east-1"
+  
 container:
   registry: "https://quay.io"
   username: ""
