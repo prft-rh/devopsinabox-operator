@@ -55,7 +55,7 @@ export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 export BUNDLE_IMG=quay.io/mrethers/devopsinabox-operator-bundle:v$VERSION
 
 # inject "replaces" field with previous version
-#sed -i "s/replaces:.*$/replaces: devopsinabox.v$REPLACES/g" config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+sed -i "s/replaces:.*$/replaces: devopsinabox.v$REPLACES/g" config/manifests/bases/devopsinabox.clusterserviceversion.yaml
 
 # replaces image name in CSV annotation for OperatorHub (IMG contains forward slashes so needs to be escaped
 # https://stackoverflow.com/questions/584894/environment-variable-substitution-in-sed

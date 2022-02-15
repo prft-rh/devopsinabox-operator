@@ -70,3 +70,4 @@ spec:
     name: Perficient Inc
     url: http://www.perficient.com
   version: 0.0.0
+  replaces: placeholder
