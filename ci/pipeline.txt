@@ -46,8 +46,8 @@ patches:
 EOF
 
 # update operator controller image
-export VERSION=0.0.4-aws
-export REPLACES=0.0.3-aws # the NAME of the CSV
+export VERSION=0.0.5-aws
+export REPLACES=0.0.4-aws # the NAME of the CSV
 export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 
 # generate bundle
