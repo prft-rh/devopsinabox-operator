@@ -10,6 +10,7 @@ spec:
   config:
     auth:
       disable_signout_menu: true
+      disable_login_form: false
     auth.anonymous:
       enabled: true
     log:
@@ -24,6 +25,5 @@ spec:
           operator: In
           values:
             - devopsinabox
-  disableLoginForm: false
   ingress:
     enabled: true
