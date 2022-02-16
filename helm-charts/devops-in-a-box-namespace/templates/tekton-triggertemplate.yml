@@ -56,4 +56,7 @@ spec:
         - name: maven-settings
           secret:
             secretName: {{ .Values.maven.settings }}
+{{- else }}
+        - name: maven-settings
+          emptyDir: {}
 {{- end }}
