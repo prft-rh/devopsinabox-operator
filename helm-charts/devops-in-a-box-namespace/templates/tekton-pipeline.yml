@@ -157,4 +157,6 @@ spec:
         name: image-updater
   workspaces:
     - name: workspace
+{{- if .Values.maven.settings }}
     - name: maven-settings
+{{- end }}
