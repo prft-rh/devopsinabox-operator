@@ -157,14 +157,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.6-aws
-    createdAt: 2022-02-15 16:48:56Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.7-aws
+    createdAt: 2022-02-16 15:02:32Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.6-aws
+  name: devopsinabox.v0.0.7-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -238,65 +238,39 @@ spec:
           - update
           - watch
         - apiGroups:
-          - rbac.authorization.k8s.io
+          - ""
           resources:
-          - clusterrolebindings
-          - clusterroles
+          - pods
+          - services
+          - services/finalizers
+          - endpoints
+          - persistentvolumeclaims
+          - events
+          - configmaps
+          - secrets
           verbs:
-          - '*'
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
         - apiGroups:
           - apps
           resources:
+          - deployments
+          - daemonsets
+          - replicasets
           - statefulsets
           verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          - argocds
-          verbs:
-          - '*'
-        - apiGroups:
-          - logging.openshift.io
-          resources:
-          - clusterlogforwarders
-          verbs:
-          - '*'
-        - apiGroups:
-          - elasticsearch.k8s.elastic.co
-          resources:
-          - elasticsearches
-          verbs:
-          - '*'
-        - apiGroups:
-          - integreatly.org
-          resources:
-          - grafanadashboards
-          - grafanadatasources
-          - grafanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - kibana.k8s.elastic.co
-          resources:
-          - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - configmaps
-          - secrets
-          - services
-          verbs:
-          - '*'
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
         - apiGroups:
           - apimc.com.perficient
           resources:
@@ -312,51 +286,39 @@ spec:
           - update
           - watch
         - apiGroups:
-          - monitoring.coreos.com
-          resources:
-          - prometheusrules
-          - servicemonitors
-          verbs:
-          - '*'
-        - apiGroups:
-          - triggers.tekton.dev
-          resources:
-          - triggerbindings
-          - triggertemplates
-          verbs:
-          - '*'
-        - apiGroups:
           - ""
           resources:
+          - pods
+          - services
+          - services/finalizers
+          - endpoints
+          - persistentvolumeclaims
+          - events
+          - configmaps
           - secrets
-          - serviceaccounts
           verbs:
-          - '*'
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
         - apiGroups:
-          - rbac.authorization.k8s.io
+          - apps
           resources:
-          - rolebindings
+          - deployments
+          - daemonsets
+          - replicasets
+          - statefulsets
           verbs:
-          - '*'
-        - apiGroups:
-          - batch
-          resources:
-          - cronjobs
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          verbs:
-          - '*'
-        - apiGroups:
-          - tekton.dev
-          resources:
-          - pipelines
-          - tasks
-          verbs:
-          - '*'
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
         - apiGroups:
           - apimc.com.perficient
           resources:
@@ -372,30 +334,39 @@ spec:
           - update
           - watch
         - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
           - ""
           resources:
-          - persistentvolumeclaims
+          - pods
           - services
+          - services/finalizers
+          - endpoints
+          - persistentvolumeclaims
+          - events
+          - configmaps
+          - secrets
           verbs:
-          - '*'
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
         - apiGroups:
-          - apps.openshift.io
+          - apps
           resources:
-          - deploymentconfigs
+          - deployments
+          - daemonsets
+          - replicasets
+          - statefulsets
           verbs:
-          - '*'
-        - apiGroups:
-          - triggers.tekton.dev
-          resources:
-          - eventlisteners
-          verbs:
-          - '*'
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
         - apiGroups:
           - authentication.k8s.io
           resources:
@@ -430,7 +401,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.6-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.7-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -532,5 +503,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.5-aws
-  version: 0.0.6-aws
+  replaces: devopsinabox.v0.0.6-aws
+  version: 0.0.7-aws
