@@ -85,10 +85,8 @@ spec:
             - 'clean'
             - 'package'
       workspaces:
-{{- if .Values.maven.settings }}
         - name: maven-settings
           workspace: maven-settings
-{{- end }}
         - name: source
           workspace: workspace
     - name: build-container-image
