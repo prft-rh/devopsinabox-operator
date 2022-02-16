@@ -1,0 +1,171 @@
+parameters:
+  - name: INCREMENT_DEVOPS_VERSION
+    displayName: Version increment for devopsinabox
+    type: string
+    default: patch
+    values:
+      - major
+      - minor
+      - patch
+
+  - name: INCREMENT_CATALOG_VERSION
+    displayName: Version increment for catalog
+    type: string
+    default: patch
+    values:
+      - major
+      - minor
+      - patch
+
+trigger: none
+
+jobs:
+  - job: Build_And_Deploy
+    timeoutInMinutes: 3
+
+    displayName: DevopsInABox Deploy
+    pool:
+      vmImage: ubuntu-latest
+    steps:
+
+      # Install Python
+      - task: UsePythonVersion@0
+        inputs:
+          versionSpec: '3.x'
+          addToPath: true
+        displayName: 'Install Python'
+  
+      - task: AzureCLI@2
+        inputs:
+          azureSubscription: 'VWAC Core Platform Sandbox - Perficient(4)(62bc6e2a-0122-45b1-9b22-c00d9a111db8)-VW.AC-Common'
+          scriptType: 'bash'
+          scriptLocation: 'inlineScript'
+          inlineScript: |
+            pip install natsort
+            az --version
+            TAG_DATA=$(az acr repository show-tags -n nubiumoperators --repository devopsinabox-operator --orderby time_desc)
+            export OLD_VERSION=$(python -c "import natsort; data=$TAG_DATA; data=natsort.natsorted(data,reverse=True); print(data[0]);")
+            echo "##vso[task.setvariable variable=OLD_VERSION]$OLD_VERSION"
+            TAG_DATA=$(az acr repository show-tags -n nubiumoperators --repository operators-catalog --orderby time_desc)
+            export OLD_CATALOG_VERSION=$(python -c "import natsort; data=$TAG_DATA; data=natsort.natsorted(data,reverse=True); print(data[0]);")
+            echo "##vso[task.setvariable variable=OLD_CATALOG_VERSION]$OLD_CATALOG_VERSION"
+            echo $OLD_VERSION
+            echo $OLD_CATALOG_VERSION
+          addSpnToEnvironment: true
+
+      # Install Operator SDK
+      - script: |
+          export ARCH=$(case $(uname -m) in x86_64) echo -n amd64 ;; aarch64) echo -n arm64 ;; *) echo -n $(uname -m) ;; esac)
+          export OS=$(uname | awk '{print tolower($0)}')
+
+          export OPERATOR_SDK_DL_URL=https://github.com/operator-framework/operator-sdk/releases/download/v1.15.0
+          curl -LO ${OPERATOR_SDK_DL_URL}/operator-sdk_${OS}_${ARCH}
+
+          gpg --keyserver keyserver.ubuntu.com --recv-keys 052996E2A20B5C7E
+
+          curl -LO ${OPERATOR_SDK_DL_URL}/checksums.txt
+          curl -LO ${OPERATOR_SDK_DL_URL}/checksums.txt.asc
+          gpg -u "Operator SDK (release) <cncf-operator-sdk@cncf.io>" --verify checksums.txt.asc
+
+          grep operator-sdk_${OS}_${ARCH} checksums.txt | sha256sum -c -
+
+          chmod +x operator-sdk_${OS}_${ARCH} && sudo mv operator-sdk_${OS}_${ARCH} /usr/local/bin/operator-sdk
+
+          rm checksums.txt
+          rm checksums.txt.asc
+        displayName: 'Install Operator SDK'
+
+      # Install Openshift CLI Tools
+      - script: |
+          echo $PATH
+          curl https://mirror.openshift.com/pub/openshift-v4/clients/ocp/latest/openshift-client-linux.tar.gz > openshift-client-linux.tar.gz
+          curl https://mirror.openshift.com/pub/openshift-v4/x86_64/clients/ocp/latest/opm-linux.tar.gz > opm-linux.tar.gz
+          mkdir openshift
+          tar -zxvf openshift-client-linux.tar.gz -C openshift
+          tar -zxvf opm-linux.tar.gz -C openshift
+          echo 'export PATH=$PATH:~/openshift' >> ~/.bashrc && source ~/.bashrc
+          sudo mv ./openshift/opm /usr/local/bin/
+          rm openshift-client-linux.tar.gz
+          rm opm-linux.tar.gz
+        displayName: 'Install Openshift CLI Tools'
+
+      # Check versions
+      - script: |
+          yq --version
+          docker --version
+          operator-sdk version
+          git --version
+          oc version
+          opm version
+        displayName: 'Check versions'
+
+      # Login
+      - script: |
+          oc login $OC_SERVER --username=$OC_USERNAME --password=$OC_PASSWORD
+          docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_SERVER
+        env:
+          OC_SERVER: $(OC_SERVER)
+          OC_USERNAME: $(OC_USERNAME)
+          OC_PASSWORD: $(OC_PASSWORD)
+          DOCKER_SERVER: $(REGISTRY)
+          DOCKER_USERNAME: $(DOCKER_USERNAME)
+          DOCKER_PASSWORD: $(DOCKER_PASSWORD)
+
+      # Generate operator files
+      - script: |      
+
+          mkdir devopsinabox
+          cd devopsinabox
+    
+          operator-sdk init --plugins=helm --domain=com.perficient --group=apimc --version=v1alpha1 --kind=DevSecOpsManager --helm-chart=../devopsinabox-helm-chart
+          operator-sdk create api --group=apimc --version=v1alpha1 --kind=ManagedNamespace --helm-chart=../devopsinabox-namespace-helm-chart
+          operator-sdk create api --group=apimc --version=v1alpha1 --kind=SpringBootApp --helm-chart=../spring-boot-app-helm-chart
+          operator-sdk create api --group=apimc --version=v1alpha1 --kind=DotNetApp --helm-chart=../dotnet-app-helm-chart
+
+          rm -Rf ../devopsinabox-operator/helm-charts
+
+          cp -R . ../devopsinabox-operator
+          cd ../devopsinabox-operator
+          
+          cat << EOF >> config/default/kustomization.yaml
+          patches:
+          - path: manager-memory.yaml
+          EOF
+
+          cat << EOF >> config/rbac/kustomization.yaml
+          patches:
+          - path: service_account.yaml
+          EOF
+
+          export OLD_VERSION=$(OLD_VERSION)
+          export VERSION=$(../tools/increment_version.sh $OLD_VERSION $INCREMENT_DEVOPS_VERSION)
+          export IMG=nubiumoperators.azurecr.io/devopsinabox-operator:v$VERSION
+          export BUNDLE_IMG=nubiumoperators.azurecr.io/devopsinabox-operator-bundle:v$VERSION
+
+          yq -i eval '.spec.version = "'$VERSION'"' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+          yq -i eval '.metadata.annotations.containerImage = "'$IMG'"' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+          DATE="$(date +'%Y-%m-%d %H:%M:%SZ')"
+          yq -i eval '.metadata.annotations.createdAt = "'$DATE'"' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+          REPLACES=devopsinabox.$OLD_VERSION
+          yq -i eval '.spec.replaces = "'$REPLACES'"' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+          NAME=devopsinabox.v$VERSION
+          yq -i eval '.metadata.name = "'$NAME'"' config/manifests/bases/devopsinabox.clusterserviceversion.yaml
+          
+          make bundle DEFAULT_CHANNEL=alpha
+          make docker-build docker-push
+          make bundle-build
+          docker push $BUNDLE_IMG
+
+          export OLD_CATALOG_VERSION=$(OLD_CATALOG_VERSION)
+          export CATALOG_VERSION=$(../tools/increment_version.sh $OLD_CATALOG_VERSION $INCREMENT_CATALOG_VERSION)
+          export CATALOG_IMAGE_LATEST=nubiumoperators.azurecr.io/operators-catalog:latest
+          export CATALOG_IMAGE_VERSION=nubiumoperators.azurecr.io/operators-catalog:v$CATALOG_VERSION
+          opm index add --bundles $BUNDLE_IMG --from-index $CATALOG_IMAGE_LATEST --tag $CATALOG_IMAGE_VERSION --build-tool docker --pull-tool docker
+          docker tag $CATALOG_IMAGE_VERSION $CATALOG_IMAGE_LATEST
+          docker push $CATALOG_IMAGE_VERSION
+          docker push $CATALOG_IMAGE_LATEST
+
+        displayName: 'Generate operator files'
+        env:
+          INCREMENT_DEVOPS_VERSION: ${{ parameters.INCREMENT_DEVOPS_VERSION }}
+          INCREMENT_CATALOG_VERSION: ${{ parameters.INCREMENT_CATALOG_VERSION }}
