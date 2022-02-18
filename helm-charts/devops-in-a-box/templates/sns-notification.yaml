@@ -1,0 +1,31 @@
+apiVersion: apimc.com.perficient/v1alpha1
+kind: SpringBootApp
+metadata:
+  name: sns-notification
+spec:
+  autoscaling:
+    enabled: false
+    maxReplicas: 200
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  config:
+    repo: notneeded
+    repoUrl: notneeded
+  container:
+    image: quay.io/mrethers/sns-notification
+    registry: notneeded
+  fullnameOverride: ""
+  git:
+    branch: master
+    module: ""
+    url: notneeded
+  maven:
+    mirror: ""
+  nameOverride: ""
+  podAnnotations: {}
+  replicaCount: 1
+  resources: {}
+  service:
+    port: 8080
+  serviceAccount:
+    annotations: {}

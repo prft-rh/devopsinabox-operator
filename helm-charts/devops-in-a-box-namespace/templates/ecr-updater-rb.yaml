@@ -1,0 +1,12 @@
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: {{ include "devops-in-a-box-namespace.fullname" . }}-ecr-updater
+subjects:
+  - kind: ServiceAccount
+    name: {{ include "devops-in-a-box-namespace.fullname" . }}-ecr-updater
+    namespace: {{ .Release.Namespace }}
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: {{ include "devops-in-a-box-namespace.fullname" . }}-ecr-updater

@@ -4,30 +4,21 @@ metadata:
   name: image-updater
 spec:
   params:
-    - description: 'The driver to use for connecting, ''gitlab'' or ''github''.'
-      name: driver
-      type: string
-    - default: ''
-      description: >
-        Required for private GitLab and Github installations  e.g.
-        https://gitlab.example.com leave blank otherwise.
-      name: api-endpoint
+    - description: 'The AWS region'
+      name: region
       type: string
     - description: Path within the source-repo to update
       name: file-path
       type: string
-    - description: Image repo e.g. org/repo that is being updated
-      name: image-repo
+    - description: Name of the git repo that is being updated
+      name: repo
       type: string
     - description: 'Image URL to populate file with e.g. myorg/my-image:c2b4eff'
       name: new-image-url
       type: string
     - default: main
       description: Branch to fetch for updating
-      name: source-branch
-      type: string
-    - description: Git repository to update e.g. org/repo
-      name: source-repo
+      name: target-branch
       type: string
     - description: >
         Prefix for naming automatically generated branch, if empty, this will
@@ -39,29 +30,30 @@ spec:
         spec.template.spec.containers.0.image
       name: update-key
       type: string
-    - default: 'false'
-      description: Allow insecure server connections when using SSL
-      name: insecure
-      type: string
   steps:
-    - args:
-        - update
-        - '--driver=$(params.driver)'
-        - '--file-path=$(params.file-path)'
-        - '--image-repo=$(params.image-repo)'
-        - '--new-image-url=$(params.new-image-url)'
-        - '--source-branch=$(params.source-branch)'
-        - '--source-repo=$(params.source-repo)'
-        - '--update-key=$(params.update-key)'
-        - '--branch-generate-name=$(params.branch-generate-name)'
-        - '--api-endpoint=$(params.api-endpoint)'
-        - '--insecure=$(params.insecure)'
+    - script: |
+        update -g $(params.region) -f $(params.file-path) -t $(params.target-branch) -i $(params.new-image-url) -r $(params.repo) -p $(params.branch-generate-name)- -h $(params.update-key)
       env:
-        - name: AUTH_TOKEN
+        - name: AWS_SECRET_ACCESS_KEY
           valueFrom:
             secretKeyRef:
-              key: token
-              name: image-updater-secret
-      image: 'bigkevmcd/image-updater:latest'
+              key: secretAccessKey
+              name: {{ include "devops-in-a-box-namespace.fullname" . }}-aws-secret
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              key: accessKeyId
+              name: {{ include "devops-in-a-box-namespace.fullname" . }}-aws-secret
+        - name: GIT_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              key: password
+              name: {{ include "devops-in-a-box-namespace.fullname" . }}-git-auth
+        - name: GIT_USERNAME
+          valueFrom:
+            secretKeyRef:
+              key: username
+              name: {{ include "devops-in-a-box-namespace.fullname" . }}-git-auth
+      image: 'quay.io/mrethers/codecommit-image-updater:latest'
       name: update-image
       resources: {}

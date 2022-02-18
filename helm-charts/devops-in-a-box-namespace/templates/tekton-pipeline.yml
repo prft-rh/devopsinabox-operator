@@ -35,6 +35,10 @@ spec:
     - default: prod
       name: PROD_CONFIG_BRANCH
       type: string
+    # AWS region
+    - default: 'us-east-1'
+      name: REGION
+      type: string
     # the name of the field holding the container image in the CRD (Spring Boot/NodeJS/etc)
     - default: "spec.container.image"
       name: IMAGE_FIELD_NAME
@@ -105,24 +109,20 @@ spec:
           workspace: workspace
     - name: update-stage-deployment-image
       params:
-        - name: driver
-          value: github
+        - name: region
+          value: $(params.REGION)
         - name: file-path
           value: $(params.APP_NAME).yaml
-        - name: image-repo
-          value: $(params.IMAGE_REPO)
         - name: new-image-url
           value: '$(params.IMAGE_REPO):$(params.GIT_REVISION)'
-        - name: source-branch
+        - name: target-branch
           value: $(params.STAGE_CONFIG_BRANCH)
-        - name: source-repo
+        - name: repo
           value: $(params.CONFIG_REPO)
         - name: update-key
           value: $(params.IMAGE_FIELD_NAME)
-        - name: insecure
-          value: 'true'
         - name: branch-generate-name
-          value: ''
+          value: 'dev-release-'
       runAfter:
         - build-container-image
       taskRef:
@@ -130,24 +130,20 @@ spec:
         name: image-updater
     - name: update-prod-deployment-image
       params:
-        - name: driver
-          value: github
+        - name: region
+          value: $(params.REGION)
         - name: file-path
           value: $(params.APP_NAME).yaml
-        - name: image-repo
-          value: $(params.IMAGE_REPO)
         - name: new-image-url
           value: '$(params.IMAGE_REPO):$(params.GIT_REVISION)'
-        - name: source-branch
+        - name: target-branch
           value: $(params.PROD_CONFIG_BRANCH)
-        - name: source-repo
+        - name: repo
           value: $(params.CONFIG_REPO)
         - name: update-key
           value: $(params.IMAGE_FIELD_NAME)
-        - name: insecure
-          value: 'true'
         - name: branch-generate-name
-          value: 'image-promotion-'
+          value: 'prod-release-'
       runAfter:
         - build-container-image
       taskRef:

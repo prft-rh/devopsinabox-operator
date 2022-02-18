@@ -55,11 +55,10 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "integreatly.org"
+  - "argoproj.io"
   resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
+  - "applications"
+  - "argocds"
 - verbs:
   - "*"
   apiGroups:
@@ -72,6 +71,12 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apimc.com.perficient"
+  resources:
+  - "springbootapps"
 - verbs:
   - "*"
   apiGroups:
@@ -89,13 +94,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
-- verbs:
-  - "*"
-  apiGroups:
   - "logging.openshift.io"
   resources:
   - "clusterlogforwarders"
@@ -105,6 +103,14 @@ rules:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
+- verbs:
+  - "*"
+  apiGroups:
+  - "integreatly.org"
+  resources:
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -136,12 +142,14 @@ rules:
   - "rbac.authorization.k8s.io"
   resources:
   - "rolebindings"
+  - "roles"
 - verbs:
   - "*"
   apiGroups:
   - "batch"
   resources:
   - "cronjobs"
+  - "jobs"
 - verbs:
   - "*"
   apiGroups:
