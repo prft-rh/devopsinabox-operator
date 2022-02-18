@@ -159,14 +159,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.14-aws
-    createdAt: 2022-02-18 16:50:23Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.15-aws
+    createdAt: 2022-02-18 17:02:55Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.14-aws
+  name: devopsinabox.v0.0.15-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -247,15 +247,34 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - kibana.k8s.elastic.co
+          - argoproj.io
           resources:
-          - kibanas
+          - applications
+          - argocds
+          verbs:
+          - '*'
+        - apiGroups:
+          - logging.openshift.io
+          resources:
+          - clusterlogforwarders
+          verbs:
+          - '*'
+        - apiGroups:
+          - elasticsearch.k8s.elastic.co
+          resources:
+          - elasticsearches
           verbs:
           - '*'
         - apiGroups:
           - route.openshift.io
           resources:
           - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - apimc.com.perficient
+          resources:
+          - springbootapps
           verbs:
           - '*'
         - apiGroups:
@@ -267,15 +286,9 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - elasticsearch.k8s.elastic.co
+          - apps
           resources:
-          - elasticsearches
-          verbs:
-          - '*'
-        - apiGroups:
-          - logging.openshift.io
-          resources:
-          - clusterlogforwarders
+          - statefulsets
           verbs:
           - '*'
         - apiGroups:
@@ -287,22 +300,9 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - apimc.com.perficient
+          - kibana.k8s.elastic.co
           resources:
-          - springbootapps
-          verbs:
-          - '*'
-        - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          - argocds
+          - kibanas
           verbs:
           - '*'
         - apiGroups:
@@ -337,7 +337,6 @@ spec:
           - batch
           resources:
           - cronjobs
-          - jobs
           verbs:
           - '*'
         - apiGroups:
@@ -382,13 +381,6 @@ spec:
           - update
           - watch
         - apiGroups:
-          - ""
-          resources:
-          - persistentvolumeclaims
-          - services
-          verbs:
-          - '*'
-        - apiGroups:
           - apps.openshift.io
           resources:
           - deploymentconfigs
@@ -404,6 +396,13 @@ spec:
           - route.openshift.io
           resources:
           - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - persistentvolumeclaims
+          - services
           verbs:
           - '*'
         - apiGroups:
@@ -440,7 +439,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.14-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.15-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -542,5 +541,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.13-aws
-  version: 0.0.14-aws
+  replaces: devopsinabox.v0.0.14-aws
+  version: 0.0.15-aws

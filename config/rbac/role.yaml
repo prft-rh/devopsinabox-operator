@@ -55,15 +55,34 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "kibana.k8s.elastic.co"
+  - "argoproj.io"
   resources:
-  - "kibanas"
+  - "applications"
+  - "argocds"
+- verbs:
+  - "*"
+  apiGroups:
+  - "logging.openshift.io"
+  resources:
+  - "clusterlogforwarders"
+- verbs:
+  - "*"
+  apiGroups:
+  - "elasticsearch.k8s.elastic.co"
+  resources:
+  - "elasticsearches"
 - verbs:
   - "*"
   apiGroups:
   - "route.openshift.io"
   resources:
   - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apimc.com.perficient"
+  resources:
+  - "springbootapps"
 - verbs:
   - "*"
   apiGroups:
@@ -75,15 +94,9 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "elasticsearch.k8s.elastic.co"
+  - "apps"
   resources:
-  - "elasticsearches"
-- verbs:
-  - "*"
-  apiGroups:
-  - "logging.openshift.io"
-  resources:
-  - "clusterlogforwarders"
+  - "statefulsets"
 - verbs:
   - "*"
   apiGroups:
@@ -95,22 +108,9 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "apimc.com.perficient"
+  - "kibana.k8s.elastic.co"
   resources:
-  - "springbootapps"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
+  - "kibanas"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -149,7 +149,6 @@ rules:
   - "batch"
   resources:
   - "cronjobs"
-  - "jobs"
 - verbs:
   - "*"
   apiGroups:
@@ -198,13 +197,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - ""
-  resources:
-  - "persistentvolumeclaims"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
@@ -220,5 +212,12 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "persistentvolumeclaims"
+  - "services"
 
 #+kubebuilder:scaffold:rules
