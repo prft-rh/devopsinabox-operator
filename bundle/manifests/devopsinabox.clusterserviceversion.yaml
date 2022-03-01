@@ -159,14 +159,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.16-aws
-    createdAt: 2022-03-01 14:33:58Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.17-aws
+    createdAt: 2022-03-01 14:46:18Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.16-aws
+  name: devopsinabox.v0.0.17-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -247,27 +247,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          - argocds
-          verbs:
-          - '*'
-        - apiGroups:
-          - logging.openshift.io
-          resources:
-          - clusterlogforwarders
-          verbs:
-          - '*'
-        - apiGroups:
-          - integreatly.org
-          resources:
-          - grafanadashboards
-          - grafanadatasources
-          - grafanas
-          verbs:
-          - '*'
-        - apiGroups:
           - route.openshift.io
           resources:
           - routes
@@ -294,6 +273,14 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - integreatly.org
+          resources:
+          - grafanadashboards
+          - grafanadatasources
+          - grafanas
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -303,6 +290,19 @@ spec:
           - apps
           resources:
           - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          - argocds
+          verbs:
+          - '*'
+        - apiGroups:
+          - logging.openshift.io
+          resources:
+          - clusterlogforwarders
           verbs:
           - '*'
         - apiGroups:
@@ -358,6 +358,7 @@ spec:
           - batch
           resources:
           - cronjobs
+          - jobs
           verbs:
           - '*'
         - apiGroups:
@@ -381,12 +382,6 @@ spec:
           - update
           - watch
         - apiGroups:
-          - triggers.tekton.dev
-          resources:
-          - eventlisteners
-          verbs:
-          - '*'
-        - apiGroups:
           - route.openshift.io
           resources:
           - routes
@@ -403,6 +398,12 @@ spec:
           - apps.openshift.io
           resources:
           - deploymentconfigs
+          verbs:
+          - '*'
+        - apiGroups:
+          - triggers.tekton.dev
+          resources:
+          - eventlisteners
           verbs:
           - '*'
         - apiGroups:
@@ -439,7 +440,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.16-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.17-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -541,5 +542,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.15-aws
-  version: 0.0.16-aws
+  replaces: devopsinabox.v0.0.16-aws
+  version: 0.0.17-aws
