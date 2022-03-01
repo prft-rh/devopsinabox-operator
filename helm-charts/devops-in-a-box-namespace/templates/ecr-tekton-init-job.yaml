@@ -13,7 +13,7 @@ spec:
         - /bin/sh
         - -c
         - |-
-          SECRET_NAME={{ include "devops-in-a-box-namespace.fullname" . }}-pull-secret
+          SECRET_NAME={{ include "devops-in-a-box-namespace.fullname" . }}-registry-auth
           oc delete secret --ignore-not-found ${SECRET_NAME}
           oc create secret generic ${SECRET_NAME} \
           --type=kubernetes.io/basic-auth \

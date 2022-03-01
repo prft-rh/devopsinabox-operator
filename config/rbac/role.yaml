@@ -55,17 +55,23 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
-- verbs:
-  - "*"
-  apiGroups:
   - ""
   resources:
   - "configmaps"
   - "secrets"
   - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "logging.openshift.io"
+  resources:
+  - "clusterlogforwarders"
 - verbs:
   - "*"
   apiGroups:
@@ -75,9 +81,10 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "kibana.k8s.elastic.co"
+  - "argoproj.io"
   resources:
-  - "kibanas"
+  - "applications"
+  - "argocds"
 - verbs:
   - "*"
   apiGroups:
@@ -89,28 +96,21 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "kibana.k8s.elastic.co"
+  resources:
+  - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
   - "apimc.com.perficient"
   resources:
   - "springbootapps"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
-- verbs:
-  - "*"
-  apiGroups:
-  - "logging.openshift.io"
-  resources:
-  - "clusterlogforwarders"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -129,6 +129,19 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "cronjobs"
+  - "jobs"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
 - verbs:
   - "*"
   apiGroups:
@@ -164,19 +177,6 @@ rules:
   resources:
   - "rolebindings"
   - "roles"
-- verbs:
-  - "*"
-  apiGroups:
-  - "batch"
-  resources:
-  - "cronjobs"
-  - "jobs"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -198,12 +198,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
-- verbs:
-  - "*"
-  apiGroups:
   - ""
   resources:
   - "persistentvolumeclaims"
@@ -220,5 +214,11 @@ rules:
   - "triggers.tekton.dev"
   resources:
   - "eventlisteners"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
 
 #+kubebuilder:scaffold:rules
