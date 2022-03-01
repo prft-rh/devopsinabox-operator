@@ -159,14 +159,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.18-aws
-    createdAt: 2022-03-01 14:58:58Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.19-aws
+    createdAt: 2022-03-01 15:02:33Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.18-aws
+  name: devopsinabox.v0.0.19-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -247,6 +247,26 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - elasticsearch.k8s.elastic.co
+          resources:
+          - elasticsearches
+          verbs:
+          - '*'
+        - apiGroups:
+          - integreatly.org
+          resources:
+          - grafanadashboards
+          - grafanadatasources
+          - grafanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
           - ""
           resources:
           - configmaps
@@ -261,18 +281,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - logging.openshift.io
-          resources:
-          - clusterlogforwarders
-          verbs:
-          - '*'
-        - apiGroups:
-          - elasticsearch.k8s.elastic.co
-          resources:
-          - elasticsearches
-          verbs:
-          - '*'
-        - apiGroups:
           - argoproj.io
           resources:
           - applications
@@ -280,23 +288,15 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - integreatly.org
+          - logging.openshift.io
           resources:
-          - grafanadashboards
-          - grafanadatasources
-          - grafanas
+          - clusterlogforwarders
           verbs:
           - '*'
         - apiGroups:
           - kibana.k8s.elastic.co
           resources:
           - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -319,26 +319,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - batch
-          resources:
-          - cronjobs
-          - jobs
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          verbs:
-          - '*'
-        - apiGroups:
-          - tekton.dev
-          resources:
-          - pipelines
-          - tasks
-          verbs:
-          - '*'
         - apiGroups:
           - monitoring.coreos.com
           resources:
@@ -365,6 +345,26 @@ spec:
           resources:
           - rolebindings
           - roles
+          verbs:
+          - '*'
+        - apiGroups:
+          - batch
+          resources:
+          - cronjobs
+          - jobs
+          verbs:
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          verbs:
+          - '*'
+        - apiGroups:
+          - tekton.dev
+          resources:
+          - pipelines
+          - tasks
           verbs:
           - '*'
         - apiGroups:
@@ -440,7 +440,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.18-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.19-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -542,5 +542,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.17-aws
-  version: 0.0.18-aws
+  replaces: devopsinabox.v0.0.18-aws
+  version: 0.0.19-aws
