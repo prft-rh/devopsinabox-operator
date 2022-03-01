@@ -16,10 +16,14 @@ spec:
             - /bin/sh
             - -c
             - |-
-              SECRET_NAME={{ include "devops-in-a-box-namespace.fullname" . }}-registry-auth
-              TOKEN=`aws ecr get-login-password --region {{ .Values.aws.region }}`
-              TOKEN=`echo -n $TOKEN | base64 -w0`
-              oc patch secret ${SECRET_NAME} --type=json -p="[{\"op\" : \"replace\" ,\"path\" : \"/data/password\" ,\"value\" : \"${TOKEN}\"}]"
+              SECRET_NAME={{ include "devops-in-a-box-namespace.fullname" . }}-pull-secret
+              oc delete secret --ignore-not-found ${SECRET_NAME}
+              oc create secret generic ${SECRET_NAME} \
+              --type=kubernetes.io/basic-auth \
+              --from-literal=username=AWS \
+              --from-literal=password=`aws ecr get-login-password --region {{ .Values.aws.region }}`
+              oc annotate secret ${SECRET_NAME} tekton.dev/docker-0={{ .Values.aws.accountId }}.dkr.ecr.{{ .Values.aws.region }}.amazonaws.com
+              echo "Created secret $SECRET_NAME"
             env:
             - name: AWS_DEFAULT_REGION
               value: {{ .Values.aws.region }}

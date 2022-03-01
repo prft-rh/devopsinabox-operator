@@ -1,0 +1,40 @@
+apiVersion: batch/v1beta1
+kind: Job
+metadata:
+  annotations:
+  # we want to start that job everytime the aws creds change. That's in addition to the existing cronjob to rotate after that
+  name: ecr-tekton-{{ include (print $.Template.BasePath "/aws-secret.yaml") . | sha256sum |  trunc 52 }}
+spec:
+  template:
+    spec:
+      serviceAccountName: {{ include "devops-in-a-box-namespace.fullname" . }}-ecr-updater
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - |-
+          SECRET_NAME={{ include "devops-in-a-box-namespace.fullname" . }}-pull-secret
+          oc delete secret --ignore-not-found ${SECRET_NAME}
+          oc create secret generic ${SECRET_NAME} \
+          --type=kubernetes.io/basic-auth \
+          --from-literal=username=AWS \
+          --from-literal=password=`aws ecr get-login-password --region {{ .Values.aws.region }}`
+          oc annotate secret ${SECRET_NAME} tekton.dev/docker-0={{ .Values.aws.accountId }}.dkr.ecr.{{ .Values.aws.region }}.amazonaws.com
+          echo "Created secret $SECRET_NAME"
+        env:
+        - name: AWS_DEFAULT_REGION
+          value: {{ .Values.aws.region }}
+        - name: AWS_SECRET_ACCESS_KEY
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "devops-in-a-box-namespace.fullname" . }}-aws-secret
+              key: secretAccessKey
+        - name: AWS_ACCESS_KEY_ID
+          valueFrom:
+            secretKeyRef:
+              name: {{ include "devops-in-a-box-namespace.fullname" . }}-aws-secret
+              key: accessKeyId
+        image: quay.io/mrethers/rosa-installer:latest
+        imagePullPolicy: Always
+        name: ecr-cred-helper
+      restartPolicy: Never

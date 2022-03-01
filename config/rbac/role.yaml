@@ -68,21 +68,17 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "elasticsearch.k8s.elastic.co"
+  - "integreatly.org"
   resources:
-  - "elasticsearches"
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
 - verbs:
   - "*"
   apiGroups:
   - "route.openshift.io"
   resources:
   - "routes"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apimc.com.perficient"
-  resources:
-  - "springbootapps"
 - verbs:
   - "*"
   apiGroups:
@@ -94,23 +90,27 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "apps"
+  - "elasticsearch.k8s.elastic.co"
   resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "integreatly.org"
-  resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
+  - "elasticsearches"
 - verbs:
   - "*"
   apiGroups:
   - "kibana.k8s.elastic.co"
   resources:
   - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apimc.com.perficient"
+  resources:
+  - "springbootapps"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -129,6 +129,27 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
+- verbs:
+  - "*"
+  apiGroups:
+  - "monitoring.coreos.com"
+  resources:
+  - "prometheusrules"
+  - "servicemonitors"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "triggerbindings"
+  - "triggertemplates"
 - verbs:
   - "*"
   apiGroups:
@@ -155,27 +176,6 @@ rules:
   - "argoproj.io"
   resources:
   - "applications"
-- verbs:
-  - "*"
-  apiGroups:
-  - "tekton.dev"
-  resources:
-  - "pipelines"
-  - "tasks"
-- verbs:
-  - "*"
-  apiGroups:
-  - "monitoring.coreos.com"
-  resources:
-  - "prometheusrules"
-  - "servicemonitors"
-- verbs:
-  - "*"
-  apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "triggerbindings"
-  - "triggertemplates"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -197,12 +197,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "apps.openshift.io"
-  resources:
-  - "deploymentconfigs"
-- verbs:
-  - "*"
-  apiGroups:
   - "triggers.tekton.dev"
   resources:
   - "eventlisteners"
@@ -219,5 +213,11 @@ rules:
   resources:
   - "persistentvolumeclaims"
   - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps.openshift.io"
+  resources:
+  - "deploymentconfigs"
 
 #+kubebuilder:scaffold:rules
