@@ -1,9 +1,12 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
+  generateName: ecr-registry-auth-updater
   annotations:
-  # we want to start that job everytime the aws creds change. That's in addition to the existing cronjob to rotate after that
-  name: ecr-tekton-{{ include (print $.Template.BasePath "/aws-secret.yaml") . | sha256sum |  trunc 52 }}
+    # This is what defines this resource as a hook. Without this line, the
+    # job is considered part of the release.
+    "helm.sh/hook": post-install,post-upgrade
+    "helm.sh/hook-delete-policy": hook-succeeded
 spec:
   template:
     spec:
