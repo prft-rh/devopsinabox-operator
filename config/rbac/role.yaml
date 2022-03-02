@@ -221,6 +221,7 @@ rules:
   - "deploymentconfigs"
 
 #+kubebuilder:scaffold:rules
+- verbs:  
   - "*"
   apiGroups:
   - "batch"
