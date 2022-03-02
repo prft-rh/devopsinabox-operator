@@ -55,24 +55,16 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - ""
-  resources:
-  - "configmaps"
-  - "secrets"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
   - "argoproj.io"
   resources:
   - "applications"
   - "argocds"
+- verbs:
+  - "*"
+  apiGroups:
+  - "elasticsearch.k8s.elastic.co"
+  resources:
+  - "elasticsearches"
 - verbs:
   - "*"
   apiGroups:
@@ -82,9 +74,17 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "elasticsearch.k8s.elastic.co"
+  - "integreatly.org"
   resources:
-  - "elasticsearches"
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "kibana.k8s.elastic.co"
+  resources:
+  - "kibanas"
 - verbs:
   - "*"
   apiGroups:
@@ -100,17 +100,17 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "integreatly.org"
+  - ""
   resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
+  - "configmaps"
+  - "secrets"
+  - "services"
 - verbs:
   - "*"
   apiGroups:
-  - "kibana.k8s.elastic.co"
+  - "apps"
   resources:
-  - "kibanas"
+  - "statefulsets"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -129,6 +129,13 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
 - verbs:
   - "*"
   apiGroups:
@@ -169,13 +176,6 @@ rules:
   - "argoproj.io"
   resources:
   - "applications"
-- verbs:
-  - "*"
-  apiGroups:
-  - "tekton.dev"
-  resources:
-  - "pipelines"
-  - "tasks"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -197,12 +197,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
-- verbs:
-  - "*"
-  apiGroups:
   - ""
   resources:
   - "persistentvolumeclaims"
@@ -219,5 +213,17 @@ rules:
   - "triggers.tekton.dev"
   resources:
   - "eventlisteners"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
 
 #+kubebuilder:scaffold:rules
+- verbs  
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "jobs"
