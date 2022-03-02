@@ -55,29 +55,22 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "route.openshift.io"
+  - "argoproj.io"
   resources:
-  - "routes"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "configmaps"
-  - "secrets"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
-  - "logging.openshift.io"
-  resources:
-  - "clusterlogforwarders"
+  - "applications"
+  - "argocds"
 - verbs:
   - "*"
   apiGroups:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
+- verbs:
+  - "*"
+  apiGroups:
+  - "logging.openshift.io"
+  resources:
+  - "clusterlogforwarders"
 - verbs:
   - "*"
   apiGroups:
@@ -95,22 +88,29 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "apps"
+  - "route.openshift.io"
   resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
+  - "routes"
 - verbs:
   - "*"
   apiGroups:
   - "apimc.com.perficient"
   resources:
   - "springbootapps"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "configmaps"
+  - "secrets"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -197,18 +197,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "eventlisteners"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
-- verbs:
-  - "*"
-  apiGroups:
   - ""
   resources:
   - "persistentvolumeclaims"
@@ -219,6 +207,18 @@ rules:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "eventlisteners"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
 
 #+kubebuilder:scaffold:rules
 - verbs:  
