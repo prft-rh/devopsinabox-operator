@@ -55,16 +55,17 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "apps"
+  - "route.openshift.io"
   resources:
-  - "statefulsets"
+  - "routes"
 - verbs:
   - "*"
   apiGroups:
-  - "argoproj.io"
+  - ""
   resources:
-  - "applications"
-  - "argocds"
+  - "configmaps"
+  - "secrets"
+  - "services"
 - verbs:
   - "*"
   apiGroups:
@@ -88,23 +89,22 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - ""
-  resources:
-  - "configmaps"
-  - "secrets"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
   - "kibana.k8s.elastic.co"
   resources:
   - "kibanas"
 - verbs:
   - "*"
   apiGroups:
-  - "route.openshift.io"
+  - "apps"
   resources:
-  - "routes"
+  - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  - "argocds"
 - verbs:
   - "*"
   apiGroups:
@@ -129,25 +129,6 @@ rules:
   - patch
   - update
   - watch
-- verbs:
-  - "*"
-  apiGroups:
-  - "rbac.authorization.k8s.io"
-  resources:
-  - "rolebindings"
-  - "roles"
-- verbs:
-  - "*"
-  apiGroups:
-  - "batch"
-  resources:
-  - "cronjobs"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
 - verbs:
   - "*"
   apiGroups:
@@ -176,6 +157,25 @@ rules:
   resources:
   - "secrets"
   - "serviceaccounts"
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
+  - "roles"
+- verbs:
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "cronjobs"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -197,6 +197,18 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "eventlisteners"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
   - "persistentvolumeclaims"
@@ -207,17 +219,10 @@ rules:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
-- verbs:
-  - "*"
-  apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "eventlisteners"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
 
 #+kubebuilder:scaffold:rules
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "jobs"

@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  generateName: ecr-registry-auth-updater
+  name: ecr-registry-auth-updater-{{ .Release.Revision }}
   annotations:
     # This is what defines this resource as a hook. Without this line, the
     # job is considered part of the release.
