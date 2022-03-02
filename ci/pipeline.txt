@@ -45,6 +45,14 @@ patches:
   - path: manager-memory.yaml
 EOF
 
+cat <<EOF >> config/rbac/role.yaml
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "jobs"
+EOF
+
 # update operator controller image
 export VERSION=0.0.20-aws
 export REPLACES=0.0.19-aws # the NAME of the CSV
