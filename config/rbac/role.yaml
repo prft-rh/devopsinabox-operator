@@ -55,23 +55,27 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "elasticsearch.k8s.elastic.co"
+  - "apps"
   resources:
-  - "elasticsearches"
+  - "statefulsets"
 - verbs:
   - "*"
   apiGroups:
-  - "integreatly.org"
+  - "kibana.k8s.elastic.co"
   resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
+  - "kibanas"
 - verbs:
   - "*"
   apiGroups:
   - "route.openshift.io"
   resources:
   - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apimc.com.perficient"
+  resources:
+  - "springbootapps"
 - verbs:
   - "*"
   apiGroups:
@@ -83,34 +87,30 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  - "argocds"
+- verbs:
+  - "*"
+  apiGroups:
   - "logging.openshift.io"
   resources:
   - "clusterlogforwarders"
 - verbs:
   - "*"
   apiGroups:
-  - "kibana.k8s.elastic.co"
+  - "elasticsearch.k8s.elastic.co"
   resources:
-  - "kibanas"
+  - "elasticsearches"
 - verbs:
   - "*"
   apiGroups:
-  - "apimc.com.perficient"
+  - "integreatly.org"
   resources:
-  - "springbootapps"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -129,6 +129,20 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - "monitoring.coreos.com"
+  resources:
+  - "prometheusrules"
+  - "servicemonitors"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "triggerbindings"
+  - "triggertemplates"
 - verbs:
   - "*"
   apiGroups:
@@ -162,20 +176,6 @@ rules:
   resources:
   - "pipelines"
   - "tasks"
-- verbs:
-  - "*"
-  apiGroups:
-  - "monitoring.coreos.com"
-  resources:
-  - "prometheusrules"
-  - "servicemonitors"
-- verbs:
-  - "*"
-  apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "triggerbindings"
-  - "triggertemplates"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp

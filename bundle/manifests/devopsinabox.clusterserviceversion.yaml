@@ -169,7 +169,7 @@ metadata:
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
     containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.25-aws
-    createdAt: 2022-05-20 12:34:00Z
+    createdAt: 2022-05-20 12:39:00Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
@@ -256,23 +256,27 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - elasticsearch.k8s.elastic.co
+          - apps
           resources:
-          - elasticsearches
+          - statefulsets
           verbs:
           - '*'
         - apiGroups:
-          - integreatly.org
+          - kibana.k8s.elastic.co
           resources:
-          - grafanadashboards
-          - grafanadatasources
-          - grafanas
+          - kibanas
           verbs:
           - '*'
         - apiGroups:
           - route.openshift.io
           resources:
           - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - apimc.com.perficient
+          resources:
+          - springbootapps
           verbs:
           - '*'
         - apiGroups:
@@ -284,34 +288,30 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          - argocds
+          verbs:
+          - '*'
+        - apiGroups:
           - logging.openshift.io
           resources:
           - clusterlogforwarders
           verbs:
           - '*'
         - apiGroups:
-          - kibana.k8s.elastic.co
+          - elasticsearch.k8s.elastic.co
           resources:
-          - kibanas
+          - elasticsearches
           verbs:
           - '*'
         - apiGroups:
-          - apimc.com.perficient
+          - integreatly.org
           resources:
-          - springbootapps
-          verbs:
-          - '*'
-        - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          - argocds
+          - grafanadashboards
+          - grafanadatasources
+          - grafanas
           verbs:
           - '*'
         - apiGroups:
@@ -328,6 +328,20 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - prometheusrules
+          - servicemonitors
+          verbs:
+          - '*'
+        - apiGroups:
+          - triggers.tekton.dev
+          resources:
+          - triggerbindings
+          - triggertemplates
+          verbs:
+          - '*'
         - apiGroups:
           - ""
           resources:
@@ -359,20 +373,6 @@ spec:
           resources:
           - pipelines
           - tasks
-          verbs:
-          - '*'
-        - apiGroups:
-          - monitoring.coreos.com
-          resources:
-          - prometheusrules
-          - servicemonitors
-          verbs:
-          - '*'
-        - apiGroups:
-          - triggers.tekton.dev
-          resources:
-          - triggerbindings
-          - triggertemplates
           verbs:
           - '*'
         - apiGroups:
