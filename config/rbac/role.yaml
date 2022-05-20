@@ -70,9 +70,9 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "logging.openshift.io"
+  - "elasticsearch.k8s.elastic.co"
   resources:
-  - "clusterlogforwarders"
+  - "elasticsearches"
 - verbs:
   - "*"
   apiGroups:
@@ -88,15 +88,21 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "apimc.com.perficient"
+  resources:
+  - "springbootapps"
+- verbs:
+  - "*"
+  apiGroups:
   - "apps"
   resources:
   - "statefulsets"
 - verbs:
   - "*"
   apiGroups:
-  - "elasticsearch.k8s.elastic.co"
+  - "logging.openshift.io"
   resources:
-  - "elasticsearches"
+  - "clusterlogforwarders"
 - verbs:
   - "*"
   apiGroups:
@@ -105,12 +111,6 @@ rules:
   - "grafanadashboards"
   - "grafanadatasources"
   - "grafanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apimc.com.perficient"
-  resources:
-  - "springbootapps"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -129,6 +129,25 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "cronjobs"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
 - verbs:
   - "*"
   apiGroups:
@@ -157,25 +176,6 @@ rules:
   resources:
   - "rolebindings"
   - "roles"
-- verbs:
-  - "*"
-  apiGroups:
-  - "batch"
-  resources:
-  - "cronjobs"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-- verbs:
-  - "*"
-  apiGroups:
-  - "tekton.dev"
-  resources:
-  - "pipelines"
-  - "tasks"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -197,18 +197,6 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "triggers.tekton.dev"
-  resources:
-  - "eventlisteners"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
-- verbs:
-  - "*"
-  apiGroups:
   - ""
   resources:
   - "persistentvolumeclaims"
@@ -219,6 +207,18 @@ rules:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
+- verbs:
+  - "*"
+  apiGroups:
+  - "triggers.tekton.dev"
+  resources:
+  - "eventlisteners"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
 
 #+kubebuilder:scaffold:rules
 - verbs:

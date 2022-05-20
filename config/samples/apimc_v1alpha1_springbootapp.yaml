@@ -16,6 +16,7 @@ spec:
     registry: ""
   dockerfile:
     repo: https://github.com/prft-rh/dockerfile-java11.git
+  env: {}
   fullnameOverride: ""
   git:
     branch: master
