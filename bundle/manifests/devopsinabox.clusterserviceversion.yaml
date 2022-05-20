@@ -144,11 +144,11 @@ metadata:
             "replicaCount": 1,
             "resources": {
               "limits": {
-                "cpu": "300m",
+                "cpu": 1,
                 "memory": "600Mi"
               },
               "requests": {
-                "cpu": "100m",
+                "cpu": "500m",
                 "memory": "400Mi"
               }
             },
@@ -168,14 +168,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.25-aws
-    createdAt: 2022-05-20 12:39:00Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.26-aws
+    createdAt: 2022-05-20 13:00:58Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Matthieu Rethers
-  name: devopsinabox.v0.0.25-aws
+  name: devopsinabox.v0.0.26-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -262,15 +262,9 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - kibana.k8s.elastic.co
+          - elasticsearch.k8s.elastic.co
           resources:
-          - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
+          - elasticsearches
           verbs:
           - '*'
         - apiGroups:
@@ -301,17 +295,23 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - elasticsearch.k8s.elastic.co
-          resources:
-          - elasticsearches
-          verbs:
-          - '*'
-        - apiGroups:
           - integreatly.org
           resources:
           - grafanadashboards
           - grafanadatasources
           - grafanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - kibana.k8s.elastic.co
+          resources:
+          - kibanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -328,13 +328,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - monitoring.coreos.com
-          resources:
-          - prometheusrules
-          - servicemonitors
-          verbs:
-          - '*'
         - apiGroups:
           - triggers.tekton.dev
           resources:
@@ -373,6 +366,13 @@ spec:
           resources:
           - pipelines
           - tasks
+          verbs:
+          - '*'
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - prometheusrules
+          - servicemonitors
           verbs:
           - '*'
         - apiGroups:
@@ -454,7 +454,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.25-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.26-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -556,5 +556,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.24-aws
-  version: 0.0.25-aws
+  replaces: devopsinabox.v0.0.25-aws
+  version: 0.0.26-aws

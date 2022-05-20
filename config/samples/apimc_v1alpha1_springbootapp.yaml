@@ -31,10 +31,10 @@ spec:
   replicaCount: 1
   resources:
     limits:
-      cpu: 300m
+      cpu: 1
       memory: 600Mi
     requests:
-      cpu: 100m
+      cpu: 500m
       memory: 400Mi
   service:
     port: 8080
