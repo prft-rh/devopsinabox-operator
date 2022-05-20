@@ -169,7 +169,7 @@ metadata:
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
     containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.25-aws
-    createdAt: 2022-05-20 12:30:13Z
+    createdAt: 2022-05-20 12:34:00Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
@@ -256,6 +256,26 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - elasticsearch.k8s.elastic.co
+          resources:
+          - elasticsearches
+          verbs:
+          - '*'
+        - apiGroups:
+          - integreatly.org
+          resources:
+          - grafanadashboards
+          - grafanadatasources
+          - grafanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
           - ""
           resources:
           - configmaps
@@ -264,28 +284,15 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - argoproj.io
+          - logging.openshift.io
           resources:
-          - applications
-          - argocds
-          verbs:
-          - '*'
-        - apiGroups:
-          - elasticsearch.k8s.elastic.co
-          resources:
-          - elasticsearches
+          - clusterlogforwarders
           verbs:
           - '*'
         - apiGroups:
           - kibana.k8s.elastic.co
           resources:
           - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -301,17 +308,10 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - logging.openshift.io
+          - argoproj.io
           resources:
-          - clusterlogforwarders
-          verbs:
-          - '*'
-        - apiGroups:
-          - integreatly.org
-          resources:
-          - grafanadashboards
-          - grafanadatasources
-          - grafanas
+          - applications
+          - argocds
           verbs:
           - '*'
         - apiGroups:
@@ -328,6 +328,20 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - ""
+          resources:
+          - secrets
+          - serviceaccounts
+          verbs:
+          - '*'
+        - apiGroups:
+          - rbac.authorization.k8s.io
+          resources:
+          - rolebindings
+          - roles
+          verbs:
+          - '*'
         - apiGroups:
           - batch
           resources:
@@ -359,20 +373,6 @@ spec:
           resources:
           - triggerbindings
           - triggertemplates
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - secrets
-          - serviceaccounts
-          verbs:
-          - '*'
-        - apiGroups:
-          - rbac.authorization.k8s.io
-          resources:
-          - rolebindings
-          - roles
           verbs:
           - '*'
         - apiGroups:

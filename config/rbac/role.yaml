@@ -55,6 +55,26 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "elasticsearch.k8s.elastic.co"
+  resources:
+  - "elasticsearches"
+- verbs:
+  - "*"
+  apiGroups:
+  - "integreatly.org"
+  resources:
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
   - ""
   resources:
   - "configmaps"
@@ -63,28 +83,15 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "argoproj.io"
+  - "logging.openshift.io"
   resources:
-  - "applications"
-  - "argocds"
-- verbs:
-  - "*"
-  apiGroups:
-  - "elasticsearch.k8s.elastic.co"
-  resources:
-  - "elasticsearches"
+  - "clusterlogforwarders"
 - verbs:
   - "*"
   apiGroups:
   - "kibana.k8s.elastic.co"
   resources:
   - "kibanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
 - verbs:
   - "*"
   apiGroups:
@@ -100,17 +107,10 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "logging.openshift.io"
+  - "argoproj.io"
   resources:
-  - "clusterlogforwarders"
-- verbs:
-  - "*"
-  apiGroups:
-  - "integreatly.org"
-  resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
+  - "applications"
+  - "argocds"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -129,6 +129,20 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "secrets"
+  - "serviceaccounts"
+- verbs:
+  - "*"
+  apiGroups:
+  - "rbac.authorization.k8s.io"
+  resources:
+  - "rolebindings"
+  - "roles"
 - verbs:
   - "*"
   apiGroups:
@@ -162,20 +176,6 @@ rules:
   resources:
   - "triggerbindings"
   - "triggertemplates"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "secrets"
-  - "serviceaccounts"
-- verbs:
-  - "*"
-  apiGroups:
-  - "rbac.authorization.k8s.io"
-  resources:
-  - "rolebindings"
-  - "roles"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
