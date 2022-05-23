@@ -55,29 +55,21 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
 - verbs:
   - "*"
   apiGroups:
-  - "apimc.com.perficient"
+  - "route.openshift.io"
   resources:
-  - "springbootapps"
+  - "routes"
 - verbs:
   - "*"
   apiGroups:
-  - ""
+  - "apps"
   resources:
-  - "configmaps"
-  - "secrets"
-  - "services"
+  - "statefulsets"
 - verbs:
   - "*"
   apiGroups:
@@ -108,9 +100,17 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "route.openshift.io"
+  - "apimc.com.perficient"
   resources:
-  - "routes"
+  - "springbootapps"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "configmaps"
+  - "secrets"
+  - "services"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -129,6 +129,13 @@ rules:
   - patch
   - update
   - watch
+- verbs:
+  - "*"
+  apiGroups:
+  - "monitoring.coreos.com"
+  resources:
+  - "prometheusrules"
+  - "servicemonitors"
 - verbs:
   - "*"
   apiGroups:
@@ -169,13 +176,6 @@ rules:
   resources:
   - "pipelines"
   - "tasks"
-- verbs:
-  - "*"
-  apiGroups:
-  - "monitoring.coreos.com"
-  resources:
-  - "prometheusrules"
-  - "servicemonitors"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp

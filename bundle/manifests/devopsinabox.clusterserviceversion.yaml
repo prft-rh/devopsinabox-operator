@@ -168,14 +168,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.26-aws
-    createdAt: 2022-05-20 13:00:58Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.27-aws
+    createdAt: 2022-05-23 15:26:59Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
-    support: Matthieu Rethers
-  name: devopsinabox.v0.0.26-aws
+    support: Perficient
+  name: devopsinabox.v0.0.27-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -256,29 +256,21 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
           - elasticsearch.k8s.elastic.co
           resources:
           - elasticsearches
           verbs:
           - '*'
         - apiGroups:
-          - apimc.com.perficient
+          - route.openshift.io
           resources:
-          - springbootapps
+          - routes
           verbs:
           - '*'
         - apiGroups:
-          - ""
+          - apps
           resources:
-          - configmaps
-          - secrets
-          - services
+          - statefulsets
           verbs:
           - '*'
         - apiGroups:
@@ -309,9 +301,17 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - route.openshift.io
+          - apimc.com.perficient
           resources:
-          - routes
+          - springbootapps
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          - secrets
+          - services
           verbs:
           - '*'
         - apiGroups:
@@ -328,6 +328,13 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - monitoring.coreos.com
+          resources:
+          - prometheusrules
+          - servicemonitors
+          verbs:
+          - '*'
         - apiGroups:
           - triggers.tekton.dev
           resources:
@@ -366,13 +373,6 @@ spec:
           resources:
           - pipelines
           - tasks
-          verbs:
-          - '*'
-        - apiGroups:
-          - monitoring.coreos.com
-          resources:
-          - prometheusrules
-          - servicemonitors
           verbs:
           - '*'
         - apiGroups:
@@ -454,7 +454,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.26-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.27-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -550,11 +550,11 @@ spec:
   - name: Devops-in-a-box Operator
     url: https://github.com/prft-rh/devopsinabox-operator
   maintainers:
-  - email: matthieu.rethers@perficient.com
-    name: Matthieu Rethers
-  maturity: alpha
+  - email: devopsinabox@perficient.com
+    name: Perficient Support
+  maturity: rc1
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.25-aws
-  version: 0.0.26-aws
+  replaces: devopsinabox.v0.0.26-aws
+  version: 0.0.27-aws
