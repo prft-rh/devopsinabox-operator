@@ -9,7 +9,7 @@ metadata:
     createdAt: 2022-05-20 13:00:58Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     repository: https://github.com/prft-rh/devopsinabox-operator
-    support: Matthieu Rethers
+    support: Perficient
   name: devopsinabox.v0.0.0
   namespace: placeholder
 spec:
@@ -63,9 +63,9 @@ spec:
   - name: Devops-in-a-box Operator
     url: https://github.com/prft-rh/devopsinabox-operator
   maintainers:
-  - email: matthieu.rethers@perficient.com
-    name: Matthieu Rethers
-  maturity: alpha
+  - email: devopsinabox@perficient.com
+    name: Perficient Support
+  maturity: rc1
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
