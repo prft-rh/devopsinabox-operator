@@ -55,8 +55,8 @@ cat <<EOF >> config/rbac/role.yaml
 EOF
 
 # update operator controller image
-export VERSION=0.0.26-aws
-export REPLACES=0.0.25-aws # the NAME of the CSV
+export VERSION=0.0.27-aws
+export REPLACES=0.0.26-aws # the NAME of the CSV
 export IMG=quay.io/mrethers/devopsinabox-operator:v$VERSION
 
 # generate bundle
