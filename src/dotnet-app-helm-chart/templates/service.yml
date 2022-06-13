@@ -1,0 +1,21 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ include "net.fullname" . }}
+  labels:
+    {{- include "net.labels" . | nindent 4 }}
+    prometheus: net-service
+  annotations:
+    {{- include "net.annotations" . | nindent 4 }}
+spec:
+  ports:
+    - name: http-service
+      protocol: TCP
+      port: {{ .Values.service.port }}
+      targetPort: {{ .Values.service.port }}
+    - name: http-management
+      protocol: TCP
+      port: {{ .Values.management.port }}
+      targetPort: {{ .Values.management.port }}
+  selector:
+    {{- include "net.selectorLabels" . | nindent 4 }}
