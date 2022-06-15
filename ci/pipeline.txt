@@ -31,7 +31,7 @@ cd devopsinabox
 operator-sdk init --plugins=helm --domain=com.perficient --group=apimc --version=v1alpha1 --kind=DevSecOpsManager --helm-chart=../devopsinabox-helm-chart
 operator-sdk create api --group=apimc --version=v1alpha1 --kind=ManagedNamespace --helm-chart=../devopsinabox-namespace-helm-chart
 operator-sdk create api --group=apimc --version=v1alpha1 --kind=SpringBootApp --helm-chart=../spring-boot-app-helm-chart
-operator-sdk create api --group=apimc --version=v1alpha1 --kind=DotNetApp --helm-chart=src/dotnet-app-helm-chart
+operator-sdk create api --group=apimc --version=v1alpha1 --kind=DotNetApp --helm-chart=../devopsinabox-operator/src/dotnet-app-helm-chart
 
 # cleanup helm-charts
 rm -Rf ../devopsinabox-operator/helm-charts
