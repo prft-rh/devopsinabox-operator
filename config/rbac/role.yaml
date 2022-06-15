@@ -55,6 +55,45 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "configmaps"
+  - "secrets"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
+  - "apps"
+  resources:
+  - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+  - "argocds"
+- verbs:
+  - "*"
+  apiGroups:
+  - "kibana.k8s.elastic.co"
+  resources:
+  - "kibanas"
+- verbs:
+  - "*"
+  apiGroups:
+  - "logging.openshift.io"
+  resources:
+  - "clusterlogforwarders"
+- verbs:
+  - "*"
+  apiGroups:
   - "elasticsearch.k8s.elastic.co"
   resources:
   - "elasticsearches"
@@ -72,45 +111,6 @@ rules:
   - "apimc.com.perficient"
   resources:
   - "springbootapps"
-- verbs:
-  - "*"
-  apiGroups:
-  - "apps"
-  resources:
-  - "statefulsets"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-  - "argocds"
-- verbs:
-  - "*"
-  apiGroups:
-  - "logging.openshift.io"
-  resources:
-  - "clusterlogforwarders"
-- verbs:
-  - "*"
-  apiGroups:
-  - "kibana.k8s.elastic.co"
-  resources:
-  - "kibanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "configmaps"
-  - "secrets"
-  - "services"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -129,12 +129,6 @@ rules:
   - patch
   - update
   - watch
-- verbs:
-  - "*"
-  apiGroups:
-  - "batch"
-  resources:
-  - "cronjobs"
 - verbs:
   - "*"
   apiGroups:
@@ -176,6 +170,12 @@ rules:
   resources:
   - "rolebindings"
   - "roles"
+- verbs:
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "cronjobs"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp

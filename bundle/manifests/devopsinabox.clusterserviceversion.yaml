@@ -168,14 +168,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.28-aws
-    createdAt: 2022-06-13 08:48:52Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.29-aws
+    createdAt: 2022-06-15 03:29:32Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Perficient
-  name: devopsinabox.v0.0.28-aws
+  name: devopsinabox.v0.0.29-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -256,6 +256,45 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          - secrets
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          - argocds
+          verbs:
+          - '*'
+        - apiGroups:
+          - kibana.k8s.elastic.co
+          resources:
+          - kibanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - logging.openshift.io
+          resources:
+          - clusterlogforwarders
+          verbs:
+          - '*'
+        - apiGroups:
           - elasticsearch.k8s.elastic.co
           resources:
           - elasticsearches
@@ -276,45 +315,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          - argocds
-          verbs:
-          - '*'
-        - apiGroups:
-          - logging.openshift.io
-          resources:
-          - clusterlogforwarders
-          verbs:
-          - '*'
-        - apiGroups:
-          - kibana.k8s.elastic.co
-          resources:
-          - kibanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - configmaps
-          - secrets
-          - services
-          verbs:
-          - '*'
-        - apiGroups:
           - apimc.com.perficient
           resources:
           - managednamespaces
@@ -328,12 +328,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - batch
-          resources:
-          - cronjobs
-          verbs:
-          - '*'
         - apiGroups:
           - argoproj.io
           resources:
@@ -373,6 +367,12 @@ spec:
           resources:
           - rolebindings
           - roles
+          verbs:
+          - '*'
+        - apiGroups:
+          - batch
+          resources:
+          - cronjobs
           verbs:
           - '*'
         - apiGroups:
@@ -454,7 +454,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.28-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.29-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -556,5 +556,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.27-aws
-  version: 0.0.28-aws
+  replaces: devopsinabox.v0.0.28-aws
+  version: 0.0.29-aws
