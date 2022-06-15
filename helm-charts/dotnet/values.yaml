@@ -1,0 +1,86 @@
+# Default values for spring-boot.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+
+replicaCount: 1
+
+git:
+  branch: master  
+  # for projects based on maven modules, specify the top-level url in order to import the dependencies
+  url: ""
+  # for projects based on maven modules, builds the specified sub-module 
+  module: ""
+  
+# specify a container image if you don't want to build from source 
+container:
+  image: "placeholder"
+  registry: ""
+
+# repository that contains the app manifest  
+config:
+  repo: ""
+  # todo: add file path option
+
+maven:
+  mirror: ""
+
+# base image for spring boot containers  
+dockerfile:
+  repo: https://github.com/prft-rh/dockerfile-java11.git
+
+nameOverride: ""
+fullnameOverride: ""
+
+serviceAccount:
+  name:
+  annotations: {}
+
+podAnnotations: {}
+
+# default NET port, override to reflect server.port config
+service:
+  port: 8080
+  
+management:
+  port: 8081
+
+#resources: {}
+  # We usually recommend not to specify default resources and to leave this as a conscious
+  # choice for the user. This also increases chances charts run on environments with little
+  # resources, such as Minikube. If you do want to specify resources, uncomment the following
+  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
+  # limits:
+  #   cpu: 100m
+  #   memory: 128Mi
+  # requests:
+  #   cpu: 100m
+  #   memory: 128Mi
+resources:
+  limits:
+    cpu: 300m
+    memory: 600Mi
+  requests:
+    cpu: 100m
+    memory: 400Mi
+
+autoscaling:
+  enabled: false
+  minReplicas: 1
+  maxReplicas: 100
+  targetCPUUtilizationPercentage: 80
+  # targetMemoryUtilizationPercentage: 80
+  
+version:
+  name: ""
+  branch: ""
+  image: "placeholder"
+
+secrets:
+  vault: "" #nubium-dev-vault
+  tenantId: "" #2d8cc149-4c57-462b-a1fb-6e548ffd73bd
+  authentication: "" #[pod|vm|assigned]
+  keys: ""
+  #- key1
+  #- key2
+
+certificateSecret: ""

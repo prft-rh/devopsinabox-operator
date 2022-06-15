@@ -64,6 +64,75 @@ metadata:
         },
         {
           "apiVersion": "apimc.com.perficient/v1alpha1",
+          "kind": "DotNetApp",
+          "metadata": {
+            "name": "dotnetapp-sample"
+          },
+          "spec": {
+            "autoscaling": {
+              "enabled": false,
+              "maxReplicas": 100,
+              "minReplicas": 1,
+              "targetCPUUtilizationPercentage": 80
+            },
+            "certificateSecret": "",
+            "config": {
+              "repo": ""
+            },
+            "container": {
+              "image": "placeholder",
+              "registry": ""
+            },
+            "dockerfile": {
+              "repo": "https://github.com/prft-rh/dockerfile-java11.git"
+            },
+            "fullnameOverride": "",
+            "git": {
+              "branch": "master",
+              "module": "",
+              "url": ""
+            },
+            "management": {
+              "port": 8081
+            },
+            "maven": {
+              "mirror": ""
+            },
+            "nameOverride": "",
+            "podAnnotations": {},
+            "replicaCount": 1,
+            "resources": {
+              "limits": {
+                "cpu": "300m",
+                "memory": "600Mi"
+              },
+              "requests": {
+                "cpu": "100m",
+                "memory": "400Mi"
+              }
+            },
+            "secrets": {
+              "authentication": "",
+              "keys": "",
+              "tenantId": "",
+              "vault": ""
+            },
+            "service": {
+              "port": 8080
+            },
+            "serviceAccount": {
+              "annotations": {},
+              "name": null
+            },
+            "version": {
+              "branch": "",
+              "image": "placeholder",
+              "name": ""
+            }
+          }
+        },
+        {
+          "apiVersion": "apimc.com.perficient/v1alpha1",
           "kind": "ManagedNamespace",
           "metadata": {
             "name": "managednamespace-sample"
@@ -168,14 +237,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.29-aws
-    createdAt: 2022-06-15 03:29:32Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.30-aws
+    createdAt: 2022-06-15 10:58:23Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Perficient
-  name: devopsinabox.v0.0.29-aws
+  name: devopsinabox.v0.0.30-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -183,6 +252,9 @@ spec:
     owned:
     - kind: DevSecOpsManager
       name: devsecopsmanagers.apimc.com.perficient
+      version: v1alpha1
+    - kind: DotNetApp
+      name: dotnetapps.apimc.com.perficient
       version: v1alpha1
     - kind: ManagedNamespace
       name: managednamespaces.apimc.com.perficient
@@ -256,20 +328,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - configmaps
-          - secrets
-          - services
-          verbs:
-          - '*'
-        - apiGroups:
           - apps
           resources:
           - statefulsets
@@ -283,21 +341,35 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - elasticsearch.k8s.elastic.co
+          resources:
+          - elasticsearches
+          verbs:
+          - '*'
+        - apiGroups:
           - kibana.k8s.elastic.co
           resources:
           - kibanas
           verbs:
           - '*'
         - apiGroups:
-          - logging.openshift.io
+          - apimc.com.perficient
           resources:
-          - clusterlogforwarders
+          - springbootapps
           verbs:
           - '*'
         - apiGroups:
-          - elasticsearch.k8s.elastic.co
+          - ""
           resources:
-          - elasticsearches
+          - configmaps
+          - secrets
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
+          - logging.openshift.io
+          resources:
+          - clusterlogforwarders
           verbs:
           - '*'
         - apiGroups:
@@ -309,9 +381,9 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - apimc.com.perficient
+          - route.openshift.io
           resources:
-          - springbootapps
+          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -328,6 +400,12 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - batch
+          resources:
+          - cronjobs
+          verbs:
+          - '*'
         - apiGroups:
           - argoproj.io
           resources:
@@ -370,12 +448,6 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - batch
-          resources:
-          - cronjobs
-          verbs:
-          - '*'
-        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -390,13 +462,6 @@ spec:
           - update
           - watch
         - apiGroups:
-          - ""
-          resources:
-          - persistentvolumeclaims
-          - services
-          verbs:
-          - '*'
-        - apiGroups:
           - apps.openshift.io
           resources:
           - deploymentconfigs
@@ -406,6 +471,45 @@ spec:
           - triggers.tekton.dev
           resources:
           - eventlisteners
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - persistentvolumeclaims
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
+          - apimc.com.perficient
+          resources:
+          - dotnetapps
+          - dotnetapps/status
+          - dotnetapps/finalizers
+          verbs:
+          - create
+          - delete
+          - get
+          - list
+          - patch
+          - update
+          - watch
+        - apiGroups:
+          - ""
+          resources:
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - deployments
           verbs:
           - '*'
         - apiGroups:
@@ -454,7 +558,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.29-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.30-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -556,5 +660,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.28-aws
-  version: 0.0.29-aws
+  replaces: devopsinabox.v0.0.29-aws
+  version: 0.0.30-aws

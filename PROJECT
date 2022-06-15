@@ -27,4 +27,11 @@ resources:
   group: apimc
   kind: SpringBootApp
   version: v1alpha1
+- api:
+    crdVersion: v1
+    namespaced: true
+  domain: com.perficient
+  group: apimc
+  kind: DotNetApp
+  version: v1alpha1
 version: "3"

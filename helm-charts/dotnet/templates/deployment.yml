@@ -1,0 +1,263 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    {{- include "net.annotations" . | nindent 4 }}
+    sidecar.jaegertracing.io/inject: "true"
+  name: {{ include "net.fullname" . }}
+  labels:
+    {{- include "net.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      {{- include "net.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        sidecar.istio.io/inject: "true"
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "net.labels" . | nindent 8 }}
+        version: default
+    spec:
+{{- if .Values.serviceAccount }}
+{{- if .Values.serviceAccount.name }}
+      serviceAccountName: {{ .Values.serviceAccount.name }}
+{{- end }}
+{{- end }}
+      volumes:
+      {{- if .Values.certificateSecret }}
+        - name: {{ .Values.certificateSecret }}
+          secret:
+            secretName: {{ .Values.certificateSecret }}
+      {{- end }}
+      {{- if .Values.secrets.keys }}
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ include "net.fullname" . }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          readinessProbe:
+            httpGet:
+              path: "{{- range .Values.env }}{{- if eq .name "AppUrlPrefix" }}{{.value}}{{- end }}{{- end }}/healthz/ready"
+              port: {{ .Values.management.port }}
+              scheme: HTTP
+            initialDelaySeconds: 30
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: "{{- range .Values.env }}{{- if eq .name "AppUrlPrefix" }}{{.value}}{{- end }}{{- end }}/healthz/live"
+              port: {{ .Values.management.port }}
+              scheme: HTTP
+            initialDelaySeconds: 45
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          image: "{{ .Values.container.image }}"
+          ports:
+            - name: http-service
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            - name: http-management
+              containerPort: {{ .Values.management.port }}
+              protocol: TCP
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://*:{{ .Values.service.port }};http://*:{{ .Values.management.port }}
+            - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+              value: "health,info,prometheus"
+            - name: SERVER_PORT
+              value: "{{ .Values.service.port }}"
+            - name: MANAGEMENT_SERVER_PORT
+              value: "{{ .Values.management.port }}"
+            {{- if .Values.certificateSecret }}
+            - name: SERVER_CERT
+              value: "/etc/cert/ca.p12"
+            {{- end }}
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            {{- range $k, $v := .Values.env }}
+            - name: {{ $v.name }}
+              value: {{ $v.value | quote }}
+            {{- end }}
+            {{- if .Values.secrets.keys }}
+            {{- range .Values.secrets.keys }}
+            - name: {{ . }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "net.fullname" $ }} 
+                  key: {{ . }}
+            {{- end }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+          volumeMounts:
+          {{- if .Values.certificateSecret }}
+            - name: {{ .Values.certificateSecret }}
+              readOnly: true
+              mountPath: /etc/cert
+          {{- end }}
+          {{- if .Values.secrets.keys }}
+            - name: secrets-store01-inline
+              readOnly: true
+              mountPath: /mnt/secrets-store
+          {{- end }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+      
+{{- if .Values.version.name }}
+{{- $top := . }}
+---
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  annotations:
+    {{- include "net.annotations" . | nindent 4 }}
+    lastDeployed: {{ now | quote }}
+  name: {{ include "net.fullname" . }}-{{ .Values.version.name }}
+  labels:
+    {{- include "net.labels" . | nindent 4 }}
+spec:
+{{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+{{- end }}
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      {{- include "net.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      annotations:
+        sidecar.jaegertracing.io/inject: "true"
+        sidecar.istio.io/inject: "true"
+        {{- with .Values.podAnnotations }}
+        {{- toYaml . | nindent 8 }}
+        {{- end }}
+      labels:
+        {{- include "net.labels" . | nindent 8 }}
+        version: {{ .Values.version.name }}
+    spec:
+      volumes:
+      {{- if .Values.certificateSecret }}
+        - name: {{ .Values.certificateSecret }}
+          secret:
+            secretName: {{ .Values.certificateSecret }}
+      {{- end }}
+      {{- if .Values.secrets.keys }}
+        - name: secrets-store01-inline
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes:
+              secretProviderClass: {{ include "net.fullname" . }}
+      {{- end }}
+      containers:
+        - name: {{ .Chart.Name }}
+          readinessProbe:
+            httpGet:
+              path: /index.html
+              port: {{ .Values.service.port }}
+              scheme: HTTP
+            initialDelaySeconds: 10
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          livenessProbe:
+            httpGet:
+              path: /index.html
+              port: {{ .Values.service.port }}
+              scheme: HTTP
+            initialDelaySeconds: 180
+            timeoutSeconds: 1
+            periodSeconds: 10
+            successThreshold: 1
+            failureThreshold: 3
+          image: "{{ .Values.version.image }}"
+          ports:
+            - name: http-service
+              containerPort: {{ .Values.service.port }}
+              protocol: TCP
+            - name: http-management
+              containerPort: {{ .Values.management.port }}
+              protocol: TCP
+          env:
+            - name: ASPNETCORE_URLS
+              value: http://*:{{ .Values.service.port }}
+            - name: MANAGEMENT_ENDPOINTS_WEB_EXPOSURE_INCLUDE
+              value: "health,info,prometheus"
+            - name: SERVER_PORT
+              value: "{{ .Values.service.port }}"
+            - name: MANAGEMENT_SERVER_PORT
+              value: "{{ .Values.management.port }}"
+            {{- if .Values.certificateSecret }}
+            - name: SERVER_CERT
+              value: "/etc/cert/ca.p12"
+            {{- end }}
+            - name: KUBERNETES_NAMESPACE
+              valueFrom:
+                fieldRef:
+                  apiVersion: v1
+                  fieldPath: metadata.namespace
+            {{- range .Values.secrets.keys }} 
+            - name: {{ . }}
+              valueFrom:
+                secretKeyRef:
+                  name: {{ include "net.fullname" $ }} 
+                  key: {{ . }}
+            {{- end }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+          imagePullPolicy: Always
+          volumeMounts:
+          {{- if .Values.certificateSecret }}
+            - name: {{ .Values.certificateSecret }}
+              readOnly: true
+              mountPath: /etc/cert
+          {{- end }}
+          {{- if .Values.secrets.keys }}
+            - name: secrets-store01-inline
+              readOnly: true
+              mountPath: /mnt/secrets-store
+          {{- end }}
+      restartPolicy: Always
+      terminationGracePeriodSeconds: 30
+      dnsPolicy: ClusterFirst
+      securityContext: {}
+      schedulerName: default-scheduler
+{{- end }}

@@ -3,4 +3,5 @@ resources:
 - apimc_v1alpha1_devsecopsmanager.yaml
 - apimc_v1alpha1_managednamespace.yaml
 - apimc_v1alpha1_springbootapp.yaml
+- apimc_v1alpha1_dotnetapp.yaml
 #+kubebuilder:scaffold:manifestskustomizesamples

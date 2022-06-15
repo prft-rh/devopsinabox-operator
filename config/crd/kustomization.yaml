@@ -5,4 +5,5 @@ resources:
 - bases/apimc.com.perficient_devsecopsmanagers.yaml
 - bases/apimc.com.perficient_managednamespaces.yaml
 - bases/apimc.com.perficient_springbootapps.yaml
+- bases/apimc.com.perficient_dotnetapps.yaml
 #+kubebuilder:scaffold:crdkustomizeresource

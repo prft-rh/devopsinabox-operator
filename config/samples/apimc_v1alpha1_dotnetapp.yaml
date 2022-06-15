@@ -1,0 +1,54 @@
+apiVersion: apimc.com.perficient/v1alpha1
+kind: DotNetApp
+metadata:
+  name: dotnetapp-sample
+spec:
+  # Default values copied from <project_dir>/helm-charts/dotnet/values.yaml
+  autoscaling:
+    enabled: false
+    maxReplicas: 100
+    minReplicas: 1
+    targetCPUUtilizationPercentage: 80
+  certificateSecret: ""
+  config:
+    repo: ""
+  container:
+    image: placeholder
+    registry: ""
+  dockerfile:
+    repo: https://github.com/prft-rh/dockerfile-java11.git
+  fullnameOverride: ""
+  git:
+    branch: master
+    module: ""
+    url: ""
+  management:
+    port: 8081
+  maven:
+    mirror: ""
+  nameOverride: ""
+  podAnnotations: {}
+  replicaCount: 1
+  resources:
+    limits:
+      cpu: 300m
+      memory: 600Mi
+    requests:
+      cpu: 100m
+      memory: 400Mi
+  secrets:
+    authentication: ""
+    keys: ""
+    tenantId: ""
+    vault: ""
+  service:
+    port: 8080
+  serviceAccount:
+    annotations: {}
+    name: null
+  version:
+    branch: ""
+    image: placeholder
+    name: ""
+  
+  

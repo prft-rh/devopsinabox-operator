@@ -1,0 +1,33 @@
+{{- if .Values.secrets.keys }}
+# This is a SecretProviderClass example using system-assigned identity to access Key Vault
+apiVersion: secrets-store.csi.x-k8s.io/v1
+kind: SecretProviderClass
+metadata:
+  name: {{ include "net.fullname" . }}
+spec:
+  provider: azure
+  secretObjects:                              # [OPTIONAL] SecretObject defines the desired state of synced K8s secret objects
+  - data:
+    {{- range .Values.secrets.keys }}
+    - key: {{ . }}                      # the key field of the secret. By convention make it the same as name of secret in kv
+      objectName: {{ . }}                   # the name of the secret in kv
+    {{- end }} 
+    secretName: {{ include "net.fullname" . }}        # name of the Kubernetes Secret object
+    type: Opaque                              # type of the Kubernetes Secret object e.g. Opaque, kubernetes.io/tls
+  parameters:
+    usePodIdentity: "false"
+    useVMManagedIdentity: "true"
+    userAssignedIdentityID: ""      # If empty, then defaults to use the system assigned identity on the VM
+    keyvaultName: "{{ .Values.secrets.vault }}"
+    cloudName: ""                   # [OPTIONAL for Azure] if not provided, azure environment will default to AzurePublicCloud
+    
+    objects: |
+      array:
+        {{- range .Values.secrets.keys }}
+        - |
+          objectName: {{ . }}
+          objectType: secret        # object types: secret, key or cert
+        {{- end }}
+    
+    tenantId: "{{ .Values.secrets.tenantId }}"
+{{- end }}

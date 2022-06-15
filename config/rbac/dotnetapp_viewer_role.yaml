@@ -1,0 +1,20 @@
+# permissions for end users to view dotnetapps.
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: dotnetapp-viewer-role
+rules:
+- apiGroups:
+  - apimc.com.perficient
+  resources:
+  - dotnetapps
+  verbs:
+  - get
+  - list
+  - watch
+- apiGroups:
+  - apimc.com.perficient
+  resources:
+  - dotnetapps/status
+  verbs:
+  - get

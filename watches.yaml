@@ -11,4 +11,8 @@
   version: v1alpha1
   kind: SpringBootApp
   chart: helm-charts/spring-boot
+- group: apimc.com.perficient
+  version: v1alpha1
+  kind: DotNetApp
+  chart: helm-charts/dotnet
 #+kubebuilder:scaffold:watch

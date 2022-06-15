@@ -1,0 +1,6 @@
+apiVersion: v2
+appVersion: 1.16.0
+description: A Helm chart to deploy a .NET application from a git repository
+name: dotnet
+type: application
+version: 0.1.0
