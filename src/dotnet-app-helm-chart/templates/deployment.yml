@@ -129,13 +129,6 @@ spec:
           {{- end }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-      tolerations:
-      - effect: NoExecute
-        key: application
-        operator: Equal
-        value: vwapp
-      nodeSelector:
-        application: vwapp
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
@@ -264,13 +257,6 @@ spec:
           {{- end }}
       restartPolicy: Always
       terminationGracePeriodSeconds: 30
-      tolerations:
-      - effect: NoExecute
-        key: application
-        operator: Equal
-        value: vwapp
-      nodeSelector:
-        application: vwapp
       dnsPolicy: ClusterFirst
       securityContext: {}
       schedulerName: default-scheduler
