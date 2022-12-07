@@ -13,4 +13,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: quay.io/mrethers/devopsinabox-operator
-  newTag: v0.0.30-aws
+  newTag: v0.0.31-aws

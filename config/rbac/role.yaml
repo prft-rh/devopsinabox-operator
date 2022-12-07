@@ -55,9 +55,35 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - "route.openshift.io"
+  resources:
+  - "routes"
+- verbs:
+  - "*"
+  apiGroups:
+  - ""
+  resources:
+  - "configmaps"
+  - "secrets"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
   - "apps"
   resources:
   - "statefulsets"
+- verbs:
+  - "*"
+  apiGroups:
+  - "logging.openshift.io"
+  resources:
+  - "clusterlogforwarders"
+- verbs:
+  - "*"
+  apiGroups:
+  - "elasticsearch.k8s.elastic.co"
+  resources:
+  - "elasticsearches"
 - verbs:
   - "*"
   apiGroups:
@@ -68,9 +94,11 @@ rules:
 - verbs:
   - "*"
   apiGroups:
-  - "elasticsearch.k8s.elastic.co"
+  - "integreatly.org"
   resources:
-  - "elasticsearches"
+  - "grafanadashboards"
+  - "grafanadatasources"
+  - "grafanas"
 - verbs:
   - "*"
   apiGroups:
@@ -83,34 +111,6 @@ rules:
   - "apimc.com.perficient"
   resources:
   - "springbootapps"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "configmaps"
-  - "secrets"
-  - "services"
-- verbs:
-  - "*"
-  apiGroups:
-  - "logging.openshift.io"
-  resources:
-  - "clusterlogforwarders"
-- verbs:
-  - "*"
-  apiGroups:
-  - "integreatly.org"
-  resources:
-  - "grafanadashboards"
-  - "grafanadatasources"
-  - "grafanas"
-- verbs:
-  - "*"
-  apiGroups:
-  - "route.openshift.io"
-  resources:
-  - "routes"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: ManagedNamespace
@@ -129,25 +129,6 @@ rules:
   - patch
   - update
   - watch
-- verbs:
-  - "*"
-  apiGroups:
-  - "batch"
-  resources:
-  - "cronjobs"
-- verbs:
-  - "*"
-  apiGroups:
-  - "argoproj.io"
-  resources:
-  - "applications"
-- verbs:
-  - "*"
-  apiGroups:
-  - "tekton.dev"
-  resources:
-  - "pipelines"
-  - "tasks"
 - verbs:
   - "*"
   apiGroups:
@@ -176,6 +157,25 @@ rules:
   resources:
   - "rolebindings"
   - "roles"
+- verbs:
+  - "*"
+  apiGroups:
+  - "batch"
+  resources:
+  - "cronjobs"
+- verbs:
+  - "*"
+  apiGroups:
+  - "argoproj.io"
+  resources:
+  - "applications"
+- verbs:
+  - "*"
+  apiGroups:
+  - "tekton.dev"
+  resources:
+  - "pipelines"
+  - "tasks"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: SpringBootApp
@@ -197,6 +197,13 @@ rules:
 - verbs:
   - "*"
   apiGroups:
+  - ""
+  resources:
+  - "persistentvolumeclaims"
+  - "services"
+- verbs:
+  - "*"
+  apiGroups:
   - "apps.openshift.io"
   resources:
   - "deploymentconfigs"
@@ -212,13 +219,6 @@ rules:
   - "route.openshift.io"
   resources:
   - "routes"
-- verbs:
-  - "*"
-  apiGroups:
-  - ""
-  resources:
-  - "persistentvolumeclaims"
-  - "services"
 
 ##
 ## Rules for apimc.com.perficient/v1alpha1, Kind: DotNetApp

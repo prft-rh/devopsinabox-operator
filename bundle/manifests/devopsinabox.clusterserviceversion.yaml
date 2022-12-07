@@ -237,14 +237,14 @@ metadata:
       ]
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
-    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.30-aws
-    createdAt: 2022-06-15 10:58:23Z
+    containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.31-aws
+    createdAt: 2022-12-07 15:30:14Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
     repository: https://github.com/prft-rh/devopsinabox-operator
     support: Perficient
-  name: devopsinabox.v0.0.30-aws
+  name: devopsinabox.v0.0.31-aws
   namespace: placeholder
 spec:
   apiservicedefinitions: {}
@@ -328,9 +328,35 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - configmaps
+          - secrets
+          - services
+          verbs:
+          - '*'
+        - apiGroups:
           - apps
           resources:
           - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - logging.openshift.io
+          resources:
+          - clusterlogforwarders
+          verbs:
+          - '*'
+        - apiGroups:
+          - elasticsearch.k8s.elastic.co
+          resources:
+          - elasticsearches
           verbs:
           - '*'
         - apiGroups:
@@ -341,9 +367,11 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - elasticsearch.k8s.elastic.co
+          - integreatly.org
           resources:
-          - elasticsearches
+          - grafanadashboards
+          - grafanadatasources
+          - grafanas
           verbs:
           - '*'
         - apiGroups:
@@ -356,34 +384,6 @@ spec:
           - apimc.com.perficient
           resources:
           - springbootapps
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - configmaps
-          - secrets
-          - services
-          verbs:
-          - '*'
-        - apiGroups:
-          - logging.openshift.io
-          resources:
-          - clusterlogforwarders
-          verbs:
-          - '*'
-        - apiGroups:
-          - integreatly.org
-          resources:
-          - grafanadashboards
-          - grafanadatasources
-          - grafanas
-          verbs:
-          - '*'
-        - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -400,25 +400,6 @@ spec:
           - patch
           - update
           - watch
-        - apiGroups:
-          - batch
-          resources:
-          - cronjobs
-          verbs:
-          - '*'
-        - apiGroups:
-          - argoproj.io
-          resources:
-          - applications
-          verbs:
-          - '*'
-        - apiGroups:
-          - tekton.dev
-          resources:
-          - pipelines
-          - tasks
-          verbs:
-          - '*'
         - apiGroups:
           - monitoring.coreos.com
           resources:
@@ -448,6 +429,25 @@ spec:
           verbs:
           - '*'
         - apiGroups:
+          - batch
+          resources:
+          - cronjobs
+          verbs:
+          - '*'
+        - apiGroups:
+          - argoproj.io
+          resources:
+          - applications
+          verbs:
+          - '*'
+        - apiGroups:
+          - tekton.dev
+          resources:
+          - pipelines
+          - tasks
+          verbs:
+          - '*'
+        - apiGroups:
           - apimc.com.perficient
           resources:
           - springbootapps
@@ -461,6 +461,13 @@ spec:
           - patch
           - update
           - watch
+        - apiGroups:
+          - ""
+          resources:
+          - persistentvolumeclaims
+          - services
+          verbs:
+          - '*'
         - apiGroups:
           - apps.openshift.io
           resources:
@@ -477,13 +484,6 @@ spec:
           - route.openshift.io
           resources:
           - routes
-          verbs:
-          - '*'
-        - apiGroups:
-          - ""
-          resources:
-          - persistentvolumeclaims
-          - services
           verbs:
           - '*'
         - apiGroups:
@@ -558,7 +558,7 @@ spec:
                 - --metrics-bind-address=127.0.0.1:8080
                 - --leader-elect
                 - --leader-election-id=devopsinabox
-                image: quay.io/mrethers/devopsinabox-operator:v0.0.30-aws
+                image: quay.io/mrethers/devopsinabox-operator:v0.0.31-aws
                 livenessProbe:
                   httpGet:
                     path: /healthz
@@ -660,5 +660,5 @@ spec:
   provider:
     name: Perficient Inc
     url: http://www.perficient.com
-  replaces: devopsinabox.v0.0.29-aws
-  version: 0.0.30-aws
+  replaces: devopsinabox.v0.0.30-aws
+  version: 0.0.31-aws
