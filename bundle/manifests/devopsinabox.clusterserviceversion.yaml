@@ -238,7 +238,7 @@ metadata:
     capabilities: Basic Install
     categories: Modernization & Migration,Developer Tools,Application Runtime
     containerImage: quay.io/mrethers/devopsinabox-operator:v0.0.31-aws
-    createdAt: 2022-12-07 15:30:14Z
+    createdAt: 2022-12-07 15:45:48Z
     description: Perficient's DevSecOps Manager For Kubernetes Applications
     operators.operatorframework.io/builder: operator-sdk-v1.15.0+git
     operators.operatorframework.io/project_layout: helm.sdk.operatorframework.io/v1
@@ -328,35 +328,11 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - route.openshift.io
-          resources:
-          - routes
-          verbs:
-          - '*'
-        - apiGroups:
           - ""
           resources:
           - configmaps
           - secrets
           - services
-          verbs:
-          - '*'
-        - apiGroups:
-          - apps
-          resources:
-          - statefulsets
-          verbs:
-          - '*'
-        - apiGroups:
-          - logging.openshift.io
-          resources:
-          - clusterlogforwarders
-          verbs:
-          - '*'
-        - apiGroups:
-          - elasticsearch.k8s.elastic.co
-          resources:
-          - elasticsearches
           verbs:
           - '*'
         - apiGroups:
@@ -367,11 +343,9 @@ spec:
           verbs:
           - '*'
         - apiGroups:
-          - integreatly.org
+          - logging.openshift.io
           resources:
-          - grafanadashboards
-          - grafanadatasources
-          - grafanas
+          - clusterlogforwarders
           verbs:
           - '*'
         - apiGroups:
@@ -384,6 +358,32 @@ spec:
           - apimc.com.perficient
           resources:
           - springbootapps
+          verbs:
+          - '*'
+        - apiGroups:
+          - apps
+          resources:
+          - statefulsets
+          verbs:
+          - '*'
+        - apiGroups:
+          - elasticsearch.k8s.elastic.co
+          resources:
+          - elasticsearches
+          verbs:
+          - '*'
+        - apiGroups:
+          - integreatly.org
+          resources:
+          - grafanadashboards
+          - grafanadatasources
+          - grafanas
+          verbs:
+          - '*'
+        - apiGroups:
+          - route.openshift.io
+          resources:
+          - routes
           verbs:
           - '*'
         - apiGroups:
@@ -501,12 +501,6 @@ spec:
           - update
           - watch
         - apiGroups:
-          - ""
-          resources:
-          - services
-          verbs:
-          - '*'
-        - apiGroups:
           - apps
           resources:
           - deployments
@@ -516,6 +510,12 @@ spec:
           - route.openshift.io
           resources:
           - routes
+          verbs:
+          - '*'
+        - apiGroups:
+          - ""
+          resources:
+          - services
           verbs:
           - '*'
         - apiGroups:
